@@ -1,0 +1,216 @@
+cluster:
+
+############# FOR TESTING FAILURES ############
+  # - name: ESX Home                      # Cluster group is automatically worked out
+  #   vm:
+  #     - name: hme-air-wlc01
+  #       # All these options are optional
+  #       tenant: dogworld
+  #       role: wi
+  #       platform: no_platorm
+  #       cpu: 1
+  #       mem: 2
+  #       disk: 8
+  #       tags: [os_network]
+  #       comments: Wireless LAN Controller
+  #       intf:
+  #         - name: Port1
+  #           grp_vl: [stesworld, [10,20,30]]             # optional
+  #         - name: management
+  #           grp_vl: [stesworld, 10]
+  #           vrf_ip: [HME_GLOBAL, 10.10.10.11/24]       # Optional
+  #           dns: hme-air-wlc01.stesworld.com
+  #         - name: hme_trust_vl20
+  #           grp_vl: [stesworld, 20]
+  #           vrf_ip: [HME_GLOBAL, 10.10.20.11/24]
+  #           secondary_ip: true                         # Optional
+  #         - name: hme_untrust_vl30
+  #           grp_vl: [stesworld, 30]
+  #           vrf_ip: [HME_GLOBAL, 10.10.30.11/24]
+  #           secondary_ip: true
+  #           tag:
+
+  # - name: ESX Home                      # Cluster group is automatically worked out
+  #   vm:
+  #     - name: hme-air-wlc01
+  #       # All these options are optional
+  #       tenant: stesworld
+  #       role: wifi
+  #       # platform: xx
+  #       cpu: 1
+  #       mem: 2
+  #       disk: 8
+  #       tags: [os_network]
+  #       comments: Wireless LAN Controller
+  #       intf:
+  #         - name: Port1
+  #           grp_vl: [stesworl, [10,20,30]]             # mandatory
+  #         # - name: management
+  #         - name: Port1
+  #           grp_vl: [stesworld, 190]
+  #           vrf_ip: [HME_GLOBAL, 10.10.10.11/24]       # Optional
+  #           dns: hme-air-wlc01.stesworld.com
+  #         - name: hme_trust_vl20
+  #           grp_vl: [stesworld, 20]
+  #           vrf_ip: [HME_GLOBA, 10.10.20.11/24]
+  #           secondary_ip: true                         # Optional
+  #         - name: hme_untrust_vl30
+  #           grp_vl: [stesworld, 30]
+  #           vrf_ip: [HME_GLOBAL, 10.10.10.50/24]
+  #           secondary_ip: true
+
+
+# Only Name and cluster are mandatory
+cluster:
+  - name: ESX Home                      # Cluster group is automatically worked out
+    vm:
+      - name: hme-air-wlc01
+        # All these options are optional
+        tenant: stesworld
+        role: wifi
+        # platform: xx
+        cpu: 1
+        mem: 2
+        disk: 8
+        tags: [os_network]
+        comments: Wireless LAN Controller
+        intf:
+          - name: Port1
+            grp_vl: [stesworld, [10,20,30]]             # mandatory
+          - name: management
+            grp_vl: [stesworld, 10]
+            vrf_ip: [HME_GLOBAL, 10.10.10.11/24]       # Optional
+            dns: hme-air-wlc01.stesworld.com
+          - name: hme_trust_vl20
+            grp_vl: [stesworld, 20]
+            vrf_ip: [HME_GLOBAL, 10.10.20.11/24]
+            secondary_ip: true                         # Optional
+          - name: hme_untrust_vl30
+            grp_vl: [stesworld, 30]
+            vrf_ip: [HME_GLOBAL, 10.10.30.11/24]
+            secondary_ip: true
+#             tag:                                        # Optional, is applied to both IP and interface
+
+      # - name: hme-win-ws01
+      #   role: compute
+      #   cpu: 1
+      #   mem: 4
+      #   disk: 64
+      #   tags: [os_windows]
+      #   comments: Windows 10 workstation (in ESX)
+      #   intf:
+      #     - name: eth0
+      #       grp_vl: [stesworld, 10]
+      #       vrf_ip: [HME_GLOBAL, 10.10.20.152/24]       # Optional
+      #       dns: hme-win-ws01.stesworld.com
+      # - name: hme-cos-ws01
+      #   role: compute
+      #   cpu: 1
+      #   mem: 2
+      #   disk: 32
+      #   tags: [os_linux]
+      #   comments: CENTOS workstation (in ESX)
+      #   ip:
+      #   - intf_addr: [ens192, 10.10.20.151/24]
+      #     dns: hme-cos-ws01.stesworld.com
+  #     - name: hme-cos-nbox01
+  #       role: compute
+  #       cpu: 1
+  #       mem: 2
+  #       disk: 32
+  #       tags: [os_linux]
+  #       comments: Netbox on CENTOS (in ESX)
+  #       ip:
+  #       - intf_addr: [ens192, 10.10.10.101/24]
+  #         dns: hme-cos-nbox01.stesworld.com
+
+
+  #     - name: hme-bip-lb01
+  #       role: compute
+  #       cpu: 1
+  #       mem: 2
+  #       disk: 32
+  #       tags: [os_linux]
+  #       comments: BIG-IP (in ESX)
+  #       ip:
+  #       - intf_ip_vlan: [1.1, [10,20,30]]
+  #         secondary_ip: true
+  #       - intf_ip_vlan: [mgmt, 10.10.10.19/24]                      # Automatically works out the VRF
+  #         dns: hme-bip-lb01.stesworld.com
+  #       - intf_ip_vlan: [hme_compute_vl10, 10.10.10.21/24]
+  #         secondary_ip: true
+  #       - intf_ip_vlan: [hme_trust_vl20, 10.10.20.21/24]
+  #         secondary_ip: true
+  #       - intf_ip_vlan: [hme_untrust_vl30, 10.10.30.21/24]
+  #         secondary_ip: true
+
+  #     - name: hme-bip-lb02
+  #       role: compute
+  #       cpu: 1
+  #       mem: 2
+  #       disk: 32
+  #       tags: [os_linux]
+  #       comments: BIG-IP (in ESX)
+  #       ip:
+  #       - intf_ip_vlan: [1.1, [10,20,30]]
+  #         secondary_ip: true
+  #       - intf_ip_vlan: [mgmt, 10.10.10.20/24]                      # Automatically works out the VRF
+  #         dns: hme-bip-lb01.stesworld.com
+  #       - intf_ip_vlan: [hme_compute_vl10, 10.10.10.22/24]
+  #         secondary_ip: true
+  #       - intf_ip_vlan: [hme_trust_vl20, 10.10.20.22/24]
+  #         secondary_ip: true
+  #       - intf_ip_vlan: [hme_untrust_vl30, 10.10.30.22/24]
+  #         secondary_ip: true
+
+
+  # # relicense F5s and configure
+  # # Add docker to hme-cos-doc01 and install pi-hole
+  # # copy eve-ng over to esx and update
+  # # update windows with word and powerpoint
+
+  #     - name: hme-cos-doc01
+  #       role: compute
+  #       cpu: 1
+  #       mem: 2
+  #       disk: 32
+  #       tags: [os_linux]
+  #       comments: Netbox on CENTOS (in ESX)
+  #       ip:
+  #       - intf_addr: [ens192, 10.10.10.103/24]
+  #         dns: hme-cos-doc01.stesworld.com
+
+  #     - name: hme-log-sexi01
+  #       role: compute
+  #       cpu: 1
+  #       mem: 2
+  #       disk: 58
+  #       tags: [os_other]
+  #       comments: Sexilog server for ESX
+  #       ip:
+  #       - intf_addr: [ens192, 10.10.10.104/24]
+  #         dns: hme-log-sexi01.stesworld.com
+
+  #     - name: hme-ubu-eve01
+  #       role: compute
+  #       cpu: 1
+  #       mem: 2
+  #       disk: xxx
+  #       tags: [os_other]
+  #       comments: EVE-NG on ESX
+  #       ip:
+  #       - intf_addr: [ens192, 10.10.10.102/24]
+  #         dns: hme-ubu-eve01.stesworld.com
+
+
+
+  #     # Add 2 F5s
+  #     # Add pihole
+  #     # deploy sexilogs
+
+
+
+
+  #     # Do Fusion
+  #     # Do azure
+

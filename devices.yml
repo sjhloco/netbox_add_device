@@ -1,0 +1,27 @@
+---
+manufacturer:
+  - Cisco:
+    - device_type: ws_c3560cx_12pcs           # Automatically works out the platform from the device type
+      device-role: switch
+      device:
+        - name: HME-C3560-SWI01
+          serial: FOC2414L6TJ
+          asset-tag: 12345
+          rack_postion: [HME-FL5-A1, 1]       # Automatically works out the location and rack-group
+          # rear: true                        # Only need if it is rear facing device
+          cluster: Azure - Europe West        # Cluster group is automatically worked out
+          tenant: stesworld                   # Automatically worksout the tenant-group
+          # tags: [test]
+          # comments: xxx
+          # ip:
+          #   - addr:                           # Automatically works out the VRF
+          #     intf:
+          #     role:
+          #     primary_ip: true                # If this the devices mgmt IP
+          #     dns:
+          #     descr:
+          #     # tags: [test]
+          # conns:
+          #   - gi0/1: [asa1, gi1]
+
+# Has to verify everything before adding
