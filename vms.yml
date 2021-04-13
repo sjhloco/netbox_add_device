@@ -1,7 +1,7 @@
 cluster:
 
 ############# FOR TESTING FAILURES ############
-  # - name: ESX Home                      # Cluster group is automatically worked out
+  # - name: ESX Home1                      # Cluster group is automatically worked out
   #   vm:
   #     - name: hme-air-wlc01
   #       # All these options are optional
@@ -59,6 +59,36 @@ cluster:
   #           vrf_ip: [HME_GLOBAL, 10.10.10.50/24]
   #           secondary_ip: true
 
+# Test update
+  # - name: ESX Home                      # Cluster group is automatically worked out
+  #   vm:
+  #     - name: hme-air-wlc015
+  #       # All these options are optional
+  #       tenant: stesworld
+  #       # role: wifi
+  #       # # platform: xx
+  #       # cpu: 2
+  #       # mem: f
+  #       disk: 8
+        # tags: [os_network]
+        # comments: Wireless LAN Controller
+
+        # intf:
+        #   - name: Port1
+        #     grp_vl: [stesworld, [10,20,30]]             # mandatory
+        #   - name: management
+        #     grp_vl: [stesworld, 10]
+        #     vrf_ip: [HME_GLOBAL, 10.10.10.11/24]       # Optional
+        #     dns: hme-air-wlc01.stesworld.com
+        #   - name: hme_trust_vl20
+        #     grp_vl: [stesworld, 20]
+        #     vrf_ip: [HME_GLOBAL, 10.10.20.11/24]
+        #     secondary_ip: true                         # Optional
+        #   - name: hme_untrust_vl30
+        #     grp_vl: [stesworld, 30]
+        #     vrf_ip: [HME_GLOBAL, 10.10.30.11/24]
+        #     secondary_ip: true
+        #     tag:
 
 # Only Name and cluster are mandatory
 cluster:
@@ -89,7 +119,7 @@ cluster:
             grp_vl: [stesworld, 30]
             vrf_ip: [HME_GLOBAL, 10.10.30.11/24]
             secondary_ip: true
-#             tag:                                        # Optional, is applied to both IP and interface
+# #             tag:                                        # Optional, is applied to both IP and interface
 
       # - name: hme-win-ws01
       #   role: compute

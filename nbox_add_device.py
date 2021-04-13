@@ -14,6 +14,10 @@ from sys import argv
 import os
 from pprint import pprint
 from collections import defaultdict
+import copy
+# from rich import print
+from rich.console import Console
+from rich.theme import Theme
 
  ######################## Variables to change dependant on environment ########################
 # Netbox login details (create from your user profile or in admin for other users)
@@ -29,6 +33,7 @@ class Nbox():
         self.nb = pynetbox.api(url=netbox_url, token=token)
         with open(argv[1], 'r') as file_content:
             self.my_vars = yaml.load(file_content, Loader=yaml.FullLoader)
+        self.rc = Console(theme=Theme({"repr.str": "black"}))
 
 
 ############################ OBJ_CREATE: API engine to create objects or error based on the details fed into it ############################
@@ -36,9 +41,18 @@ class Nbox():
         try:
             result = operator.attrgetter(api_attr)(self.nb).create(input_obj)
             all_results.append({api_attr.split('.')[1].capitalize()[:-1]: input_obj})
-            return result
+            return ['create', result]
         except RequestError as e:
-            error.append({obj_name: ast.literal_eval(e.error)})
+            error.append({obj_name: ast.literal_eval(e.error), 'task_type': 'create'})
+
+
+############################ OBJ_UPDATE: API engine to update objects or error based on the details fed into it ############################
+    def obj_update(self, obj_name, nbox_obj, input_obj, all_results, error):
+        try:
+            nbox_obj.update(input_obj)
+            return ['update', nbox_obj]
+        except RequestError as e:
+            error.append({obj_name: ast.literal_eval(e.error), 'task_type': 'update'})
 
 
 ############################ GET_ID: API call to get the Netbox object IDs ############################
@@ -55,7 +69,7 @@ class Nbox():
             error.append((api_attr.split('.')[1].capitalize()[:-1], input_obj, e))
         # Catch-all for any other error
         except Exception as e:
-            print("{} {} - Method '{}' with {} object '{}'".format(u'\u274c', e, 'get_multi_id', api_attr.split('.')[1].capitalize()[:-1], input_obj))
+            self.rc.print(":x: [red]def {}[/red] using {} [i red]{}[/i red] - {}".format('get_multi_id', api_attr.split('.')[1].capitalize()[:-1], input_obj, e))
             exit()
 
     # SINGLE_ID: Gets the ID for a single primary object (input_obj), errors are a list within a dictionary of the VM name
@@ -67,7 +81,7 @@ class Nbox():
             error.append((vm_name, {api_attr.split('.')[1].capitalize()[:-1]: input_obj}, e))
         # Catch-all for any other error
         except Exception as e:
-            print("{} {} - Method '{}' with {} object '{}'".format(u'\u274c', e, 'get_single_id', api_attr.split('.')[1].capitalize()[:-1], input_obj))
+            self.rc.print(":x: [red]def {}[/red] using {} object [i red]{}[/i red] - {}".format('get_single_id', api_attr.split('.')[1].capitalize()[:-1], input_obj, e))
             exit()
 
     # Gets the VLAN group slug which is then used to get the single VLAN ID or create a list of all VLAN IDs
@@ -86,17 +100,30 @@ class Nbox():
             error.append((intf, {'Vlan_group': vl_grp}, e))
         except AttributeError as e:
             error.append((intf, {'Vlan': vlan}, e))
-
-    # EXIST: Checks whether an objected with that name already exists (VM or IP address) within the container (cluster or VRF)
-    def chk_exist(self, api_attr, input_obj_fltr, input_obj, obj_container_fltr, obj_container_id, obj_container_name, error):
-        try:
-            if operator.attrgetter(api_attr)(self.nb).get(**{input_obj_fltr: input_obj, obj_container_fltr: obj_container_id}) != None:
-                error.append((api_attr.split('.')[1].capitalize()[:-1], input_obj, [obj_container_fltr, obj_container_name]))
-        # Catch-all for any other error
         except Exception as e:
-            print("{} {} - Method '{}' with VLANs {} in VLAN group '{}'".format(u'\u274c', e, 'chk_exist', api_attr.split('.')[1].capitalize()[:-1], input_obj))
+            self.rc.print(":x: [red]def {}[/red] with VLANs [i red]{}[/i red] in VLAN group [i]{}[/i] - {}".format('get_vlan_id', vlan, vl_grp, e))
             exit()
 
+    # EXIST: Checks whether an objected with that name already exists (VM or IP address) within the container (cluster or VRF). EXIT if fail
+    def chk_exist(self, api_attr, input_obj_fltr, input_obj, obj_container_fltr, obj_container_id, obj_container_name):
+        try:
+            return operator.attrgetter(api_attr)(self.nb).get(**{input_obj_fltr: input_obj, obj_container_fltr: obj_container_id})
+        # Catch-all for any other error
+        except Exception as e:
+            self.rc.print(":x: [red]def {}[red] using {} [i red]{}[/i red] in {} [i]{}[/i] - {}".format('chk_exist', api_attr.split('.')[1].capitalize()[:-1],
+                    input_obj, obj_container_fltr, obj_container_name, e))
+            exit()
+
+    # REMOVE_EMPTY: Removes any empty attributes from the VM, interface or IP address attribute list
+    def rmv_empty(self, attr_list):
+        tmp_attr = copy.deepcopy(attr_list)
+        for each_attr, each_val in tmp_attr.items():
+            if each_val == None:
+                del attr_list[each_attr]
+            elif not isinstance(each_val, int):
+                if len(each_val) == 0:
+                    del attr_list[each_attr]
+        return attr_list
 
 ############################# DM_CREATE: Ensures that objects don't already exist and creates the DMs ready for API call to add VMs, INTF and IP ############################
     def create_dm(self):
@@ -112,8 +139,6 @@ class Nbox():
                     vm_err = []
                     tmp_vm = {}
 
-                    # CHK_OBJ_EXIST: Check the VM does not already exist in the cluster
-                    self.chk_exist('virtualization.virtual_machines', 'name', each_vm['name'], 'cluster', clstr_site['clstr'], each_clstr['name'], vm_err)
                     # GET_OBJ_ID: Gets ID of the optional objects
                     if each_vm.get('tenant') != None:
                         tmp_vm['tenant'] = self.get_single_id(each_vm['name'], 'tenancy.tenants', each_vm['tenant'], vm_err)
@@ -124,10 +149,11 @@ class Nbox():
 
                     # CREATE_VM_DM: If there are no errors creates the data-model for creating the VM
                     if len(vm_err) == 0:
-                        vm = dict(name=each_vm['name'], cluster=clstr_site['clstr'], site=clstr_site.get('site', None),
+                        vm = dict(name=each_vm['name'], clstr_name=each_clstr['name'], cluster=clstr_site['clstr'], site=clstr_site.get('site', None),
                                   tenant=tmp_vm.get('tenant', None), role=tmp_vm.get('role', None), platform=each_vm.get('platform', None),
                                   vcpus=each_vm.get('cpu', None), memory=each_vm.get('mem', None), disk=each_vm.get('disk', None),
                                   comments=each_vm.get('comments', ''), tags=each_vm.get('tags', []))
+                        vm = self.rmv_empty(vm)
 
                         # INTF_IP: Gathers object IDs for objects used to create VM interfaces and associated IP addresses
                         if each_vm.get('intf', None) != None:
@@ -140,8 +166,6 @@ class Nbox():
                                 # LAYER3: If it is a Layer3 interface, so has an IP checks the VRF is valid and that the IP address does no already exist in that VRF
                                 if each_intf.get('vrf_ip', None) != None:
                                     tmp_intf['vrf'] = self.get_single_id(each_intf['name'], 'ipam.vrfs', each_intf['vrf_ip'][0], intf_err)
-                                    if tmp_intf.get('vrf') != None:
-                                        self.chk_exist('ipam.ip_addresses', 'address', each_intf['vrf_ip'][1], 'vrf_id', tmp_intf['vrf'], each_intf['vrf_ip'][0], intf_err)
 
                                 # CREATE_INTF_DM: If are no errors creates the data-models to be used to create the interface
                                 if len(intf_err) == 0:
@@ -160,7 +184,7 @@ class Nbox():
                                         ip.append(dict(address=each_intf['vrf_ip'][1], vrf=tmp_intf['vrf'], tenant=tmp_vm.get('tenant', None), intf_name=dict(name=each_intf['name']),
                                                        dns_name=each_intf.get('dns', ''), tags=each_intf.get('tags', [])))
 
-                            # FAILFAST_INTF: Reports error message if an IP address is already used or any of the VM interface objects don't exist
+                            # FAILFAST_INTF: Reports error message if any of the VM interface objects don't exist
                             if len(intf_err) != 0:
                                 tmp_intf_err = defaultdict(dict)
                                 tmp_ip_err = []
@@ -177,65 +201,144 @@ class Nbox():
                                             each_vm['name'], dict(tmp_intf_err)))
                                 exit()
 
-                        # CREATE_VM: Are created on a one-by-one basis as all elements (VM, INTF & IP) created for each VM so can fail and remove if something cant be created
+
+                        # ACTION: Checks whether the VM name already exists in the cluster and either creates a new VM or updates existing VM details
+                        vm_exist = self.chk_exist('virtualization.virtual_machines', 'name', vm['name'], 'cluster', vm['cluster'], vm['clstr_name'])
                         all_results, deploy_err = ([] for i in range(2))
-                        vm_result = self.obj_create(each_vm['name'], 'virtualization.virtual_machines', vm, all_results, deploy_err)
+
+                        # CREATE_VM: Are created on a one-by-one basis as all elements (VM, INTF & IP) created for each VM so can fail and remove if something cant be created
+                        if vm_exist == None:
+                            vm_result = self.obj_create(each_vm['name'], 'virtualization.virtual_machines', vm, all_results, deploy_err)
+                        # UPDATE_VM: Only needs to update the VM if it has attributes to change, so if it has more than 4 (name, clstr_name, cluster and site)
+                        elif vm_exist != None:
+                            if len(vm) > 4:
+                                vm_result = self.obj_update(each_vm['name'], vm_exist, vm, all_results, deploy_err)
+                            else:
+                                vm_result = {'update': vm_exist}       # Replicates what would be returned by obj_update
+                        # VM_ERROR: Failfast if errors have occurred during attempt to create or update the VM, no point proceeding to interface creation
+                        if len(deploy_err) != 0:
+                            self.rc.print(":x: Virtual Machine [i red]{}[/i red] {} failed because of the following attribute errors - {}".format(each_vm['name'],
+                                          deploy_err[0]['task_type'], str(list(deploy_err[0].values())[0]).replace('{', '').replace('}', '').replace('[', '').replace(']', '')))
+                            exit()
+                        # VM_ONLY_SUCCESS: If are no interfaces defined and something has been changed prints result. Knows something has change if vm_result has a value
+                        if each_vm.get('intf', None) == None:
+                            if vm_result != None:
+                                del vm['name'], vm['clstr_name'], vm['cluster'], vm['site']             # TO get list just of the attributed added or updated
+                                self.rc.print(":white_heavy_check_mark: Virtual Machine [i green]{}[/i green] successfully {}d with attributes {}".format(
+                                              vm_result[1], vm_result[0], str(list(vm.keys())).replace('[', '').replace(']', '')))
 
                         # CREATE_INTF: Only creates interfaces if VM creation was successful. Created individually so  that error messages can have the interface name
-                        if vm_result != None:
+                        elif each_vm.get('intf', None) != None:
                             intf_result = []
                             for each_intf in intf:
-                                tmp_intf_result = self.obj_create(each_intf['name'], 'virtualization.interfaces', each_intf, all_results, deploy_err)
-                                intf_result.append(tmp_intf_result)
+                                # If it is a new VM
+                                if vm_exist == None:
+                                    intf_result.append(self.obj_create(each_intf['name'], 'virtualization.interfaces', each_intf, all_results, deploy_err))
+                                # If the VM already existed check if the interface exists and either create or update
+                                else:
+                                    intf_exist = self.chk_exist('virtualization.interfaces', 'name', each_intf['name'], 'virtual_machine_id', vm_result[1].id, each_intf['name'])
+                                    if intf_exist == None:
+                                        intf_result.append(self.obj_create(each_intf['name'], 'virtualization.interfaces', each_intf, all_results, deploy_err))
+                                    elif intf_exist != None:
+                                        each_intf = self.rmv_empty(each_intf)
+                                        # Needed as if got from access (untagged) to trunk (tagged) port wont remove the untagged VLAN
+                                        if each_intf['mode'] == 'tagged':
+                                            each_intf['untagged_vlan'] = None
+                                        intf_result.append(self.obj_update(each_intf['name'], intf_exist, each_intf, all_results, deploy_err))
 
-                            # CREATE_IP: Only creates IP addresses if VM and interfaces creation was successful. Each IP address created individually to get object ID to add primary interface
-                            if len(deploy_err) == 0:
-                                try:                        # Use try statement as doing direct API calls rather than through another method
-                                    ip_result = []
-                                    for each_ip in ip:
-                                        # Gets the interface ID and uses that rather than the interface name when creating the IP address
-                                        each_ip['interface'] = self.nb.virtualization.interfaces.get(name=each_ip['intf_name']['name'], virtual_machine_id=vm_result.id).id
-                                        tmp_ip_result = self.obj_create(each_ip['intf_name']['name'], 'ipam.ip_addresses', each_ip, all_results, deploy_err)
-                                        # If it is the primary IP address updates the VM with the details
-                                        if each_ip.get('primary') != None:
-                                            vm_obj = self.nb.virtualization.virtual_machines.get(vm_result.id)
-                                            vm_obj.update({"primary_ip4": tmp_ip_result.id})
-                                        ip_result.append(tmp_ip_result)
-                                    # If IP address creation failed raise an exception
-                                    if len(deploy_err) != 0:
-                                        raise Exception()
-                                    # Print message with details of VM created
-                                    print("{} '{}' successfully created with interfaces {} and IPs {}".format(u'\u2705', vm_result,
-                                          str(intf_result).replace("[","'" ).replace("]", "'"), str(ip_result).replace("[", "'").replace("]", "'")))
-
-                                # INTF_ERROR: Errors that occurred during attempt to create the VM interfaces. Rollback the VM creation
-                                except Exception as e:
+                            # INTF_ERROR: Failfast if errors have occurred during attempt to create or update the VM interfaces
+                            if len(deploy_err) != 0:
+                                # DEL_NEW_VM: If it is a newly created VM the VM and all its interfaces are deleted as part of the failure process the VM when failing
+                                if vm_exist == None:
                                     vm_result.delete()
-                                    print("{} IP Address: '{}' creation failed because of the following IP address errors - {}".format(u'\u274c', each_vm['name'], deploy_err))
-                            # INTF_ERROR: Errors that occurred during attempt to create the VM interfaces. Rollback the VM creation
-                            else:
-                                print("{} Interface: '{}' creation failed because of the following interface errors - {}".format(u'\u274c', each_vm['name'], deploy_err))
-                                vm_result.delete()
-                        # VM_ERROR: Errors that occurred during attempt to create the VM
-                        else:
-                            print("{} Virtual Machine: '{}' creation failed because of the following VM object errors - {}".format(u'\u274c', each_vm['name'], list(deploy_err[0].values())[0]))
+                                # ERR_MSG: Groups 'create interface' and 'update interface' error messages together before displaying them
+                                tmp_intf_err = defaultdict(list)
+                                for err in deploy_err:
+                                    tmp_intf_err[err.pop('task_type')].append(err)
+                                for deploy_type, intf_err in tmp_intf_err.items():
+                                    self.rc.print(":x: Virtual Machine [i red]{}[/i red] interface {} failed - {}".format(each_vm['name'],
+                                                  deploy_type, str(intf_err).replace('{', '').replace('}', '').replace('[', '').replace(']', '')))
 
-                    # FAILFAST_VM: Reports error message if VM already exists or any of the VM objects don't exist or
+                        # INTF_ONLY_SUCCESS: If are no IP addresses are defined (ip is empty) and an interface has been changed (intf_result is not empty) prints result
+                        if len(ip) != 0:
+                            if len(intf_result) != 0:
+                                # RSLT_MSG: Groups 'create interface' and 'update interface' result messages together before displaying them
+                                tmp_intf_rslt = defaultdict(list)
+                                for rslt in intf_result:
+                                    tmp_intf_rslt[rslt[0]].append(rslt[1])
+
+                                # PRINT_MSG: Prints the successfully added or updated interfaces
+                                for rslt, intf in tmp_intf_rslt.items():
+                                    # NEW_VM: Different message if it is a new VM
+                                    if vm_exist == None:
+                                        self.rc.print(":white_heavy_check_mark: Virtual Machine [i green]{}[/i green] successfully {}d with interfaces [i]{}[/i]".format(each_vm['name'],
+                                                    rslt, intf, str(intf).replace('[', '').replace(']', '')))
+                                    else:
+                                        self.rc.print(":white_heavy_check_mark: Virtual Machine [i green]{}[/i green] {}d interfaces [i]{}[/i]".format(each_vm['name'],
+                                                    rslt, str(intf).replace('[', '').replace(']', '')))
+
+
+
+            #                 # CREATE_IP: Only creates IP addresses if VM and interfaces creation was successful. Each IP address created individually to get object ID to add primary interface
+                            # if len(deploy_err) == 0:
+
+
+
+
+            #                     # # LAYER3: If it is a Layer3 interface, so has an IP checks the VRF is valid and that the IP address does no already exist in that VRF
+            #                     # if each_intf.get('vrf_ip', None) != None:
+            #                     #     tmp_intf['vrf'] = self.get_single_id(each_intf['name'], 'ipam.vrfs', each_intf['vrf_ip'][0], intf_err)
+            #                     #     if tmp_intf.get('vrf') != None:
+            #                                 # NEED TO ADD prefix address to IP dict if not already in it for this method
+            #                     #         self.chk_exist('ipam.ip_addresses', 'address', each_intf['vrf_ip'][1], 'vrf_id', tmp_intf['vrf'], each_intf['vrf_ip'][0], intf_err)
+
+
+
+
+            #                     try:                        # Use try statement as doing direct API calls rather than through another method
+            #                         ip_result = []
+            #                         for each_ip in ip:
+            #                             # Gets the interface ID and uses that rather than the interface name when creating the IP address
+            #                             each_ip['interface'] = self.nb.virtualization.interfaces.get(name=each_ip['intf_name']['name'], virtual_machine_id=vm_result.id).id
+            #                             tmp_ip_result = self.obj_create(each_ip['intf_name']['name'], 'ipam.ip_addresses', each_ip, all_results, deploy_err)
+            #                             # If it is the primary IP address updates the VM with the details
+            #                             if each_ip.get('primary') != None:
+            #                                 vm_obj = self.nb.virtualization.virtual_machines.get(vm_result.id)
+            #                                 vm_obj.update({"primary_ip4": tmp_ip_result.id})
+            #                             ip_result.append(tmp_ip_result)
+            #                         # If IP address creation failed raise an exception
+            #                         if len(deploy_err) != 0:
+            #                             raise Exception()
+            #                         # Print message with details of VM created
+            #                         print("{} '{}' successfully created with interfaces {} and IPs {}".format(u'\u2705', vm_result,
+            #                               str(intf_result).replace("[","'" ).replace("]", "'"), str(ip_result).replace("[", "'").replace("]", "'")))
+
+            #                     # INTF_ERROR: Errors that occurred during attempt to create the VM interfaces. Rollback the VM creation
+            #                     except Exception as e:
+            #                         vm_result.delete()
+            #                         print("{} IP Address: '{}' creation failed because of the following IP address errors - {}".format(u'\u274c', each_vm['name'], deploy_err))
+            #                 # INTF_ERROR: Errors that occurred during attempt to create the VM interfaces. Rollback the VM creation
+            #                 else:
+            #                     print("{} Interface: '{}' creation failed because of the following interface errors - {}".format(u'\u274c', each_vm['name'], deploy_err))
+            #                     vm_result.delete()
+
+
+
+            # IS CREATION OF THE DM FOR THE VM
+
+                    # FAILFAST_VM: Reports error message if any of the VM objects don't exist
                     elif len(vm_err) != 0:
                         tmp_errors = {}
                         for vm_name, err_obj, err in vm_err:
-                            if isinstance(err, list):
-                                print("{}  {}: '{}' already exists in {} '{}'".format(u'\u26A0\uFE0F', vm_name, err_obj, err[0], err[1]))
-                            # Groups all object ID errors into the one error message
-                            else:
-                                tmp_errors.update(err_obj)
-                        if len(tmp_errors) != 0:
-                            print("{} Virtual Machine: '{}' objects may not exist. Failed to get object.id for {}".format(u'\u274c', each_vm['name'], tmp_errors))
+                            tmp_errors.update(err_obj)
+                        self.rc.print(":x: Virtual Machine [i red]{}[/i red] objects may not exist. Failed to get object.id for - {}".format(vm_name,
+                                      str(tmp_errors).replace('{', '').replace('}', '')))
                         exit()
+
             # FAILFAST_CLUSTER: Reports error message if Cluster does not exist
             elif len(clstr_err) != 0:
                 for obj_type, name, err in clstr_err:
-                    print("{} {}: '{}' may not exist, failed to get object.id - {}".format(u'\u274c', obj_type, name, err))
+                    self.rc.print(":x: {} [i red]{}[/i red] may not exist. Failed to get object.id - {}".format(obj_type, name, err))
                 exit()
 
 
