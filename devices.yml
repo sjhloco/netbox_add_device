@@ -25,3 +25,23 @@ manufacturer:
           #   - gi0/1: [asa1, gi1]
 
 # Has to verify everything before adding
+cluster:
+  - name: ESX Home
+    vm:
+      - name: hme-air-wlc01
+        ### All of these other VM attribute options are optional
+        tenant: stesworld
+        role: wifi
+        cpu: 1
+        mem: 2
+        disk: 8
+        tags: [os_network]
+        comments: Wireless LAN Controller
+        #### If interface is defined only name is mandatory. ALl IPs are by default the VM primary IP, add 'secondary_ip: true' for any other IP interfaces (vrf_ip)
+        intf:
+          - name: Port1
+            grp_vl: [stesworld, [10,20,30]]
+          - name: management
+            grp_vl: [stesworld, 10]
+            vrf_ip: [HME_BLU, 10.10.10.11/24]
+            dns: hme-air-wlc01.stesworld.com
