@@ -1,0 +1,117 @@
+Creating UML diagrams with PlantUML
+
+Are lots of types of different UML diagram types that can be created as diagrams as code.
+Classes, objects, interfaces or Abstract objects are joined by lines, with differing line types having different significance
+The standard way of doing diagrams is to have class objects, with attributes followed by methods.
+
+Are many kinds of relationships between classes which are defined by the line type.
+It is possible to replace -- by .. to have a dotted line
+Can add a direction to line (in middle .down.>) or add text at either end ("1" ..> "2")
+
+Different line types:
+-Generalization: Refers to the relationship between the parent class and the child class
+ -Inheritance: If the parent class is an abstract class or a normal class                   (Empty Arrows)          <|--  --|>
+ -Implementation: if the parent class is an interface                                                               <|..  ..|>
+-Aggregation: Relationship between parent and child class, can function without each other  (Empty Diamond)         o--   --o
+-Composition: Strong ownership between two classes, Child never exist independently         (Filled Diamond)        *--   --*
+-Rely: Weakest association between classes. Use other class objects as parameters, local variables or call methods  <..   ..>
+
+In my diagrams will mainly use rely as I don't yet use parent and child classes with
+Alt-D shows a PlantUML preview, to create final diagram cmd palette and 'plantuml: export current diagram' and choose the format
+
+@startuml
+scale 2
+class Car {
+  color: string
+  model: integer
+  +start()
+  +run()
+  +stop()
+}
+
+Car <|- Bus
+Car *-down- Tire
+Car *-down- Engine
+Bus "1" o-down- "2" Driver
+@enduml
+
+===Options
+
+-Add Titles to the page and also add new pages to scroll through
+title Function Diagram
+newpage
+title Function Diagram
+
+-Colours
+skinparam monochrome true               Black and White
+skinparam monochrome reverse            Reverse colours, so black background, white front
+
+skinparam packageStyle rect             ??????
+
+-Layout
+left to write direction                 The direction of diagram, so goes left to write (default) up to down)
+
+-Macros can set variables and add code such as conditionals, loops mindmaps, create modules, functions, etc
+https://plantuml.com/preprocessing
+
+-Set the to specific scale of the diagrams, by default is autoscale
+scale x
+
+-UML has 9 types of diagrams with different element types. Use 'allowmixing' if you want to mix classes and other UML elements
+allow_mixing
+class Abstract
+actor Actor
+
+===Class
+Are two ways to create a class, either with or without {}. Both give the same result
+
+ArrayList : Object[] elementData
+ArrayList : Object[] elementData1
+ArrayList : size()
+ArrayList : size1()
+
+class ArrayList1 {
+    Object[] elementData
+    Object[] elementData1
+    size()
+    size1()
+}
+
+-Classes always have 3 sections with the divide between the 2nd and 3rd decided by where the first method is (end in ()).
+This can be overridden and manually set by using --
+class ArrayList1 {
+    --
+    Object[] elementData
+    --
+    Object[] elementData1
+    size()
+}
+
+-By default all classes have a 'C' in a circle. This can be changed using the following, the 2nd part is the circle colour.
+class System << (S,#FF7700) Singleton >>
+class function << (F,orange) >>
+
+This same thing can be done with the {} fromat:
+class main << (F,orange) >> {
+    elementData
+    Object[] elementData1
+    size
+    size1()
+}
+
+===object
+Is same as class but only has two fields and no Letter and circle.
+
+object user
+user : name = "Dummy"
+user : id = 123
+
+Again this can be written in {} format with -- used to add 3rd field (not automatic)
+object user {
+    name = "Dummy"
+    id = 123
+    --
+    test
+}
+
+

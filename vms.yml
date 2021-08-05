@@ -1,7 +1,11 @@
 ### Only the Name and cluster are mandatory, all other options are optional
 cluster:
+############################################# ESX #############################################
+
+
   - name: ESX Home
     vm:
+########### Network devices ###########
       - name: hme-air-wlc01
         ### All of these other VM attribute options are optional
         tenant: stesworld
@@ -11,7 +15,7 @@ cluster:
         disk: 8
         tags: [os_network]
         comments: Wireless LAN Controller
-        #### If interface is defined only name is mandatory. ALl IPs are by default the VM primary IP, add 'secondary_ip: true' for any other IP interfaces (vrf_ip)
+        #### If interface is defined only name is mandatory. All IPs are by default the VM primary IP, add 'secondary_ip: true' for any other IP interfaces (vrf_ip)
         intf:
           - name: Port1
             grp_vl: [stesworld, [10,20,30]]
@@ -28,7 +32,63 @@ cluster:
             vrf_ip: [HME_BLU, 10.10.30.11/24]
             secondary_ip: true
             # tag:                                        # Optional, is applied to both IP and interface
+      - name: hme-bip-lb01
+        tenant: stesworld
+        platform: BIGIP
+        role: compute
+        cpu: 1
+        mem: 2
+        disk: 80
+        tags: [os_network]
+        comments: BIG-IP (in ESX)
+        intf:
+          - name: '1.1'
+            grp_vl: [stesworld, [10,20,30]]
+          - name: hme_compute_vl10
+            grp_vl: [stesworld, 10]
+            vrf_ip: [HME_BLU, 10.10.10.21/24]
+            dns: hme-bip-lb01.stesworld.com
+          - name: hme_trust_vl20
+            grp_vl: [stesworld, 20]
+            vrf_ip: [HME_BLU, 10.10.20.21/24]
+            secondary_ip: true
+          - name: hme_untrust_vl30
+            grp_vl: [stesworld, 30]
+            vrf_ip: [HME_BLU, 10.10.30.21/24]
+            secondary_ip: true
+          - name: dns_listener
+            grp_vl: [stesworld, 10]
+            vrf_ip: [HME_BLU, 10.10.10.254/24]
+            secondary_ip: true
+      - name: hme-bip-lb02
+        tenant: stesworld
+        platform: BIGIP
+        role: compute
+        cpu: 1
+        mem: 2
+        disk: 80
+        tags: [os_network]
+        comments: BIG-IP (in ESX)
+        intf:
+          - name: '1.1'
+            grp_vl: [stesworld, [10,20,30]]
+          - name: hme_compute_vl10
+            grp_vl: [stesworld, 10]
+            vrf_ip: [HME_BLU, 10.10.10.22/24]
+            dns: hme-bip-lb01.stesworld.com
+          - name: hme_trust_vl20
+            grp_vl: [stesworld, 20]
+            vrf_ip: [HME_BLU, 10.10.20.22/24]
+            secondary_ip: true
+          - name: hme_untrust_vl30
+            grp_vl: [stesworld, 30]
+            vrf_ip: [HME_BLU, 10.10.30.22/24]
+            secondary_ip: true
+          - name: dns_listener
+            grp_vl: [stesworld, 10]
+            secondary_ip: true
 
+########### Windows devices ###########
       - name: hme-win-ws01
         tenant: stesworld
         role: compute
@@ -43,6 +103,7 @@ cluster:
             vrf_ip: [HME_BLU, 10.10.20.152/24]
             dns: hme-win-ws01.stesworld.com
 
+########### Linux devices ###########
       - name: hme-cos-ws01
         tenant: stesworld
         role: compute
@@ -56,7 +117,6 @@ cluster:
             grp_vl: [stesworld, 20]
             vrf_ip: [HME_BLU, 10.10.20.151/24]
             dns: hme-cos-ws01.stesworld.com
-
       - name: hme-cos-nbox01
         tenant: stesworld
         role: compute
@@ -70,112 +130,191 @@ cluster:
             grp_vl: [stesworld, 10]
             vrf_ip: [HME_BLU, 10.10.10.101/24]
             dns: hme-cos-nbox01.stesworld.com
-
-      - name: hme-bip-lb01
+      - name: hme-ubt-eve01
         tenant: stesworld
-        platform: BIGIP
         role: compute
         cpu: 1
         mem: 2
-        disk: 80
-        tags: [os_network]
-        comments: BIG-IP (in ESX)
+        disk: 220
+        tags: [os_linux]
+        comments: EVE-NG on ESX
         intf:
-          - name: '1.1'
-            grp_vl: [stesworld, [10,20,30]]
-          - name: mgmt
+          - name: eth0
             grp_vl: [stesworld, 10]
-            vrf_ip: [HME_BLU, 10.10.10.19/24]
-            dns: hme-bip-lb01.stesworld.com
-          - name: hme_compute_vl10
-            grp_vl: [stesworld, 10]
-            vrf_ip: [HME_BLU, 10.10.10.21/24]
-            secondary_ip: true
-          - name: hme_trust_vl20
+            vrf_ip: [HME_BLU, 10.10.10.102/24]
+            dns: hme-ubt-eve01.stesworld.com
+          - name: eth1
             grp_vl: [stesworld, 20]
-            vrf_ip: [HME_BLU, 10.10.20.21/24]
-            secondary_ip: true
-          - name: hme_untrust_vl30
+          - name: eth2
             grp_vl: [stesworld, 30]
-            vrf_ip: [HME_BLU, 10.10.30.21/24]
-            secondary_ip: true
-      - name: hme-bip-lb02
+      - name: hme-rhl-svr01
         tenant: stesworld
-        platform: BIGIP
         role: compute
         cpu: 1
         mem: 2
-        disk: 80
-        tags: [os_network]
-        comments: BIG-IP (in ESX)
+        disk: 32
+        tags: [os_linux]
+        comments: RHEL8 server (in ESX)
         intf:
-          - name: '1.1'
-            grp_vl: [stesworld, [10,20,30]]
-          - name: mgmt
-            grp_vl: [stesworld, 10]
-            vrf_ip: [HME_BLU, 10.10.10.20/24]
-            dns: hme-bip-lb01.stesworld.com
-          - name: hme_compute_vl10
-            grp_vl: [stesworld, 10]
-            vrf_ip: [HME_BLU, 10.10.10.22/24]
-            secondary_ip: true
-          - name: hme_trust_vl20
+          - name: ens192
             grp_vl: [stesworld, 20]
-            vrf_ip: [HME_BLU, 10.10.20.22/24]
+            vrf_ip: [HME_BLU, 10.10.20.153/24]
+            dns: hme-rhl-svr01.stesworld.com
+      - name: hme-rhl-ws01
+        tenant: stesworld
+        role: compute
+        cpu: 1
+        mem: 2
+        disk: 32
+        tags: [os_linux]
+        comments: RHEL8 GUI workstation (in ESX)
+        intf:
+          - name: ens192
+            grp_vl: [stesworld, 20]
+            vrf_ip: [HME_BLU, 10.10.20.154/24]
+            dns: hme-rhl-ws01.stesworld.com
+      - name: hme-rhl-auto01
+        tenant: stesworld
+        role: compute
+        cpu: 1
+        mem: 2
+        disk: 16
+        tags: [os_linux]
+        comments: RHEL8 GUI workstation (in ESX)
+        intf:
+          - name: ens192
+            grp_vl: [stesworld, 10]
+            vrf_ip: [HME_BLU, 10.10.10.103/24]
+            dns: hme-rhl-auto01.stesworld.com
+      - name: hme-rhl-doc01
+        tenant: stesworld
+        role: compute
+        cpu: 1
+        mem: 2
+        disk: 16
+        tags: [os_linux]
+        comments: RHEL8 GUI workstation (in ESX)
+        intf:
+          - name: ens192
+            grp_vl: [stesworld, 10]
+            vrf_ip: [HME_BLU, 10.10.10.104/24]
+            dns: hme-rhl-doc01.stesworld.com
+
+
+############################################# Fusion #############################################
+  - name: Fusion MAC
+    vm:
+########### Network devices ###########
+
+########### Windows devices ###########
+      - name: mob-win-ws01
+        tenant: stesworld
+        role: compute
+        cpu: 1
+        mem: 4
+        disk: 64
+        tags: [os_windows]
+        comments: Windows 10 workstation (in FUS)
+        intf:
+          - name: eth0
+            vrf_ip: [HME_BLU, 10.30.20.152/24]
+            dns: mob-win-ws01.stesworld.com
+
+########### linux devices ###########
+      - name: mob-ubt-eve01
+        tenant: stesworld
+        role: compute
+        cpu: 2
+        mem: 8
+        disk: 220
+        tags: [os_linux]
+        comments: EVE-NG (in FUS)
+        intf:
+          - name: eth0
+            vrf_ip: [MOB_GLOBAL, 10.30.10.102/24]
+            dns: mob-ubt-eve01.stesworld.com
+      - name: mob-rhl-svr01
+        tenant: stesworld
+        role: compute
+        cpu: 1
+        mem: 2
+        disk: 16
+        tags: [os_linux]
+        comments: RHEL8 server (in FUS)
+        intf:
+          - name: ens192
+            vrf_ip: [MOB_GLOBAL, 10.30.20.153/24]
+            dns: mob-rhl-svr01.stesworld.com
+      - name: mob-rhl-ws01
+        tenant: stesworld
+        role: compute
+        cpu: 1
+        mem: 2
+        disk: 16
+        tags: [os_linux]
+        comments: RHEL8 GUI workstation (in FUS)
+        intf:
+          - name: ens192
+            vrf_ip: [MOB_GLOBAL, 10.30.20.154/24]
+            dns: mob-rhl-ws01.stesworld.com
+      - name: mob-rhl-auto01
+        tenant: stesworld
+        role: compute
+        cpu: 1
+        mem: 2
+        disk: 16
+        tags: [os_linux]
+        comments: RHEL8 GUI workstation (in FUS)
+        intf:
+          - name: ens192
+            vrf_ip: [MOB_GLOBAL, 10.30.10.103/24]
+            dns: mob-rhl-auto01.stesworld.com
+      - name: mob-rhl-doc01
+        tenant: stesworld
+        role: compute
+        cpu: 1
+        mem: 2
+        disk: 16
+        tags: [os_linux]
+        comments: RHEL8 GUI workstation (in FUS)
+        intf:
+          - name: ens192
+            vrf_ip: [MOB_GLOBAL, 10.30.10.104/24]
+            dns: mob-rhl-doc01.stesworld.com
+
+
+############################################# Azure #############################################
+  - name: Azure - Europe West
+    vm:
+########### Network devices ###########
+
+########### Windows devices ###########
+      - name: azu-win-vc01
+        tenant: stesworld
+        role: compute
+        cpu: 2
+        mem: 8
+        disk: 127
+        tags: [os_linux]
+        comments: vCentre (in AZ) Standard B2ms - name in AZ is VM-win-vc1
+        intf:
+          - name: eth0
+            vrf_ip: [AZU_NT_VNET1, 10.20.10.61/24]
+            dns: azu-win-vc01.stesworld.com
+
+########### linux devices ###########
+      - name: azu-ubt-eve01
+        tenant: stesworld
+        role: compute
+        cpu: 8
+        mem: 32
+        disk: 320
+        tags: [os_linux]
+        comments: EVE-NG (in AZ) Standard D8s v3 - name in AZ is VM-uni-eve1
+        intf:
+          - name: eth0
+            vrf_ip: [AZU_NT_VNET1, 10.20.10.5/24]
+            dns: azu-ubt-eve01.stesworld.com
+          - name: eth1
+            vrf_ip: [AZU_NT_VNET1, 10.20.20.5/24]
             secondary_ip: true
-          - name: hme_untrust_vl30
-            grp_vl: [stesworld, 30]
-            vrf_ip: [HME_BLU, 10.10.30.22/24]
-            secondary_ip: true
-
-
-  # # relicense F5s and configure
-  # # Add docker to hme-cos-doc01 and install pi-hole
-  # # copy eve-ng over to esx and update
-  # # update windows with word and powerpoint
-
-  #     - name: hme-cos-doc01
-  #       role: compute
-  #       cpu: 1
-  #       mem: 2
-  #       disk: 32
-  #       tags: [os_linux]
-  #       comments: Netbox on CENTOS (in ESX)
-  #       ip:
-  #       - intf_addr: [ens192, 10.10.10.103/24]
-  #         dns: hme-cos-doc01.stesworld.com
-
-  #     - name: hme-log-sexi01
-  #       role: compute
-  #       cpu: 1
-  #       mem: 2
-  #       disk: 58
-  #       tags: [os_other]
-  #       comments: Sexilog server for ESX
-  #       ip:
-  #       - intf_addr: [ens192, 10.10.10.104/24]
-  #         dns: hme-log-sexi01.stesworld.com
-
-  #     - name: hme-ubu-eve01
-  #       role: compute
-  #       cpu: 1
-  #       mem: 2
-  #       disk: xxx
-  #       tags: [os_other]
-  #       comments: EVE-NG on ESX
-  #       ip:
-  #       - intf_addr: [ens192, 10.10.10.102/24]
-  #         dns: hme-ubu-eve01.stesworld.com
-
-
-
-  #     # Add 2 F5s
-  #     # Add pihole
-  #     # deploy sexilogs
-
-
-
-
-  #     # Do Fusion
-  #     # Do azure
-

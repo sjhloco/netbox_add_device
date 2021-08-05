@@ -28,6 +28,8 @@ The VMs are defined in in a YAML file in a hierarchical structure that starts at
 - Defining interfaces is not mandatory, however if defined the `name` either is mandatory
 - If for `grp_vl` only 1 VLAN is specified it is an untagged 'access' port, if a list of VLANs is specified it is a tagged 'trunk'
 - By default IP addresses are primary, to make it non-primary add the `secondary_ip` dictionary
+- To assign mulitple IPs to an interface name the interface muliple times
+- If you change IP of the interface it wont delete the old IP will have to manaully do that. Reason is becaue IP is in IPAM and only associated to interface, so have to specifically say 'delete this IP address'
 
 To run the script reference the VM variable file
 `python nbox_add_device.py vms.yml`
@@ -55,6 +57,11 @@ Updates the object by using the netbox initialized object and an input list of o
 - input_obj: List of dictionaries which are the object attribute names and values
 - error: Dictionary with the key the obj_name and the value a list of all errors created that this method appends to if the API call fails
 
+
+***obj_delete***
+(api_obj, task_type)
+
+
 ***get_multi_id***
 Gets the ID of the main primary object as well as the ID of an optional secondary object based on the first object
 
@@ -73,16 +80,7 @@ Gets the ID of a single primary object
 - error: Dictionary with the key the VM name and the value a list of all errors created that this method appends to if the API call fails
 
 ***get_single_fltr_id***
-   # SINGLE_FLTR_ID: Gets the ID for a single primary object (input_obj) based on name and its container
-    def get_single_fltr_id(self, api_attr, input_obj_fltr, input_obj, obj_container_fltr, obj_container_id, obj_container_name, error):
-        try:
-            return operator.attrgetter(api_attr)(self.nb).get(**{input_obj_fltr: input_obj, obj_container_fltr: obj_container_id}).id
-        except AttributeError as e:
-            error.append("{} ({}): {}".format(input_obj, obj_container_name, e))
-        # Catch-all for any other error
-        except Exception as e:
-            self.rc.print(":x: [red]def {}[/red] using {} object [i red]{}[/i red] - {}".format('get_single_fltr_id', api_attr.split('.')[1].capitalize()[:-1], input_obj, e))
-            exit()
+api_attr, input_obj_fltr, input_obj, obj_cntr_fltr, obj_cntr_id, obj_cntr_name, error)
 
 
 ***get_vlan_id***
@@ -105,36 +103,77 @@ Checks whether an objected with that name already exists (VM or IP address) with
 - error: List of all errors created that this method appends to if the API finds a duplicate VM or IP address
 
 
-Now need to look if can easily updatable
-- Dont think is too hard to add the logic into the deployment seciton
-- need to remove the warning and failfast if VM or IP exist, but use same symbol for an update
-- Updating shouldnt be too hard, problme will be:
-  - What happens with the default values, guess these ned removing as would rest current settings
-  - How do you report on the changes made?
-Loop thruhg and remove all Dicts with a None vlaue
-Add validation checker using NTC
+
+
 
 TODO:
-- Add Update for VMs
-- Add update for interfaces
-- Add create for IPs
-- add update IPs
-- ~~Fix up errors with RICH~~
-- ~~remove  all_results if not neededZZ
+~~1. Create class diagram~~
+2. Create function diagram
+3. Create unit tests
+4. Rewrite readme
+5. Add validation checker using NTC
+6. Design adding devices to script
+7. Write tests for devices
+8. Write script for devices
+
+9. Redo create env, so refactor, draw up and add testing
+10. fix cluster-group issue, doesnt seem to be working as not added azure cluster to azure VSC cluster group
 
 
-If an address is assigned as primary cant use on another VM
-❌ Virtual Machine hme-win-ws019 IP address update failed - '10.10.10.50/24': 'interface': 'IP address is primary for virtual
-machine hme-win-ws018 but assigned to hme-win-ws019 (eth1)'
 
+===== CREATE ERRORS =====
 
+1. Just VM error
+❌ Virtual Machine TEST vm update failed - 'TEST': 'vcpus': 'A valid integer is required.', 'memory': 'A valid integer is required.'
+2. Just VM and interface error - Not applicable as wont run if VM creation failed.
+3. Just Interface error with new or existing VM
+❌ Virtual Machine TEST vm and interface create failed - 'eth1': 'mode': 'acces is not a valid choice.', 'eth2': 'mode': 'acces is not a valid choice.', 'Port1': 'mode': 'tagge is not a valid choice.'
+4. VLAN or vlan group not exist
+❌ Virtual Machine TEST interface objects may not exist. Failed to get object.id for - 'eth3': 'Vlan_group': 'stesworl'
+5. IP fail if cant get interface object ID (set input_obj = 'eth5' in get_single_fltr_id)
+❌ Virtual Machine TEST4 ip update failed - 'eth5(10.10.20.152/24)': AttributeError("'NoneType' object has no attribute 'id'"
+6. If an address is assigned as primary cant use on another VM
+❌ Virtual Machine TEST ip update failed - '10.10.20.166/24': 'IP address is primary for virtual machine TEST2 but assigned to TEST (eth5)'
+7. VRF not exist for IP interface
+❌ Virtual Machine TEST interface objects may not exist. Failed to get object.id for - 'eth5': 'Vrf': 'HME_BL'
 
+===== CREATE/UPDATE just vm =====
 
-1. add to notes, if in swapper it says 'x-nullable: true' measn you can reset the vlaue by using none
-2. fix cluster-cloud issue
-3. Create add device script. Hopefully will be very much same as this, need to move all the methods to external script. Update read me with details and write blog
-4. refactor this to be the same as add device
-5. Add pre-val check using NTC tool
-6. write unit tests for these and setup env
-7. combine with setup env and blog
-8. refactor for newer version
+1. Just VM create
+✅ Virtual Machine TEST created with attributes: 'tenant', 'role', 'vcpus', 'memory', 'disk', 'comments', 'tags'
+2. No change to VM
+⚠️  Virtual Machine TEST already exists with the correct details
+3. Update just VM, always shows any attributes defined, even havent been changed (shouldnt be defining them unless changing)
+✅ Virtual Machine TEST updated with attributes: 'tenant', 'role', 'vcpus', 'memory', 'disk', 'comments', 'tags'
+
+===== CREATE VM and Interface =====
+
+1. Create VM with attributes and interface
+✅ Virtual Machine TEST1 created with attributes: 'tenant', 'role', 'vcpus', 'memory', 'disk', 'comments', 'tags' interfaces: 'eth3', 'Port1'
+2. No change to VM with interfaces
+⚠️  Virtual Machine TEST1 already exists with the correct details
+
+===== CREATE VM, Interface and IP =====
+
+1. Create VM with attributes, interface and IP
+✅ Virtual Machine TEST2 created with attributes: 'tenant', 'role', 'vcpus', 'memory', 'disk', 'comments', 'tags' interfaces: 'eth0', 'eth3', 'Port1' IP addresses: '10.10.20.166/24'
+2. No change to VM with interfaces and IP
+⚠️  Virtual Machine TEST2 already exists with the correct details
+
+===== Add Interface and IP to existing VM =====
+
+1. Add interface to existing VM
+✅ Virtual Machine TEST updated with  interfaces: 'eth3', 'Port1'
+2. Add interface with IP to existing VM
+✅ Virtual Machine TEST updated with  interfaces: 'eth5' IP addresses: '10.10.20.167/24'
+
+===== Update VM or interface =====
+
+1. Update VM attributes but not interface
+✅ Virtual Machine TEST updated with attributes: 'tenant', 'role', 'vcpus', 'memory', 'disk', 'comments', 'tags'
+2. Update only interface
+✅ Virtual Machine TEST updated with  interfaces: 'eth3', 'Port1'
+3. Update only IP
+✅ Virtual Machine TEST updated with   IP addresses: '10.10.20.169/24'
+4. Update all
+✅ Virtual Machine TEST4 updated with attributes: 'tenant', 'role', 'vcpus', 'memory', 'disk', 'comments', 'tags' interfaces: 'eth3' IP addresses: '10.10.20.185/24'

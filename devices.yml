@@ -2,46 +2,35 @@
 manufacturer:
   - Cisco:
     - device_type: ws_c3560cx_12pcs           # Automatically works out the platform from the device type
-      device-role: switch
+      ##### Can be applied for all devices and/or overridden by setting under device 
+      device-role: switch 
+      site: London
+      location: Room1
+      tenant: stesworld
+      tags: [test]  
+      #### END #####               
       device:
         - name: HME-C3560-SWI01
           serial: FOC2414L6TJ
           asset-tag: 12345
           rack_postion: [HME-FL5-A1, 1]       # Automatically works out the location and rack-group
-          # rear: true                        # Only need if it is rear facing device
-          cluster: Azure - Europe West        # Cluster group is automatically worked out
-          tenant: stesworld                   # Automatically worksout the tenant-group
-          # tags: [test]
-          # comments: xxx
-          # ip:
-          #   - addr:                           # Automatically works out the VRF
-          #     intf:
-          #     role:
-          #     primary_ip: true                # If this the devices mgmt IP
-          #     dns:
-          #     descr:
-          #     # tags: [test]
-          # conns:
-          #   - gi0/1: [asa1, gi1]
-
-# Has to verify everything before adding
-cluster:
-  - name: ESX Home
-    vm:
-      - name: hme-air-wlc01
-        ### All of these other VM attribute options are optional
-        tenant: stesworld
-        role: wifi
-        cpu: 1
-        mem: 2
-        disk: 8
-        tags: [os_network]
-        comments: Wireless LAN Controller
-        #### If interface is defined only name is mandatory. ALl IPs are by default the VM primary IP, add 'secondary_ip: true' for any other IP interfaces (vrf_ip)
-        intf:
-          - name: Port1
-            grp_vl: [stesworld, [10,20,30]]
-          - name: management
+          rear: true                        # Only need if it is rear facing device
+          comments: xxx
+          ##### Overide settings under device_type ##### 
+          device-role: switch 
+          site: London
+          location: Room1
+          tenant: stesworld
+          tags: [test]  
+          #### END ######
+          #### If interface is defined only name is mandatory. ALl IPs are by default the primary IP, add 'secondary_ip: true' for any other IP interfaces (vrf_ip)
+          intf:
+          - name: vlan10
             grp_vl: [stesworld, 10]
             vrf_ip: [HME_BLU, 10.10.10.11/24]
             dns: hme-air-wlc01.stesworld.com
+          - name: vlan20
+            grp_vl: [stesworld, 20]
+            vrf_ip: [HME_BLU, 10.10.10.11/24]
+            secondary_ip: true
+

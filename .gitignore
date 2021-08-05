@@ -3,4 +3,6 @@ config.pyc
 .DS_Store
 __pycache__
 hme_base.yml
+devices.yml
+vms.yml
 info
