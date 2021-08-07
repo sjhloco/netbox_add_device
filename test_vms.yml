@@ -2,7 +2,7 @@
 cluster:
   - name: ESX Home
     vm:
-      - name: TEST4
+      - name: TEST6
         tenant: stesworld
         role: compute
         cpu: 2
@@ -11,18 +11,18 @@ cluster:
         tags: [os_linux]
         comments: RHEL8 GUI workstation (in ESX)
         intf:
-          - name: eth0
-            vrf_ip: [HME_BLU, 10.10.20.183/24]
-            dns: mob-win-ws01.stesworld.com
-          - name: eth0
-            vrf_ip: [HME_BLU, 10.10.20.185/24]
-            secondary_ip: true
-        #   - name: eth1
-        #     vrf_ip: [HME_BLU, 10.10.20.172/24]
+        #   - name: eth0
+        #     vrf_ip: [HME_BLU, 10.10.20.183/24]
+        #     dns: mob-win-ws01.stesworld.com
+        #   - name: eth0
+        #     vrf_ip: [HME_BLU, 10.10.20.185/24]
         #     secondary_ip: true
-        # #   - name: eth2
-        # #     grp_vl: [stesworld, 20]
-          - name: eth3
-            grp_vl: [stesworld, [30]]
+        # #   - name: eth1
+        # #     vrf_ip: [HME_BLU, 10.10.20.172/24]
+        # #     secondary_ip: true
+        # # #   - name: eth2
+        # # #     grp_vl: [stesworld, 20]
+        #   - name: eth3
+        #     grp_vl: [stesworld, [30]]
           - name: Port1
             grp_vl: [stesworld, 20]

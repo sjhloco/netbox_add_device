@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="3243px" preserveAspectRatio="none" style="width:10974px;height:3243px;background:#FFFFFF;" version="1.1" viewBox="0 0 10974 3243" width="10974px" zoomAndPan="magnify"><defs><filter height="300%" id="fkk7tsk4fe6c3" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="6.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="12.0" dy="12.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="sans-serif" font-size="54" lengthAdjust="spacing" textLength="462" x="5236.5" y="52.207">Function Diagram</text><!--MD5=[2bec866fd1b06de4fd8622258a013e83]
+cluster class_CreateDm--><polygon fill="#DDDDDD" filter="url(#fkk7tsk4fe6c3)" points="8694,1100.0977,9054,1100.0977,9075,1167.5625,10923,1167.5625,10923,2850.5977,8694,2850.5977,8694,1100.0977" style="stroke:#000000;stroke-width:4.5;"/><line style="stroke:#000000;stroke-width:4.5;" x1="8694" x2="9075" y1="1167.5625" y2="1167.5625"/><text fill="#000000" font-family="sans-serif" font-size="42" font-weight="bold" lengthAdjust="spacing" textLength="342" x="8706" y="1146.7031">class_CreateDm</text><!--MD5=[e77109cda9de34f6803a3c1f4ccccffa]
+cluster class_CreateObject--><polygon fill="#DDDDDD" filter="url(#fkk7tsk4fe6c3)" points="48,600.5977,474,600.5977,495,668.0625,3288,668.0625,3288,3222.5977,48,3222.5977,48,600.5977" style="stroke:#000000;stroke-width:4.5;"/><line style="stroke:#000000;stroke-width:4.5;" x1="48" x2="495" y1="668.0625" y2="668.0625"/><text fill="#000000" font-family="sans-serif" font-size="42" font-weight="bold" lengthAdjust="spacing" textLength="408" x="60" y="647.2031">class_CreateObject</text><!--MD5=[06773dbd49b4d776cb804f8dbfa55901]
+cluster class_NboxApi--><polygon fill="#DDDDDD" filter="url(#fkk7tsk4fe6c3)" points="3360,1695.5977,3690,1695.5977,3711,1763.0625,8622,1763.0625,8622,2873.0977,3360,2873.0977,3360,1695.5977" style="stroke:#000000;stroke-width:4.5;"/><line style="stroke:#000000;stroke-width:4.5;" x1="3360" x2="3711" y1="1763.0625" y2="1763.0625"/><text fill="#000000" font-family="sans-serif" font-size="42" font-weight="bold" lengthAdjust="spacing" textLength="312" x="3372" y="1742.2031">class_NboxApi</text><!--MD5=[4d7304f5224700b1691cd9e4c7c2c10a]
+class class_CreateDm.engine--><rect codeLine="33" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="221.7305" id="class_CreateDm.engine" style="stroke:#A80036;stroke-width:4.5;" width="246" x="9267" y="1263.5977"/><ellipse cx="9328.2" cy="1311.5977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M9339.3914,1300.3931 L9323.5784,1300.3931 L9323.5784,1308.4116 L9337.972,1308.4116 L9337.972,1314.8862 L9323.5784,1314.8862 L9323.5784,1331.0977 L9316.2322,1331.0977 L9316.2322,1293.9185 L9339.3914,1293.9185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="114" x="9373.8" y="1325.2031">engine</text><line style="stroke:#A80036;stroke-width:4.5;" x1="9270" x2="9510" y1="1359.5977" y2="1359.5977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="84" x="9285" y="1403.502">None</text><line style="stroke:#A80036;stroke-width:3.0;" x1="9270" x2="9510" y1="1422.4629" y2="1422.4629"/><ellipse cx="9300" cy="1455.4629" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="168" x="9327" y="1466.3672">all_vm: list</text><!--MD5=[8e667dac50165043178f54cdb27dd21d]
+class class_CreateDm.CreateDm(__init__)--><rect codeLine="24" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="338.3262" id="class_CreateDm.CreateDm(__init__)" style="stroke:#A80036;stroke-width:4.5;" width="417" x="8743.5" y="1205.0977"/><ellipse cx="8788.5" cy="1253.0977" fill="#ADD1B2" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M8795.9194,1271.5269 Q8794.1763,1272.4233 8792.2588,1272.8716 Q8790.3413,1273.3198 8788.2246,1273.3198 Q8780.7041,1273.3198 8776.7446,1268.3643 Q8772.7852,1263.4087 8772.7852,1254.0454 Q8772.7852,1244.6572 8776.7446,1239.7017 Q8780.7041,1234.7461 8788.2246,1234.7461 Q8790.3413,1234.7461 8792.2837,1235.1943 Q8794.2261,1235.6426 8795.9194,1236.5391 L8795.9194,1244.707 Q8794.0269,1242.9639 8792.2463,1242.1545 Q8790.4658,1241.3452 8788.5732,1241.3452 Q8784.5391,1241.3452 8782.4846,1244.5452 Q8780.4302,1247.7451 8780.4302,1254.0454 Q8780.4302,1260.3208 8782.4846,1263.5208 Q8784.5391,1266.7207 8788.5732,1266.7207 Q8790.4658,1266.7207 8792.2463,1265.9114 Q8794.0269,1265.1021 8795.9194,1263.3589 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="321" x="8830.5" y="1266.7031">CreateDm(__init__)</text><line style="stroke:#A80036;stroke-width:4.5;" x1="8746.5" x2="9157.5" y1="1301.0977" y2="1301.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="207" x="8761.5" y="1345.002">rc: Console()</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="258" x="8761.5" y="1383.8672">nbox: Console()</text><line style="stroke:#A80036;stroke-width:3.0;" x1="8746.5" x2="9157.5" y1="1402.8281" y2="1402.8281"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="8761.5" y="1446.7324">self.rc: rc</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="252" x="8761.5" y="1485.5977">self.nbox: nbox</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="279" x="8761.5" y="1524.4629">self.my_vars: dict</text><!--MD5=[de40312aa5c484c62e847cffe4264c63]
+class class_CreateDm.create_vm--><rect codeLine="40" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="338.3262" id="class_CreateDm.create_vm" style="stroke:#A80036;stroke-width:4.5;" width="279" x="8791.5" y="1917.5977"/><ellipse cx="8839.2" cy="1965.5977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M8850.3914,1954.3931 L8834.5784,1954.3931 L8834.5784,1962.4116 L8848.972,1962.4116 L8848.972,1968.8862 L8834.5784,1968.8862 L8834.5784,1985.0977 L8827.2322,1985.0977 L8827.2322,1947.9185 L8850.3914,1947.9185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="177" x="8881.8" y="1979.2031">create_vm</text><line style="stroke:#A80036;stroke-width:4.5;" x1="8794.5" x2="9067.5" y1="2013.5977" y2="2013.5977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="225" x="8809.5" y="2057.502">clstr_site: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="243" x="8809.5" y="2096.3672">each_clstr: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="219" x="8809.5" y="2135.2324">each_vm: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="207" x="8809.5" y="2174.0977">tmp_vm: dict</text><line style="stroke:#A80036;stroke-width:3.0;" x1="8794.5" x2="9067.5" y1="2193.0586" y2="2193.0586"/><ellipse cx="8824.5" cy="2226.0586" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="126" x="8851.5" y="2236.9629">vm: dict</text><path d="M8743.5,2679.5977 L8743.5,2801.4609 A0,0 0 0 0 8743.5,2801.4609 L9064.5,2801.4609 A0,0 0 0 0 9064.5,2801.4609 L9064.5,2709.5977 L9034.5,2679.5977 L8940,2679.5977 L8928,2257.2277 L8916,2679.5977 L8743.5,2679.5977 A0,0 0 0 0 8743.5,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M9034.5,2679.5977 L9034.5,2709.5977 L9064.5,2709.5977 L9034.5,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="246" x="8761.5" y="2732.3027">Create DM of</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="252" x="8761.5" y="2778.2344">VM attributes</text><!--MD5=[f5f5b42288ee9b9607f998f24730c522]
+class class_CreateDm.rmv_empty_attr--><rect codeLine="50" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="221.7305" id="class_CreateDm.rmv_empty_attr" style="stroke:#A80036;stroke-width:4.5;" width="366" x="9207" y="1976.0977"/><ellipse cx="9252" cy="2024.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M9263.1914,2012.8931 L9247.3784,2012.8931 L9247.3784,2020.9116 L9261.772,2020.9116 L9261.772,2027.3862 L9247.3784,2027.3862 L9247.3784,2043.5977 L9240.0322,2043.5977 L9240.0322,2006.4185 L9263.1914,2006.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="270" x="9294" y="2037.7031">rmv_empty_attr</text><line style="stroke:#A80036;stroke-width:4.5;" x1="9210" x2="9570" y1="2072.0977" y2="2072.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="213" x="9225" y="2116.002">attr_dict: dict</text><line style="stroke:#A80036;stroke-width:3.0;" x1="9210" x2="9570" y1="2134.9629" y2="2134.9629"/><ellipse cx="9240" cy="2167.9629" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="213" x="9267" y="2178.8672">attr_dict: dict</text><path d="M9169.5,2679.5977 L9169.5,2801.4609 A0,0 0 0 0 9169.5,2801.4609 L9616.5,2801.4609 A0,0 0 0 0 9616.5,2801.4609 L9616.5,2709.5977 L9586.5,2679.5977 L9402,2679.5977 L9390,2199.5377 L9378,2679.5977 L9169.5,2679.5977 A0,0 0 0 0 9169.5,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M9586.5,2679.5977 L9586.5,2709.5977 L9616.5,2709.5977 L9586.5,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="381" x="9187.5" y="2732.3027">Remove empty dicts</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="384" x="9187.5" y="2778.2344">(attributes) from DM</text><!--MD5=[86e804ecb32c6a281482a72811c95944]
+class class_CreateDm.create_intf_dm--><rect codeLine="57" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="377.1914" id="class_CreateDm.create_intf_dm" style="stroke:#A80036;stroke-width:4.5;" width="351" x="9712.5" y="1898.0977"/><ellipse cx="9757.5" cy="1946.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M9768.6914,1934.8931 L9752.8784,1934.8931 L9752.8784,1942.9116 L9767.272,1942.9116 L9767.272,1949.3862 L9752.8784,1949.3862 L9752.8784,1965.5977 L9745.5322,1965.5977 L9745.5322,1928.4185 L9768.6914,1928.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="255" x="9799.5" y="1959.7031">create_intf_dm</text><line style="stroke:#A80036;stroke-width:4.5;" x1="9715.5" x2="10060.5" y1="1994.0977" y2="1994.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="291" x="9730.5" y="2038.002">tmp_intf_dict: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="219" x="9730.5" y="2076.8672">each_vm: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="225" x="9730.5" y="2115.7324">each_intf: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="207" x="9730.5" y="2154.5977">tmp_vm: dict</text><line style="stroke:#A80036;stroke-width:3.0;" x1="9715.5" x2="10060.5" y1="2173.5586" y2="2173.5586"/><ellipse cx="9745.5" cy="2206.5586" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="201" x="9772.5" y="2217.4629">tmp_intf: list</text><ellipse cx="9745.5" cy="2245.4238" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="177" x="9772.5" y="2256.3281">tmp_ip: list</text><path d="M9721.5,2679.5977 L9721.5,2801.4609 A0,0 0 0 0 9721.5,2801.4609 L10126.5,2801.4609 A0,0 0 0 0 10126.5,2801.4609 L10126.5,2709.5977 L10096.5,2679.5977 L9904.5,2679.5977 L9892.5,2276.2477 L9880.5,2679.5977 L9721.5,2679.5977 A0,0 0 0 0 9721.5,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M10096.5,2679.5977 L10096.5,2709.5977 L10126.5,2709.5977 L10096.5,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="288" x="9739.5" y="2732.3027">Creates the DM</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="342" x="9739.5" y="2778.2344">of interface and IP</text><!--MD5=[06541abd3dfc7b4cb9ab58287f57d639]
+class class_CreateDm.vm_error--><rect codeLine="68" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="299.4609" id="class_CreateDm.vm_error" style="stroke:#A80036;stroke-width:4.5;" width="345" x="10273.5" y="1937.0977"/><ellipse cx="10360.35" cy="1985.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M10371.5414,1973.8931 L10355.7284,1973.8931 L10355.7284,1981.9116 L10370.122,1981.9116 L10370.122,1988.3862 L10355.7284,1988.3862 L10355.7284,2004.5977 L10348.3822,2004.5977 L10348.3822,1967.4185 L10371.5414,1967.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="156" x="10411.65" y="1998.7031">vm_error</text><line style="stroke:#A80036;stroke-width:4.5;" x1="10276.5" x2="10615.5" y1="2033.0977" y2="2033.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="10291.5" y="2077.002">vm_name: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="216" x="10291.5" y="2115.8672">input_err: list</text><line style="stroke:#A80036;stroke-width:3.0;" x1="10276.5" x2="10615.5" y1="2134.8281" y2="2134.8281"/><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="10297.5" y="2158.8281"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="10333.5" y="2178.7324">vm_name: string</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="10297.5" y="2197.6934"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="243" x="10333.5" y="2217.5977">tmp_err: string</text><path d="M10233,2679.5977 L10233,2801.4609 A0,0 0 0 0 10233,2801.4609 L10875,2801.4609 A0,0 0 0 0 10875,2801.4609 L10875,2709.5977 L10845,2679.5977 L10458,2679.5977 L10446,2237.1277 L10434,2679.5977 L10233,2679.5977 A0,0 0 0 0 10233,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M10845,2679.5977 L10845,2709.5977 L10875,2709.5977 L10845,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="543" x="10251" y="2732.3027">Grouped per-VM errors if VM</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="579" x="10251" y="2778.2344">or interface objects don't exist</text><!--MD5=[29f029eb7669d387102bfbd4ecdb3e13]
+class class_CreateObject.engine--><rect codeLine="215" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="221.7305" id="class_CreateObject.engine" style="stroke:#A80036;stroke-width:4.5;" width="210" x="1770" y="744.5977"/><ellipse cx="1815" cy="792.5977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M1826.1914,781.3931 L1810.3784,781.3931 L1810.3784,789.4116 L1824.772,789.4116 L1824.772,795.8862 L1810.3784,795.8862 L1810.3784,812.0977 L1803.0322,812.0977 L1803.0322,774.9185 L1826.1914,774.9185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="114" x="1857" y="806.2031">engine</text><line style="stroke:#A80036;stroke-width:4.5;" x1="1773" x2="1977" y1="840.5977" y2="840.5977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="129" x="1788" y="884.502">dm: dict</text><line style="stroke:#A80036;stroke-width:3.0;" x1="1773" x2="1977" y1="903.4629" y2="903.4629"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="84" x="1788" y="947.3672">None</text><!--MD5=[d5d1b30880263f3af22536569fa1055d]
+class class_CreateObject.CreateObject(__init__)--><rect codeLine="207" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="299.4609" id="class_CreateObject.CreateObject(__init__)" style="stroke:#A80036;stroke-width:4.5;" width="471" x="2086.5" y="705.5977"/><ellipse cx="2131.5" cy="753.5977" fill="#ADD1B2" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M2138.9194,772.0269 Q2137.1763,772.9233 2135.2588,773.3716 Q2133.3413,773.8198 2131.2246,773.8198 Q2123.7041,773.8198 2119.7446,768.8643 Q2115.7852,763.9087 2115.7852,754.5454 Q2115.7852,745.1572 2119.7446,740.2017 Q2123.7041,735.2461 2131.2246,735.2461 Q2133.3413,735.2461 2135.2837,735.6943 Q2137.2261,736.1426 2138.9194,737.0391 L2138.9194,745.207 Q2137.0269,743.4639 2135.2463,742.6545 Q2133.4658,741.8452 2131.5732,741.8452 Q2127.5391,741.8452 2125.4846,745.0452 Q2123.4302,748.2451 2123.4302,754.5454 Q2123.4302,760.8208 2125.4846,764.0208 Q2127.5391,767.2207 2131.5732,767.2207 Q2133.4658,767.2207 2135.2463,766.4114 Q2137.0269,765.6021 2138.9194,763.8589 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="375" x="2173.5" y="767.2031">CreateObject(__init__)</text><line style="stroke:#A80036;stroke-width:4.5;" x1="2089.5" x2="2554.5" y1="801.5977" y2="801.5977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="207" x="2104.5" y="845.502">rc: Console()</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="258" x="2104.5" y="884.3672">nbox: Console()</text><line style="stroke:#A80036;stroke-width:3.0;" x1="2089.5" x2="2554.5" y1="903.3281" y2="903.3281"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="2104.5" y="947.2324">self.rc: rc</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="252" x="2104.5" y="986.0977">self.nbox: nbox</text><!--MD5=[82ccf56dd9b49d720b97b30018b2c158]
+class class_CreateObject.format_rslt_err--><rect codeLine="221" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="221.7305" id="class_CreateObject.format_rslt_err" style="stroke:#A80036;stroke-width:4.5;" width="351" x="1579.5" y="2630.0977"/><ellipse cx="1624.5" cy="2678.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M1635.6914,2666.8931 L1619.8784,2666.8931 L1619.8784,2674.9116 L1634.272,2674.9116 L1634.272,2681.3862 L1619.8784,2681.3862 L1619.8784,2697.5977 L1612.5322,2697.5977 L1612.5322,2660.4185 L1635.6914,2660.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="255" x="1666.5" y="2691.7031">format_rslt_err</text><line style="stroke:#A80036;stroke-width:4.5;" x1="1582.5" x2="1927.5" y1="2726.0977" y2="2726.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="216" x="1597.5" y="2770.002">input_list: list</text><line style="stroke:#A80036;stroke-width:3.0;" x1="1582.5" x2="1927.5" y1="2788.9629" y2="2788.9629"/><ellipse cx="1612.5" cy="2821.9629" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="264" x="1639.5" y="2832.8672">output_dict: dict</text><path d="M1321.5,3051.5977 L1321.5,3173.4609 A0,0 0 0 0 1321.5,3173.4609 L2080.5,3173.4609 A0,0 0 0 0 2080.5,3173.4609 L2080.5,3081.5977 L2050.5,3051.5977 L1767,3051.5977 L1755,2852.6977 L1743,3051.5977 L1321.5,3051.5977 A0,0 0 0 0 1321.5,3051.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M2050.5,3051.5977 L2050.5,3081.5977 L2080.5,3081.5977 L2050.5,3051.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="696" x="1339.5" y="3104.3027">Combines interface/ip error or result</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="669" x="1339.5" y="3150.2344">messages into dict to use in stdout</text><!--MD5=[8468362a9c854462b94cab46e2970c29]
+class class_CreateObject.format_stdout_intf_ip--><rect codeLine="228" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="260.5957" id="class_CreateObject.format_stdout_intf_ip" style="stroke:#A80036;stroke-width:4.5;" width="459" x="2089.5" y="2610.5977"/><ellipse cx="2134.5" cy="2658.5977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M2145.6914,2647.3931 L2129.8784,2647.3931 L2129.8784,2655.4116 L2144.272,2655.4116 L2144.272,2661.8862 L2129.8784,2661.8862 L2129.8784,2678.0977 L2122.5322,2678.0977 L2122.5322,2640.9185 L2145.6914,2640.9185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="363" x="2176.5" y="2672.2031">format_stdout_intf_ip</text><line style="stroke:#A80036;stroke-width:4.5;" x1="2092.5" x2="2545.5" y1="2706.5977" y2="2706.5977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="252" x="2107.5" y="2750.502">obj_type: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="234" x="2107.5" y="2789.3672">input_rslt: dict</text><line style="stroke:#A80036;stroke-width:3.0;" x1="2092.5" x2="2545.5" y1="2808.3281" y2="2808.3281"/><ellipse cx="2122.5" cy="2841.3281" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="234" x="2149.5" y="2852.2324">input_rslt: dict</text><path d="M2185.5,3051.5977 L2185.5,3173.4609 A0,0 0 0 0 2185.5,3173.4609 L2668.5,3173.4609 A0,0 0 0 0 2668.5,3173.4609 L2668.5,3081.5977 L2638.5,3051.5977 L2379,3051.5977 L2367,2872.2577 L2355,3051.5977 L2185.5,3051.5977 A0,0 0 0 0 2185.5,3051.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M2638.5,3051.5977 L2638.5,3081.5977 L2668.5,3081.5977 L2638.5,3051.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="363" x="2203.5" y="3104.3027">Formats the output</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="420" x="2203.5" y="3150.2344">for interface/IP stdout</text><!--MD5=[a889b2d911d918c6e249eeeb941d265e]
+class class_CreateObject.crte_upte_stdout--><rect codeLine="236" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="688.1133" id="class_CreateObject.crte_upte_stdout" style="stroke:#A80036;stroke-width:4.5;" width="489" x="2074.5" y="1743.5977"/><ellipse cx="2166.75" cy="1791.5977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M2177.9414,1780.3931 L2162.1284,1780.3931 L2162.1284,1788.4116 L2176.522,1788.4116 L2176.522,1794.8862 L2162.1284,1794.8862 L2162.1284,1811.0977 L2154.7822,1811.0977 L2154.7822,1773.9185 L2177.9414,1773.9185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="288" x="2219.25" y="1805.2031">crte_upte_stdout</text><line style="stroke:#A80036;stroke-width:4.5;" x1="2077.5" x2="2560.5" y1="1839.5977" y2="1839.5977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="252" x="2092.5" y="1883.502">obj_type: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="453" x="2092.5" y="1922.3672">vm_exist: None or nbox_obj</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="129" x="2092.5" y="1961.2324">dm: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="240" x="2092.5" y="2000.0977">deploy_err: list</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="237" x="2092.5" y="2038.9629">vm_result: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="243" x="2092.5" y="2077.8281">intf_result: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="219" x="2092.5" y="2116.6934">ip_result: dict</text><line style="stroke:#A80036;stroke-width:3.0;" x1="2077.5" x2="2560.5" y1="2135.6543" y2="2135.6543"/><ellipse cx="2107.5" cy="2168.6543" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="237" x="2134.5" y="2179.5586">vm_result: dict</text><ellipse cx="2107.5" cy="2207.5195" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="198" x="2134.5" y="2218.4238">vm_rslt: dict</text><ellipse cx="2107.5" cy="2246.3848" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="204" x="2134.5" y="2257.2891">intf_rslt: dict</text><ellipse cx="2107.5" cy="2285.25" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="180" x="2134.5" y="2296.1543">ip_rslt: dict</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="2098.5" y="2315.1152"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="252" x="2134.5" y="2335.0195">obj_type: string</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="2098.5" y="2353.9805"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="126" x="2134.5" y="2373.8848">err: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="0" x="2143.5" y="2412.75"/><path d="M2655,2679.5977 L2655,2801.4609 L3231,2801.4609 L3231,2709.5977 L3201,2679.5977 L2655,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M3201,2679.5977 L3201,2709.5977 L3231,2709.5977 L3201,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="513" x="2673" y="2732.3027">Prints stdout dependant on</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="513" x="2673" y="2778.2344">error or the task performed</text><!--MD5=[7534bd859d960618de8a6215cce3269c]
+class class_CreateObject.create_vm--><rect codeLine="255" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="260.5957" id="class_CreateObject.create_vm" style="stroke:#A80036;stroke-width:4.5;" width="564" x="96" y="1244.0977"/><ellipse cx="276.75" cy="1292.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M287.9414,1280.8931 L272.1284,1280.8931 L272.1284,1288.9116 L286.522,1288.9116 L286.522,1295.3862 L272.1284,1295.3862 L272.1284,1311.5977 L264.7822,1311.5977 L264.7822,1274.4185 L287.9414,1274.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="177" x="338.25" y="1305.7031">create_vm</text><line style="stroke:#A80036;stroke-width:4.5;" x1="99" x2="657" y1="1340.0977" y2="1340.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="453" x="114" y="1384.002">vm_exist: None or nbox_obj</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="129" x="114" y="1422.8672">dm: dict</text><line style="stroke:#A80036;stroke-width:3.0;" x1="99" x2="657" y1="1441.8281" y2="1441.8281"/><ellipse cx="129" cy="1474.8281" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="486" x="156" y="1485.7324">result: [vm_result, deploy_err]</text><path d="M150,2025.5977 L150,2147.4609 A0,0 0 0 0 150,2147.4609 L606,2147.4609 A0,0 0 0 0 606,2147.4609 L606,2055.5977 L576,2025.5977 L390,2025.5977 L378,1505.2777 L366,2025.5977 L150,2025.5977 A0,0 0 0 0 150,2025.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M576,2025.5977 L576,2055.5977 L606,2055.5977 L576,2025.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="387" x="168" y="2078.3027">Creates the VM only,</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="393" x="168" y="2124.2344">no interfaces and IPs</text><!--MD5=[49222ce32dab57e012b5aba1a84960b4]
+class class_CreateObject.update_vm--><rect codeLine="263" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="260.5957" id="class_CreateObject.update_vm" style="stroke:#A80036;stroke-width:4.5;" width="564" x="765" y="1244.0977"/><ellipse cx="938.25" cy="1292.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M949.4414,1280.8931 L933.6284,1280.8931 L933.6284,1288.9116 L948.022,1288.9116 L948.022,1295.3862 L933.6284,1295.3862 L933.6284,1311.5977 L926.2822,1311.5977 L926.2822,1274.4185 L949.4414,1274.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="192" x="999.75" y="1305.7031">update_vm</text><line style="stroke:#A80036;stroke-width:4.5;" x1="768" x2="1326" y1="1340.0977" y2="1340.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="453" x="783" y="1384.002">vm_exist: None or nbox_obj</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="129" x="783" y="1422.8672">dm: dict</text><line style="stroke:#A80036;stroke-width:3.0;" x1="768" x2="1326" y1="1441.8281" y2="1441.8281"/><ellipse cx="798" cy="1474.8281" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="486" x="825" y="1485.7324">result: [vm_result, deploy_err]</text><path d="M742.5,2025.5977 L742.5,2147.4609 A0,0 0 0 0 742.5,2147.4609 L1351.5,2147.4609 A0,0 0 0 0 1351.5,2147.4609 L1351.5,2055.5977 L1321.5,2025.5977 L918,2025.5977 L906,1505.2777 L894,2025.5977 L742.5,2025.5977 A0,0 0 0 0 742.5,2025.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M1321.5,2025.5977 L1321.5,2055.5977 L1351.5,2055.5977 L1321.5,2025.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="534" x="760.5" y="2078.3027">Updates VM if already exists</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="531" x="760.5" y="2124.2344">and something has changed</text><!--MD5=[d184f36fc9cb175da56d8b55a8246913]
+class class_CreateObject.crte_upte_intf--><rect codeLine="271" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="338.3262" id="class_CreateObject.crte_upte_intf" style="stroke:#A80036;stroke-width:4.5;" width="570" x="2670" y="1205.0977"/><ellipse cx="2825.25" cy="1253.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M2836.4414,1241.8931 L2820.6284,1241.8931 L2820.6284,1249.9116 L2835.022,1249.9116 L2835.022,1256.3862 L2820.6284,1256.3862 L2820.6284,1272.5977 L2813.2822,1272.5977 L2813.2822,1235.4185 L2836.4414,1235.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="234" x="2886.75" y="1266.7031">crte_upte_intf</text><line style="stroke:#A80036;stroke-width:4.5;" x1="2673" x2="3237" y1="1301.0977" y2="1301.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="129" x="2688" y="1345.002">dm: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="453" x="2688" y="1383.8672">vm_exist: None or nbox_obj</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="237" x="2688" y="1422.7324">vm_result: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="240" x="2688" y="1461.5977">deploy_err: list</text><line style="stroke:#A80036;stroke-width:3.0;" x1="2673" x2="3237" y1="1480.5586" y2="1480.5586"/><ellipse cx="2703" cy="1513.5586" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="492" x="2730" y="1524.4629">result: [intf_result, deploy_err]</text><path d="M2664,794.0977 L2664,915.9609 A0,0 0 0 0 2664,915.9609 L3038.01,915.9609 L3050.01,1204.2277 L3062.01,915.9609 L3240,915.9609 A0,0 0 0 0 3240,915.9609 L3240,824.0977 L3210,794.0977 L2664,794.0977 A0,0 0 0 0 2664,794.0977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M3210,794.0977 L3210,824.0977 L3240,824.0977 L3210,794.0977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="441" x="2682" y="846.8027">Creates new or updates</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="513" x="2682" y="892.7344">updates existing interfaces</text><!--MD5=[84001d105c236ea37216a2df5809931f]
+class class_CreateObject.crte_upte_ip--><rect codeLine="281" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="377.1914" id="class_CreateObject.crte_upte_ip" style="stroke:#A80036;stroke-width:4.5;" width="489" x="2074.5" y="1185.5977"/><ellipse cx="2200.5" cy="1233.5977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M2211.6914,1222.3931 L2195.8784,1222.3931 L2195.8784,1230.4116 L2210.272,1230.4116 L2210.272,1236.8862 L2195.8784,1236.8862 L2195.8784,1253.0977 L2188.5322,1253.0977 L2188.5322,1215.9185 L2211.6914,1215.9185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="213" x="2260.5" y="1247.2031">crte_upte_ip</text><line style="stroke:#A80036;stroke-width:4.5;" x1="2077.5" x2="2560.5" y1="1281.5977" y2="1281.5977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="129" x="2092.5" y="1325.502">dm: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="453" x="2092.5" y="1364.3672">vm_exist: None or nbox_obj</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="237" x="2092.5" y="1403.2324">vm_result: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="231" x="2092.5" y="1442.0977">intf_result: list</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="240" x="2092.5" y="1480.9629">deploy_err: list</text><line style="stroke:#A80036;stroke-width:3.0;" x1="2077.5" x2="2560.5" y1="1499.9238" y2="1499.9238"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="84" x="2092.5" y="1543.8281">None</text><path d="M1434,1313.0977 L1434,1434.9609 A0,0 0 0 0 1434,1434.9609 L1968,1434.9609 A0,0 0 0 0 1968,1434.9609 L1968,1386.5977 L2074.5,1374.5977 L1968,1362.5977 L1968,1343.0977 L1938,1313.0977 L1434,1313.0977 A0,0 0 0 0 1434,1313.0977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M1938,1313.0977 L1938,1343.0977 L1968,1343.0977 L1938,1313.0977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="471" x="1452" y="1365.8027">Creates new interface IPs</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="456" x="1452" y="1411.7344">or adds IPs to interfaces</text><!--MD5=[7bffebc8d697f2d4e9e554e7ac67492a]
+class class_NboxApi.get_multi_id--><rect codeLine="128" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="493.7871" id="class_NboxApi.get_multi_id" style="stroke:#A80036;stroke-width:4.5;" width="393" x="8134.5" y="1839.5977"/><ellipse cx="8220" cy="1887.5977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M8231.1914,1876.3931 L8215.3784,1876.3931 L8215.3784,1884.4116 L8229.772,1884.4116 L8229.772,1890.8862 L8215.3784,1890.8862 L8215.3784,1907.0977 L8208.0322,1907.0977 L8208.0322,1869.9185 L8231.1914,1869.9185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="207" x="8271" y="1901.2031">get_multi_id</text><line style="stroke:#A80036;stroke-width:4.5;" x1="8137.5" x2="8524.5" y1="1935.5977" y2="1935.5977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="237" x="8152.5" y="1979.502">api_attr: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="8152.5" y="2018.3672">input_obj: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="354" x="8152.5" y="2057.2324">input_obj_type: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="357" x="8152.5" y="2096.0977">other_obj_type: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="8152.5" y="2134.9629">error: list</text><line style="stroke:#A80036;stroke-width:3.0;" x1="8137.5" x2="8524.5" y1="2153.9238" y2="2153.9238"/><ellipse cx="8167.5" cy="2186.9238" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="171" x="8194.5" y="2197.8281">result: dict</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="8158.5" y="2216.7891"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="8194.5" y="2236.6934">error: list</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="8158.5" y="2255.6543"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="8194.5" y="2275.5586">input_obj: string</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="8158.5" y="2294.5195"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="195" x="8194.5" y="2314.4238">e: exception</text><!--MD5=[02ba0ac2b96b79dad72449944b22f382]
+class class_NboxApi.get_single_id--><rect codeLine="142" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="454.9219" id="class_NboxApi.get_single_id" style="stroke:#A80036;stroke-width:4.5;" width="345" x="7609.5" y="1859.0977"/><ellipse cx="7666.65" cy="1907.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M7677.8414,1895.8931 L7662.0284,1895.8931 L7662.0284,1903.9116 L7676.422,1903.9116 L7676.422,1910.3862 L7662.0284,1910.3862 L7662.0284,1926.5977 L7654.6822,1926.5977 L7654.6822,1889.4185 L7677.8414,1889.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="222" x="7711.35" y="1920.7031">get_single_id</text><line style="stroke:#A80036;stroke-width:4.5;" x1="7612.5" x2="7951.5" y1="1955.0977" y2="1955.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="7627.5" y="1999.002">vm_name: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="237" x="7627.5" y="2037.8672">api_attr: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="7627.5" y="2076.7324">input_obj: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="7627.5" y="2115.5977">error: list</text><line style="stroke:#A80036;stroke-width:3.0;" x1="7612.5" x2="7951.5" y1="2134.5586" y2="2134.5586"/><ellipse cx="7642.5" cy="2167.5586" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="231" x="7669.5" y="2178.4629">obj_id: integer</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="7633.5" y="2197.4238"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="7669.5" y="2217.3281">error: list</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="7633.5" y="2236.2891"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="7669.5" y="2256.1934">input_obj: string</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="7633.5" y="2275.1543"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="195" x="7669.5" y="2295.0586">e: exception</text><!--MD5=[b6f17aaf2f68f9baa54fafee45110502]
+class class_NboxApi.get_vlan_id--><rect codeLine="171" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="532.6523" id="class_NboxApi.get_vlan_id" style="stroke:#A80036;stroke-width:4.5;" width="324" x="7092" y="1820.0977"/><ellipse cx="7153.2" cy="1868.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M7164.3914,1856.8931 L7148.5784,1856.8931 L7148.5784,1864.9116 L7162.972,1864.9116 L7162.972,1871.3862 L7148.5784,1871.3862 L7148.5784,1887.5977 L7141.2322,1887.5977 L7141.2322,1850.4185 L7164.3914,1850.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="192" x="7198.8" y="1881.7031">get_vlan_id</text><line style="stroke:#A80036;stroke-width:4.5;" x1="7095" x2="7413" y1="1916.0977" y2="1916.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="168" x="7110" y="1960.002">intf: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="216" x="7110" y="1998.8672">vl_grp: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="132" x="7110" y="2037.7324">vlan: list</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="7110" y="2076.5977">error: list</text><line style="stroke:#A80036;stroke-width:3.0;" x1="7095" x2="7413" y1="2095.5586" y2="2095.5586"/><ellipse cx="7125" cy="2128.5586" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="246" x="7152" y="2139.4629">vlan_id: integer</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="7116" y="2158.4238"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="7152" y="2178.3281">error: list</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="7116" y="2197.2891"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="216" x="7152" y="2217.1934">vl_grp: string</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="7116" y="2236.1543"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="132" x="7152" y="2256.0586">vlan: list</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="7116" y="2275.0195"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="195" x="7152" y="2294.9238">e: exception</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="0" x="7161" y="2333.7891"/><!--MD5=[1bc0a0ebc7b1a29e158a090f6a735130]
+class class_NboxApi.NboxApi(__init__)--><rect codeLine="91" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="221.7305" id="class_NboxApi.NboxApi(__init__)" style="stroke:#A80036;stroke-width:4.5;" width="393" x="6505.5" y="1976.0977"/><ellipse cx="6550.5" cy="2024.0977" fill="#ADD1B2" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M6557.9194,2042.5269 Q6556.1763,2043.4233 6554.2588,2043.8716 Q6552.3413,2044.3198 6550.2246,2044.3198 Q6542.7041,2044.3198 6538.7446,2039.3643 Q6534.7852,2034.4087 6534.7852,2025.0454 Q6534.7852,2015.6572 6538.7446,2010.7017 Q6542.7041,2005.7461 6550.2246,2005.7461 Q6552.3413,2005.7461 6554.2837,2006.1943 Q6556.2261,2006.6426 6557.9194,2007.5391 L6557.9194,2015.707 Q6556.0269,2013.9639 6554.2463,2013.1545 Q6552.4658,2012.3452 6550.5732,2012.3452 Q6546.5391,2012.3452 6544.4846,2015.5452 Q6542.4302,2018.7451 6542.4302,2025.0454 Q6542.4302,2031.3208 6544.4846,2034.5208 Q6546.5391,2037.7207 6550.5732,2037.7207 Q6552.4658,2037.7207 6554.2463,2036.9114 Q6556.0269,2036.1021 6557.9194,2034.3589 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="297" x="6592.5" y="2037.7031">NboxApi(__init__)</text><line style="stroke:#A80036;stroke-width:4.5;" x1="6508.5" x2="6895.5" y1="2072.0977" y2="2072.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="207" x="6523.5" y="2116.002">rc: Console()</text><line style="stroke:#A80036;stroke-width:3.0;" x1="6508.5" x2="6895.5" y1="2134.9629" y2="2134.9629"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="306" x="6523.5" y="2178.8672">self.nb = pynetbox</text><!--MD5=[8d6abe2f0e9dda9f6b04181686bffe85]
+class class_NboxApi.obj_create--><rect codeLine="97" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="377.1914" id="class_NboxApi.obj_create" style="stroke:#A80036;stroke-width:4.5;" width="543" x="3409.5" y="1898.0977"/><ellipse cx="3576.75" cy="1946.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M3587.9414,1934.8931 L3572.1284,1934.8931 L3572.1284,1942.9116 L3586.522,1942.9116 L3586.522,1949.3862 L3572.1284,1949.3862 L3572.1284,1965.5977 L3564.7822,1965.5977 L3564.7822,1928.4185 L3587.9414,1928.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="183" x="3638.25" y="1959.7031">obj_create</text><line style="stroke:#A80036;stroke-width:4.5;" x1="3412.5" x2="3949.5" y1="1994.0977" y2="1994.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="270" x="3427.5" y="2038.002">obj_name: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="237" x="3427.5" y="2076.8672">api_attr: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="231" x="3427.5" y="2115.7324">input_obj: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="3427.5" y="2154.5977">error: list</text><line style="stroke:#A80036;stroke-width:3.0;" x1="3412.5" x2="3949.5" y1="2173.5586" y2="2173.5586"/><ellipse cx="3442.5" cy="2206.5586" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="465" x="3469.5" y="2217.4629">return: ['create', result, True]</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="3433.5" y="2236.4238"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="3469.5" y="2256.3281">error: list</text><path d="M3409.5,2679.5977 L3409.5,2801.4609 A0,0 0 0 0 3409.5,2801.4609 L3928.5,2801.4609 A0,0 0 0 0 3928.5,2801.4609 L3928.5,2709.5977 L3898.5,2679.5977 L3681,2679.5977 L3669,2276.2477 L3657,2679.5977 L3409.5,2679.5977 A0,0 0 0 0 3409.5,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M3898.5,2679.5977 L3898.5,2709.5977 L3928.5,2709.5977 L3898.5,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="435" x="3427.5" y="2732.3027">Create object returning</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="456" x="3427.5" y="2778.2344">output and change (T/F)</text><!--MD5=[9b524ea5159cf701cbed9ba0c57b63c6]
+class class_NboxApi.obj_update--><rect codeLine="108" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="377.1914" id="class_NboxApi.obj_update" style="stroke:#A80036;stroke-width:4.5;" width="633" x="5005.5" y="1898.0977"/><ellipse cx="5210.25" cy="1946.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M5221.4414,1934.8931 L5205.6284,1934.8931 L5205.6284,1942.9116 L5220.022,1942.9116 L5220.022,1949.3862 L5205.6284,1949.3862 L5205.6284,1965.5977 L5198.2822,1965.5977 L5198.2822,1928.4185 L5221.4414,1928.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="198" x="5271.75" y="1959.7031">obj_update</text><line style="stroke:#A80036;stroke-width:4.5;" x1="5008.5" x2="5635.5" y1="1994.0977" y2="1994.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="270" x="5023.5" y="2038.002">obj_name: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="237" x="5023.5" y="2076.8672">api_attr: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="231" x="5023.5" y="2115.7324">input_obj: dict</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="5023.5" y="2154.5977">error: list</text><line style="stroke:#A80036;stroke-width:3.0;" x1="5008.5" x2="5635.5" y1="2173.5586" y2="2173.5586"/><ellipse cx="5038.5" cy="2206.5586" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="555" x="5065.5" y="2217.4629">return: ['update', nbox_obj, result]</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="5029.5" y="2236.4238"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="5065.5" y="2256.3281">error: list</text><path d="M5527.5,2679.5977 L5527.5,2801.4609 A0,0 0 0 0 5527.5,2801.4609 L6046.5,2801.4609 A0,0 0 0 0 6046.5,2801.4609 L6046.5,2709.5977 L6016.5,2679.5977 L5595,2679.5977 L5583,2276.2477 L5571,2679.5977 L5527.5,2679.5977 A0,0 0 0 0 5527.5,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M6016.5,2679.5977 L6016.5,2709.5977 L6046.5,2709.5977 L6016.5,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="447" x="5545.5" y="2732.3027">Update object returning</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="456" x="5545.5" y="2778.2344">output and change (T/F)</text><!--MD5=[d653bc1b1d72d1ccb491386d0a717d8e]
+class class_NboxApi.obj_delete--><rect codeLine="119" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="299.4609" id="class_NboxApi.obj_delete" style="stroke:#A80036;stroke-width:4.5;" width="345" x="4555.5" y="1937.0977"/><ellipse cx="4630.2" cy="1985.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M4641.3914,1973.8931 L4625.5784,1973.8931 L4625.5784,1981.9116 L4639.972,1981.9116 L4639.972,1988.3862 L4625.5784,1988.3862 L4625.5784,2004.5977 L4618.2322,2004.5977 L4618.2322,1967.4185 L4641.3914,1967.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="183" x="4678.8" y="1998.7031">obj_delete</text><line style="stroke:#A80036;stroke-width:4.5;" x1="4558.5" x2="4897.5" y1="2033.0977" y2="2033.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="270" x="4573.5" y="2077.002">nbox_obj: object</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="4573.5" y="2115.8672">task_type: string</text><line style="stroke:#A80036;stroke-width:3.0;" x1="4558.5" x2="4897.5" y1="2134.8281" y2="2134.8281"/><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="4579.5" y="2158.8281"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="4615.5" y="2178.7324">nbox_obj: string</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="4579.5" y="2197.6934"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="4615.5" y="2217.5977">task_type: string</text><path d="M4887,2679.5977 L4887,2801.4609 L5421,2801.4609 L5421,2709.5977 L5391,2679.5977 L4887,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M5391,2679.5977 L5391,2709.5977 L5421,2709.5977 L5391,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="471" x="4905" y="2732.3027">Deletes object, nbox_obj</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="402" x="4905" y="2778.2344">is the vm or interface</text><path d="M7999.5,2657.0977 L7999.5,2824.8926 A0,0 0 0 0 7999.5,2824.8926 L8572.5,2824.8926 A0,0 0 0 0 8572.5,2824.8926 L8572.5,2687.0977 L8542.5,2657.0977 L8343,2657.0977 L8331,2335.2877 L8319,2657.0977 L7999.5,2657.0977 A0,0 0 0 0 7999.5,2657.0977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M8542.5,2657.0977 L8542.5,2687.0977 L8572.5,2687.0977 L8542.5,2657.0977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="426" x="8017.5" y="2709.8027">Gets ID of primary and</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="510" x="8017.5" y="2755.7344">secondary (other_obj_type)</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="402" x="8017.5" y="2801.666">object within primary</text><path d="M7525.5,2679.5977 L7525.5,2801.4609 A0,0 0 0 0 7525.5,2801.4609 L7894.5,2801.4609 A0,0 0 0 0 7894.5,2801.4609 L7894.5,2709.5977 L7864.5,2679.5977 L7764,2679.5977 L7752,2315.8477 L7740,2679.5977 L7525.5,2679.5977 A0,0 0 0 0 7525.5,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M7864.5,2679.5977 L7864.5,2709.5977 L7894.5,2709.5977 L7864.5,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="276" x="7543.5" y="2732.3027">Gets the ID for</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="306" x="7543.5" y="2778.2344">a primary object</text><!--MD5=[b27bcadf908a8e0d9440c40cd8bcbe18]
+class class_NboxApi.get_single_fltr_id--><rect codeLine="155" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="571.5176" id="class_NboxApi.get_single_fltr_id" style="stroke:#A80036;stroke-width:4.5;" width="390" x="4059" y="1800.5977"/><ellipse cx="4106.7" cy="1848.5977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M4117.8914,1837.3931 L4102.0784,1837.3931 L4102.0784,1845.4116 L4116.472,1845.4116 L4116.472,1851.8862 L4102.0784,1851.8862 L4102.0784,1868.0977 L4094.7322,1868.0977 L4094.7322,1830.9185 L4117.8914,1830.9185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="288" x="4149.3" y="1862.2031">get_single_fltr_id</text><line style="stroke:#A80036;stroke-width:4.5;" x1="4062" x2="4446" y1="1896.5977" y2="1896.5977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="237" x="4077" y="1940.502">api_attr: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="333" x="4077" y="1979.3672">input_obj_fltr: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="4077" y="2018.2324">input_obj: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="315" x="4077" y="2057.0977">obj_cntr_fltr: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="315" x="4077" y="2095.9629">obj_cntr_id: integer</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="354" x="4077" y="2134.8281">obj_cntr_name: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="4077" y="2173.6934">error: list</text><line style="stroke:#A80036;stroke-width:3.0;" x1="4062" x2="4446" y1="2192.6543" y2="2192.6543"/><ellipse cx="4092" cy="2225.6543" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="231" x="4119" y="2236.5586">obj_id: integer</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="4083" y="2255.5195"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="4119" y="2275.4238">error: list</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="4083" y="2294.3848"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="4119" y="2314.2891">input_obj: string</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="4083" y="2333.25"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="195" x="4119" y="2353.1543">e: exception</text><path d="M4033.5,2679.5977 L4033.5,2801.4609 A0,0 0 0 0 4033.5,2801.4609 L4780.5,2801.4609 A0,0 0 0 0 4780.5,2801.4609 L4780.5,2709.5977 L4750.5,2679.5977 L4266,2679.5977 L4254,2373.9577 L4242,2679.5977 L4033.5,2679.5977 A0,0 0 0 0 4033.5,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M4750.5,2679.5977 L4750.5,2709.5977 L4780.5,2709.5977 L4750.5,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="684" x="4051.5" y="2732.3027">Gets the ID for primary object based</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="663" x="4051.5" y="2778.2344">on its name and its container (cntr)</text><path d="M6921,2679.5977 L6921,2801.4609 A0,0 0 0 0 6921,2801.4609 L7419,2801.4609 A0,0 0 0 0 7419,2801.4609 L7419,2709.5977 L7389,2679.5977 L7266,2679.5977 L7254,2354.9977 L7242,2679.5977 L6921,2679.5977 A0,0 0 0 0 6921,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M7389,2679.5977 L7389,2709.5977 L7419,2709.5977 L7389,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="414" x="6939" y="2732.3027">Gets unique VLAN IDs</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="435" x="6939" y="2778.2344">using VLAN group slug</text><!--MD5=[2651d89c04a916d4b6efff6aec566388]
+class class_NboxApi.chk_exist--><rect codeLine="186" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="532.6523" id="class_NboxApi.chk_exist" style="stroke:#A80036;stroke-width:4.5;" width="480" x="5745" y="1820.0977"/><ellipse cx="5892.75" cy="1868.0977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M5903.9414,1856.8931 L5888.1284,1856.8931 L5888.1284,1864.9116 L5902.522,1864.9116 L5902.522,1871.3862 L5888.1284,1871.3862 L5888.1284,1887.5977 L5880.7822,1887.5977 L5880.7822,1850.4185 L5903.9414,1850.4185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="159" x="5954.25" y="1881.7031">chk_exist</text><line style="stroke:#A80036;stroke-width:4.5;" x1="5748" x2="6222" y1="1916.0977" y2="1916.0977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="237" x="5763" y="1960.002">api_attr: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="333" x="5763" y="1998.8672">input_obj_fltr: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="5763" y="2037.7324">input_obj: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="315" x="5763" y="2076.5977">obj_cntr_fltr: string</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="315" x="5763" y="2115.4629">obj_cntr_id: integer</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="354" x="5763" y="2154.3281">obj_cntr_name: string</text><line style="stroke:#A80036;stroke-width:3.0;" x1="5748" x2="6222" y1="2173.2891" y2="2173.2891"/><ellipse cx="5778" cy="2206.2891" rx="9" ry="9" style="stroke:#038048;stroke-width:3.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="402" x="5805" y="2217.1934">result: None or nbox_obj</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="5769" y="2236.1543"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="150" x="5805" y="2256.0586">error: list</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="5769" y="2275.0195"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="267" x="5805" y="2294.9238">input_obj: string</text><rect fill="none" height="18" style="stroke:#C82930;stroke-width:3.0;" width="18" x="5769" y="2313.8848"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="195" x="5805" y="2333.7891">e: exception</text><path d="M6151.5,2679.5977 L6151.5,2801.4609 A0,0 0 0 0 6151.5,2801.4609 L6814.5,2801.4609 A0,0 0 0 0 6814.5,2801.4609 L6814.5,2709.5977 L6784.5,2679.5977 L6200.25,2679.5977 L6188.25,2354.9977 L6176.25,2679.5977 L6151.5,2679.5977 A0,0 0 0 0 6151.5,2679.5977 " fill="#FBFB77" filter="url(#fkk7tsk4fe6c3)" style="stroke:#A80036;stroke-width:3.0;"/><path d="M6784.5,2679.5977 L6784.5,2709.5977 L6814.5,2709.5977 L6784.5,2679.5977 " fill="#FBFB77" style="stroke:#A80036;stroke-width:3.0;"/><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="600" x="6169.5" y="2732.3027">Check if object exists (VM or IP)</text><text fill="#000000" font-family="sans-serif" font-size="39" lengthAdjust="spacing" textLength="594" x="6169.5" y="2778.2344">in the container (cluster or VRF)</text><!--MD5=[4520fda4e10d4d791ce48fe025810cd4]
+class main--><rect codeLine="6" fill="#FEFECE" filter="url(#fkk7tsk4fe6c3)" height="440.0566" id="main" style="stroke:#A80036;stroke-width:4.5;" width="483" x="2395.5" y="84.5977"/><ellipse cx="2582.25" cy="132.5977" fill="#FFA500" rx="33" ry="33" style="stroke:#A80036;stroke-width:3.0;"/><path d="M2593.4414,121.3931 L2577.6284,121.3931 L2577.6284,129.4116 L2592.022,129.4116 L2592.022,135.8862 L2577.6284,135.8862 L2577.6284,152.0977 L2570.2822,152.0977 L2570.2822,114.9185 L2593.4414,114.9185 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="36" lengthAdjust="spacing" textLength="84" x="2643.75" y="146.2031">main</text><line style="stroke:#A80036;stroke-width:4.5;" x1="2398.5" x2="2875.5" y1="180.5977" y2="180.5977"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="294" x="2413.5" y="224.502">script, first = argv</text><line style="stroke:#A80036;stroke-width:3.0;" x1="2398.5" x2="2875.5" y1="243.4629" y2="243.4629"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="234" x="2413.5" y="287.3672">rc = Console()</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="294" x="2413.5" y="326.2324">nbox = NboxApi()</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="396" x="2413.5" y="365.0977">create_dm = CreateDm()</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="447" x="2413.5" y="403.9629">create_obj = CreateObject()</text><line style="stroke:#A80036;stroke-width:3.0;" x1="2398.5" x2="2875.5" y1="422.9238" y2="422.9238"/><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="405" x="2413.5" y="466.8281">dm = create_dm.engine()</text><text fill="#000000" font-family="sans-serif" font-size="33" lengthAdjust="spacing" textLength="309" x="2413.5" y="505.6934">create_obj.engine()</text><!--MD5=[d3949ef4c09babc5384ac29f648df39f]
+link main to class_CreateDm.engine--><path codeLine="18" d="M2879.34,306.5977 C4086.15,306.5977 9390,306.5977 9390,306.5977 C9390,306.5977 9390,1248.3277 9390,1248.3277 " fill="none" id="main-to-class_CreateDm.engine" style="stroke:#A80036;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="9390,1263.3277,9402,1236.3277,9390,1248.3277,9378,1236.3277,9390,1263.3277" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[b21bcf4d859db8a199d4401872e49c0c]
+link main to class_CreateObject.engine--><path codeLine="19" d="M2394.84,306.5977 C2171.73,306.5977 1875,306.5977 1875,306.5977 C1875,306.5977 1875,729.5077 1875,729.5077 " fill="none" id="main-to-class_CreateObject.engine" style="stroke:#A80036;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="1875,744.5077,1887,717.5077,1875,729.5077,1863,717.5077,1875,744.5077" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[d85cbdcd462e92f44ed73d165104b27a]
+link class_CreateDm.engine to class_CreateDm.create_vm--><path codeLine="77" d="M9407.58,1486.8277 C9407.58,1655.9377 9407.58,1956.5977 9407.58,1956.5977 C9407.58,1956.5977 9086.4,1956.5977 9086.4,1956.5977 " fill="none" id="class_CreateDm.engine-to-class_CreateDm.create_vm" style="stroke:#A80036;stroke-width:3.0;"/><polygon fill="#A80036" points="9071.4,1956.5977,9098.4,1968.5977,9086.4,1956.5977,9098.4,1944.5977,9071.4,1956.5977" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[0d337348c53c5b211e71beeb2fba2e00]
+link class_CreateDm.engine to class_CreateDm.rmv_empty_attr--><path codeLine="78" d="M9442.71,1485.9277 C9442.71,1485.9277 9442.71,1960.3777 9442.71,1960.3777 " fill="none" id="class_CreateDm.engine-to-class_CreateDm.rmv_empty_attr" style="stroke:#A80036;stroke-width:3.0;"/><polygon fill="#A80036" points="9442.71,1975.3777,9454.71,1948.3777,9442.71,1960.3777,9430.71,1948.3777,9442.71,1975.3777" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[0f36d964d72f3728dee28caa3642a36f]
+link class_CreateDm.engine to class_CreateDm.create_intf_dm--><path codeLine="79" d="M9477.87,1486.0177 C9477.87,1650.3877 9477.87,1938.5977 9477.87,1938.5977 C9477.87,1938.5977 9696.69,1938.5977 9696.69,1938.5977 " fill="none" id="class_CreateDm.engine-to-class_CreateDm.create_intf_dm" style="stroke:#A80036;stroke-width:3.0;"/><polygon fill="#A80036" points="9711.69,1938.5977,9684.69,1926.5977,9696.69,1938.5977,9684.69,1950.5977,9711.69,1938.5977" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[4dd44cd8046a35be24f1ec4daf09f403]
+link class_CreateDm.engine to class_CreateDm.vm_error--><path codeLine="80" d="M9513.21,1374.5977 C9791.76,1374.5977 10446,1374.5977 10446,1374.5977 C10446,1374.5977 10446,1921.8577 10446,1921.8577 " fill="none" id="class_CreateDm.engine-to-class_CreateDm.vm_error" style="stroke:#A80036;stroke-width:3.0;"/><polygon fill="#A80036" points="10446,1936.8577,10458,1909.8577,10446,1921.8577,10434,1909.8577,10446,1936.8577" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[3fa9a94dda8a1980099bf50e0890f298]
+link class_CreateDm.engine to class_NboxApi.get_multi_id--><path codeLine="81" d="M9372.42,1485.6877 C9372.42,1631.6377 9372.42,1869.5977 9372.42,1869.5977 C9372.42,1869.5977 8543.1,1869.5977 8543.1,1869.5977 " fill="none" id="class_CreateDm.engine-to-class_NboxApi.get_multi_id" style="stroke:#A80036;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="8528.1,1869.5977,8555.1,1881.5977,8543.1,1869.5977,8555.1,1857.5977,8528.1,1869.5977" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[4a0dbc836ca1134923de3e61693b7e84]
+link class_CreateDm.engine to class_NboxApi.get_single_id--><path codeLine="82" d="M9302.13,1485.5977 C9302.13,1584.4777 9302.13,1713.5977 9302.13,1713.5977 C9302.13,1713.5977 7782,1713.5977 7782,1713.5977 C7782,1713.5977 7782,1844.0677 7782,1844.0677 " fill="none" id="class_CreateDm.engine-to-class_NboxApi.get_single_id" style="stroke:#A80036;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="7782,1859.0677,7794,1832.0677,7782,1844.0677,7770,1832.0677,7782,1859.0677" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[c7d066afff716848408b8f08c976d5a9]
+link class_CreateDm.engine to class_NboxApi.get_vlan_id--><path codeLine="83" d="M9337.29,1486.3477 C9337.29,1601.6077 9337.29,1764.5977 9337.29,1764.5977 C9337.29,1764.5977 7254,1764.5977 7254,1764.5977 C7254,1764.5977 7254,1804.3177 7254,1804.3177 " fill="none" id="class_CreateDm.engine-to-class_NboxApi.get_vlan_id" style="stroke:#A80036;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="7254,1819.3177,7266,1792.3177,7254,1804.3177,7242,1792.3177,7254,1819.3177" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[6e9f2825a27af7eb94f01c97b7f76e19]
+link class_NboxApi.obj_delete to class_NboxApi.GMN47--><path d="M4833.75,2237.4877 C4833.75,2431.0177 4833.75,2742.5977 4833.75,2742.5977 C4833.75,2742.5977 4855.05,2742.5977 4886.64,2742.5977 " fill="none" id="class_NboxApi.obj_delete-class_NboxApi.GMN47" style="stroke:#A80036;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><!--MD5=[b4b78c0779ae71f64ad6f93c45285c56]
+link class_CreateObject.crte_upte_stdout to class_CreateObject.GMN77--><path d="M2564.46,2412.5977 C2774.79,2412.5977 3044.01,2412.5977 3044.01,2412.5977 C3044.01,2412.5977 3044.01,2584.1377 3044.01,2679.2977 " fill="none" id="class_CreateObject.crte_upte_stdout-class_CreateObject.GMN77" style="stroke:#A80036;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><!--MD5=[5731b37f06798fe6124773c7f5d60e18]
+link class_CreateObject.engine to class_NboxApi.chk_exist--><path codeLine="292" d="M1928.4,966.7477 C1928.4,1017.1177 1928.4,1065.5977 1928.4,1065.5977 C1928.4,1065.5977 6105,1065.5977 6105,1065.5977 C6105,1065.5977 6105,1805.0377 6105,1805.0377 " fill="none" id="class_CreateObject.engine-to-class_NboxApi.chk_exist" style="stroke:#A80036;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="6105,1820.0377,6117,1793.0377,6105,1805.0377,6093,1793.0377,6105,1820.0377" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[ced34ac653d4407db53fa94507fd17d8]
+link class_CreateObject.engine to class_CreateObject.create_vm--><path codeLine="293" d="M1769.73,855.5977 C1428.99,855.5977 378,855.5977 378,855.5977 C378,855.5977 378,1228.6177 378,1228.6177 " fill="none" id="class_CreateObject.engine-to-class_CreateObject.create_vm" style="stroke:#A80036;stroke-width:3.0;"/><polygon fill="#A80036" points="378,1243.6177,390,1216.6177,378,1228.6177,366,1216.6177,378,1243.6177" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[71f5495acbc05924c247c71570c2879a]
+link class_CreateObject.create_vm to class_NboxApi.obj_create--><path codeLine="294" d="M642,1505.6377 C642,1589.8477 642,1683.5977 642,1683.5977 C642,1683.5977 3590.49,1683.5977 3590.49,1683.5977 C3590.49,1683.5977 3590.49,1882.1677 3590.49,1882.1677 " fill="none" id="class_CreateObject.create_vm-to-class_NboxApi.obj_create" style="stroke:#DC143C;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#DC143C" points="3590.49,1897.1677,3602.49,1870.1677,3590.49,1882.1677,3578.49,1870.1677,3590.49,1897.1677" style="stroke:#DC143C;stroke-width:3.0;"/><!--MD5=[1d3defabd2232c84cc0335ce1cadc2b1]
+link class_CreateObject.create_vm to class_CreateObject.crte_upte_stdout--><path codeLine="295" d="M624,1505.4277 C624,1670.3377 624,1932.5977 624,1932.5977 C624,1932.5977 2059.35,1932.5977 2059.35,1932.5977 " fill="none" id="class_CreateObject.create_vm-to-class_CreateObject.crte_upte_stdout" style="stroke:#DC143C;stroke-width:3.0;"/><polygon fill="#DC143C" points="2074.35,1932.5977,2047.35,1920.5977,2059.35,1932.5977,2047.35,1944.5977,2074.35,1932.5977" style="stroke:#DC143C;stroke-width:3.0;"/><!--MD5=[e39e947caf09372fbe58e77ff64ae372]
+link class_CreateObject.engine to class_CreateObject.update_vm--><path codeLine="297" d="M1809.6,966.7477 C1809.6,1092.0577 1809.6,1278.5977 1809.6,1278.5977 C1809.6,1278.5977 1344.87,1278.5977 1344.87,1278.5977 " fill="none" id="class_CreateObject.engine-to-class_CreateObject.update_vm" style="stroke:#A80036;stroke-width:3.0;"/><polygon fill="#A80036" points="1329.87,1278.5977,1356.87,1290.5977,1344.87,1278.5977,1356.87,1266.5977,1329.87,1278.5977" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[193dd800d39fb6f4fe88fb30bbffca30]
+link class_CreateObject.update_vm to class_NboxApi.obj_update--><path codeLine="298" d="M1188,1505.0977 C1188,1577.7277 1188,1653.5977 1188,1653.5977 C1188,1653.5977 5163.75,1653.5977 5163.75,1653.5977 C5163.75,1653.5977 5163.75,1881.9577 5163.75,1881.9577 " fill="none" id="class_CreateObject.update_vm-to-class_NboxApi.obj_update" style="stroke:#800080;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#800080" points="5163.75,1896.9577,5175.75,1869.9577,5163.75,1881.9577,5151.75,1869.9577,5163.75,1896.9577" style="stroke:#800080;stroke-width:3.0;"/><!--MD5=[a0b5bf78c63e222cbaf6d00340abcbf4]
+link class_CreateObject.update_vm to class_CreateObject.crte_upte_stdout--><path codeLine="299" d="M1047,1505.3677 C1047,1642.8877 1047,1839.5977 1047,1839.5977 C1047,1839.5977 2059.5,1839.5977 2059.5,1839.5977 " fill="none" id="class_CreateObject.update_vm-to-class_CreateObject.crte_upte_stdout" style="stroke:#800080;stroke-width:3.0;"/><polygon fill="#800080" points="2074.5,1839.5977,2047.5,1827.5977,2059.5,1839.5977,2047.5,1851.5977,2074.5,1839.5977" style="stroke:#800080;stroke-width:3.0;"/><!--MD5=[c505b740fb45369beef96d3f1fd833a6]
+link class_CreateObject.engine to class_CreateObject.crte_upte_intf--><path codeLine="301" d="M1888.8,966.9877 C1888.8,1041.3577 1888.8,1125.5977 1888.8,1125.5977 C1888.8,1125.5977 2859.99,1125.5977 2859.99,1125.5977 C2859.99,1125.5977 2859.99,1189.3777 2859.99,1189.3777 " fill="none" id="class_CreateObject.engine-to-class_CreateObject.crte_upte_intf" style="stroke:#A80036;stroke-width:3.0;"/><polygon fill="#A80036" points="2859.99,1204.3777,2871.99,1177.3777,2859.99,1189.3777,2847.99,1177.3777,2859.99,1204.3777" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[2bbd001b4318eb03af906796c03a0cd6]
+link class_CreateObject.crte_upte_intf to class_NboxApi.chk_exist--><path codeLine="302" d="M3240.06,1290.5977 C3994.32,1290.5977 5985,1290.5977 5985,1290.5977 C5985,1290.5977 5985,1804.6477 5985,1804.6477 " fill="none" id="class_CreateObject.crte_upte_intf-to-class_NboxApi.chk_exist" style="stroke:#32CD32;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#32CD32" points="5985,1819.6477,5997,1792.6477,5985,1804.6477,5973,1792.6477,5985,1819.6477" style="stroke:#32CD32;stroke-width:3.0;"/><!--MD5=[d963c0961e6b0bcb7f7e7f6d962f9854]
+link class_CreateObject.crte_upte_intf to class_NboxApi.obj_create--><path codeLine="303" d="M3240.57,1461.5977 C3476.04,1461.5977 3771.51,1461.5977 3771.51,1461.5977 C3771.51,1461.5977 3771.51,1882.7377 3771.51,1882.7377 " fill="none" id="class_CreateObject.crte_upte_intf-to-class_NboxApi.obj_create" style="stroke:#32CD32;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#32CD32" points="3771.51,1897.7377,3783.51,1870.7377,3771.51,1882.7377,3759.51,1870.7377,3771.51,1897.7377" style="stroke:#32CD32;stroke-width:3.0;"/><!--MD5=[59f59c08d2bafd58d6fb9de12d1e883d]
+link class_CreateObject.crte_upte_intf to class_NboxApi.obj_update--><path codeLine="304" d="M3240.99,1374.5977 C3902.13,1374.5977 5480.25,1374.5977 5480.25,1374.5977 C5480.25,1374.5977 5480.25,1883.0377 5480.25,1883.0377 " fill="none" id="class_CreateObject.crte_upte_intf-to-class_NboxApi.obj_update" style="stroke:#32CD32;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#32CD32" points="5480.25,1898.0377,5492.25,1871.0377,5480.25,1883.0377,5468.25,1871.0377,5480.25,1898.0377" style="stroke:#32CD32;stroke-width:3.0;"/><!--MD5=[645a40e1e2ce9a689c7bf5ac4267df8f]
+link class_CreateObject.crte_upte_intf to class_CreateObject.crte_upte_stdout--><path codeLine="305" d="M2856.99,1545.2677 C2856.99,1657.0777 2856.99,1782.5977 2856.99,1782.5977 C2856.99,1782.5977 2578.59,1782.5977 2578.59,1782.5977 " fill="none" id="class_CreateObject.crte_upte_intf-to-class_CreateObject.crte_upte_stdout" style="stroke:#32CD32;stroke-width:3.0;"/><polygon fill="#32CD32" points="2563.59,1782.5977,2590.59,1794.5977,2578.59,1782.5977,2590.59,1770.5977,2563.59,1782.5977" style="stroke:#32CD32;stroke-width:3.0;"/><!--MD5=[07b92514cd4758503e08e9b79984791a]
+link class_CreateObject.engine to class_CreateObject.crte_upte_ip--><path codeLine="307" d="M1849.2,967.5277 C1849.2,1073.2177 1849.2,1215.5977 1849.2,1215.5977 C1849.2,1215.5977 2059.47,1215.5977 2059.47,1215.5977 " fill="none" id="class_CreateObject.engine-to-class_CreateObject.crte_upte_ip" style="stroke:#A80036;stroke-width:3.0;"/><polygon fill="#A80036" points="2074.47,1215.5977,2047.47,1203.5977,2059.47,1215.5977,2047.47,1227.5977,2074.47,1215.5977" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[f3c9c22bf844f080e3a5dac8f1e8e9e1]
+link class_CreateObject.crte_upte_ip to class_NboxApi.get_single_fltr_id--><path codeLine="308" d="M2564.13,1320.5977 C2599.65,1320.5977 2624.49,1320.5977 2624.49,1320.5977 C2624.49,1320.5977 2624.49,1851.5977 2624.49,1851.5977 C2624.49,1851.5977 4043.25,1851.5977 4043.25,1851.5977 " fill="none" id="class_CreateObject.crte_upte_ip-to-class_NboxApi.get_single_fltr_id" style="stroke:#1E90FF;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#1E90FF" points="4058.25,1851.5977,4031.25,1839.5977,4043.25,1851.5977,4031.25,1863.5977,4058.25,1851.5977" style="stroke:#1E90FF;stroke-width:3.0;"/><!--MD5=[4e5992cad7c1302e04412d6b86dcd59b]
+link class_CreateObject.crte_upte_ip to class_NboxApi.chk_exist--><path codeLine="309" d="M2441.25,1564.0477 C2441.25,1581.9577 2441.25,1593.5977 2441.25,1593.5977 C2441.25,1593.5977 5865,1593.5977 5865,1593.5977 C5865,1593.5977 5865,1803.6877 5865,1803.6877 " fill="none" id="class_CreateObject.crte_upte_ip-to-class_NboxApi.chk_exist" style="stroke:#1E90FF;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#1E90FF" points="5865,1818.6877,5877,1791.6877,5865,1803.6877,5853,1791.6877,5865,1818.6877" style="stroke:#1E90FF;stroke-width:3.0;"/><!--MD5=[ba85d975f7473058d4e20377219a3e47]
+link class_CreateObject.crte_upte_ip to class_NboxApi.obj_create--><path codeLine="310" d="M2563.53,1431.5977 C2582.22,1431.5977 2594.01,1431.5977 2594.01,1431.5977 C2594.01,1431.5977 2594.01,2088.5977 2594.01,2088.5977 C2594.01,2088.5977 3393.12,2088.5977 3393.12,2088.5977 " fill="none" id="class_CreateObject.crte_upte_ip-to-class_NboxApi.obj_create" style="stroke:#1E90FF;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#1E90FF" points="3408.12,2088.5977,3381.12,2076.5977,3393.12,2088.5977,3381.12,2100.5977,3408.12,2088.5977" style="stroke:#1E90FF;stroke-width:3.0;"/><!--MD5=[f3652c0eef0c677827f3dc6cc4fc176e]
+link class_CreateObject.crte_upte_ip to class_NboxApi.obj_update--><path codeLine="311" d="M2319,1564.5877 C2319,1598.6677 2319,1623.5977 2319,1623.5977 C2319,1623.5977 5322,1623.5977 5322,1623.5977 C5322,1623.5977 5322,1882.2277 5322,1882.2277 " fill="none" id="class_CreateObject.crte_upte_ip-to-class_NboxApi.obj_update" style="stroke:#1E90FF;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#1E90FF" points="5322,1897.2277,5334,1870.2277,5322,1882.2277,5310,1870.2277,5322,1897.2277" style="stroke:#1E90FF;stroke-width:3.0;"/><!--MD5=[1a00df1d92768693ca5ce1cd1afcf647]
+link class_CreateObject.crte_upte_ip to class_CreateObject.crte_upte_stdout--><path codeLine="312" d="M2196.75,1563.6577 C2196.75,1563.6577 2196.75,1727.7877 2196.75,1727.7877 " fill="none" id="class_CreateObject.crte_upte_ip-to-class_CreateObject.crte_upte_stdout" style="stroke:#1E90FF;stroke-width:3.0;"/><polygon fill="#1E90FF" points="2196.75,1742.7877,2208.75,1715.7877,2196.75,1727.7877,2184.75,1715.7877,2196.75,1742.7877" style="stroke:#1E90FF;stroke-width:3.0;"/><!--MD5=[80ffd324f85cbf5aa01527af2ee51995]
+link class_CreateObject.crte_upte_stdout to class_NboxApi.obj_delete--><path codeLine="314" d="M2563.74,2394.5977 C3165.36,2394.5977 4668,2394.5977 4668,2394.5977 C4668,2394.5977 4668,2252.2477 4668,2252.2477 " fill="none" id="class_CreateObject.crte_upte_stdout-to-class_NboxApi.obj_delete" style="stroke:#A80036;stroke-width:3.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#A80036" points="4668,2237.2477,4656,2264.2477,4668,2252.2477,4680,2264.2477,4668,2237.2477" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[925b86743992dea3c76d8b46f824784a]
+link class_CreateObject.crte_upte_stdout to class_CreateObject.format_rslt_err--><path codeLine="315" d="M2074.08,2289.5977 C1921.86,2289.5977 1755,2289.5977 1755,2289.5977 C1755,2289.5977 1755,2614.4977 1755,2614.4977 " fill="none" id="class_CreateObject.crte_upte_stdout-to-class_CreateObject.format_rslt_err" style="stroke:#A80036;stroke-width:3.0;"/><polygon fill="#A80036" points="1755,2629.4977,1767,2602.4977,1755,2614.4977,1743,2602.4977,1755,2629.4977" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[5f9344841b176ab037119d9f072f80e7]
+link class_CreateObject.crte_upte_stdout to class_CreateObject.format_stdout_intf_ip--><path codeLine="316" d="M2319,2431.3477 C2319,2431.3477 2319,2595.1177 2319,2595.1177 " fill="none" id="class_CreateObject.crte_upte_stdout-to-class_CreateObject.format_stdout_intf_ip" style="stroke:#A80036;stroke-width:3.0;"/><polygon fill="#A80036" points="2319,2610.1177,2331,2583.1177,2319,2595.1177,2307,2583.1177,2319,2610.1177" style="stroke:#A80036;stroke-width:3.0;"/><!--MD5=[5a8d9cc5d27dc7f26f9e31f29972cf91]
+@startuml
+scale 3
+skinparam linetype ortho
+
+title Function Diagram
+
+class main << (F,orange) >> {
+    script, first = argv
+    - -
+    rc = Console()
+    nbox = NboxApi()
+    create_dm = CreateDm()
+    create_obj = CreateObject()
+    - -
+    dm = create_dm.engine()
+    create_obj.engine()
+}
+
+main ..> class_CreateDm.engine
+main ..> class_CreateObject.engine
+
+' ####### Class CreateDm #######
+namespace class_CreateDm #DDDDDD {
+
+class CreateDm(__init__) {
+    rc: Console()
+    nbox: Console()
+    - -
+    self.rc: rc
+    self.nbox: nbox
+    self.my_vars: dict
+}
+
+class engine << (F,orange) >> {
+    None
+    - -
+    +all_vm: list
+}
+' note top: runs all methods
+
+class create_vm << (F,orange) >> {
+    clstr_site: dict
+    each_clstr: dict
+    each_vm: dict
+    tmp_vm: dict
+    - -
+    +vm: dict
+}
+note bottom: Create DM of \nVM attributes
+
+class rmv_empty_attr << (F,orange) >> {
+    attr_dict: dict
+    - -
+    +attr_dict: dict
+}
+note bottom: Remove empty dicts\n(attributes) from DM
+
+class create_intf_dm << (F,orange) >> {
+    tmp_intf_dict: dict
+    each_vm: dict
+    each_intf: dict
+    tmp_vm: dict
+    - -
+    +tmp_intf: list
+    +tmp_ip: list
+}
+note bottom: Creates the DM\nof interface and IP
+
+class vm_error << (F,orange) >> {
+    vm_name: string
+    input_err: list
+    - -
+    -vm_name: string
+    -tmp_err: string
+}
+note bottom: Grouped per-VM errors if VM\nor interface objects don't exist
+
+engine - -> create_vm
+engine - -> rmv_empty_attr
+engine - -> create_intf_dm
+engine - -> vm_error
+engine ..> class_NboxApi.get_multi_id
+engine ..> class_NboxApi.get_single_id
+engine ..> class_NboxApi.get_vlan_id
+}
+
+
+
+' ####### Class CreateDm #######
+package class_NboxApi #DDDDDD {
+
+class NboxApi(__init__) {
+    rc: Console()
+    - -
+    self.nb = pynetbox
+}
+
+class obj_create << (F,orange) >> {
+    obj_name: string
+    api_attr: string
+    input_obj: dict
+    error: list
+    - -
+    +return: ['create', result, True]
+    -error: list
+}
+note bottom: Create object returning\noutput and change (T/F)
+
+class obj_update << (F,orange) >> {
+    obj_name: string
+    api_attr: string
+    input_obj: dict
+    error: list
+    - -
+    +return: ['update', nbox_obj, result]
+    -error: list
+}
+note bottom: Update object returning\noutput and change (T/F)
+
+class obj_delete << (F,orange) >> {
+    nbox_obj: object
+    task_type: string
+    - -
+    -nbox_obj: string
+    -task_type: string
+}
+note bottom: Deletes object, nbox_obj\nis the vm or interface
+
+class get_multi_id << (F,orange) >> {
+    api_attr: string
+    input_obj: string
+    input_obj_type: string
+    other_obj_type: string
+    error: list
+    - -
+    +result: dict
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Gets ID of primary and\nsecondary (other_obj_type)\nobject within primary
+
+class get_single_id << (F,orange) >> {
+    vm_name: string
+    api_attr: string
+    input_obj: string
+    error: list
+    - -
+    +obj_id: integer
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Gets the ID for\na primary object
+
+class get_single_fltr_id << (F,orange) >> {
+    api_attr: string
+    input_obj_fltr: string
+    input_obj: string
+    obj_cntr_fltr: string
+    obj_cntr_id: integer
+    obj_cntr_name: string
+    error: list
+    - -
+    +obj_id: integer
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Gets the ID for primary object based\non its name and its container (cntr)
+
+class get_vlan_id << (F,orange) >> {
+    intf: string
+    vl_grp: string
+    vlan: list
+    error: list
+    - -
+    +vlan_id: integer
+    -error: list
+    -vl_grp: string
+    -vlan: list
+    -e: exception
+
+}
+note bottom: Gets unique VLAN IDs\nusing VLAN group slug
+
+class chk_exist << (F,orange) >> {
+    api_attr: string
+    input_obj_fltr: string
+    input_obj: string
+    obj_cntr_fltr: string
+    obj_cntr_id: integer
+    obj_cntr_name: string
+    - -
+    +result: None or nbox_obj
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Check if object exists (VM or IP)\nin the container (cluster or VRF)
+
+}
+
+
+' ####### Class CreateObject #######
+namespace class_CreateObject #DDDDDD {
+
+class CreateObject(__init__) {
+    rc: Console()
+    nbox: Console()
+    - -
+    self.rc: rc
+    self.nbox: nbox
+}
+
+class engine << (F,orange) >> {
+    dm: dict
+    - -
+    None
+}
+
+class format_rslt_err << (F,orange) >> {
+    input_list: list
+    - -
+    +output_dict: dict
+}
+note bottom: Combines interface/ip error or result\nmessages into dict to use in stdout
+
+class format_stdout_intf_ip << (F,orange) >> {
+    obj_type: string
+    input_rslt: dict
+    - -
+    +input_rslt: dict
+}
+note bottom: Formats the output\nfor interface/IP stdout
+
+class crte_upte_stdout << (F,orange) >> {
+    obj_type: string
+    vm_exist: None or nbox_obj
+    dm: dict
+    deploy_err: list
+    vm_result: dict
+    intf_result: dict
+    ip_result: dict
+    - -
+    +vm_result: dict
+    +vm_rslt: dict
+    +intf_rslt: dict
+    +ip_rslt: dict
+    -obj_type: string
+    -err: dict
+
+}
+note bottom: Prints stdout dependant on\nerror or the task performed
+
+class create_vm << (F,orange) >> {
+    vm_exist: None or nbox_obj
+    dm: dict
+    - -
+    +result: [vm_result, deploy_err]
+}
+note bottom: Creates the VM only,\nno interfaces and IPs
+
+class update_vm << (F,orange) >> {
+    vm_exist: None or nbox_obj
+    dm: dict
+    - -
+    +result: [vm_result, deploy_err]
+}
+note bottom: Updates VM if already exists \nand something has changed
+
+class crte_upte_intf << (F,orange) >> {
+    dm: dict
+    vm_exist: None or nbox_obj
+    vm_result: dict
+    deploy_err: list
+    - -
+    +result: [intf_result, deploy_err]
+}
+note top: Creates new or updates\nupdates existing interfaces
+
+class crte_upte_ip << (F,orange) >> {
+    dm: dict
+    vm_exist: None or nbox_obj
+    vm_result: dict
+    intf_result: list
+    deploy_err: list
+    - -
+    None
+}
+note left: Creates new interface IPs\nor adds IPs to interfaces
+
+engine ..> class_NboxApi.chk_exist
+engine - -> create_vm
+create_vm .[#Crimson].> class_NboxApi.obj_create
+create_vm -[#Crimson]-> crte_upte_stdout
+
+engine - -> update_vm
+update_vm .[#Purple].> class_NboxApi.obj_update
+update_vm -[#Purple]-> crte_upte_stdout
+
+engine - -> crte_upte_intf
+crte_upte_intf .[#LimeGreen].> class_NboxApi.chk_exist
+crte_upte_intf .[#LimeGreen].> class_NboxApi.obj_create
+crte_upte_intf .[#LimeGreen].> class_NboxApi.obj_update
+crte_upte_intf -[#LimeGreen]-> crte_upte_stdout
+
+engine - -> crte_upte_ip
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.get_single_fltr_id
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.chk_exist
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.obj_create
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.obj_update
+crte_upte_ip -[#DodgerBlue]-> crte_upte_stdout
+
+crte_upte_stdout .down.> class_NboxApi.obj_delete
+crte_upte_stdout - -> format_rslt_err
+crte_upte_stdout - -> format_stdout_intf_ip
+}
+
+@enduml
+
+@startuml
+scale 3
+skinparam linetype ortho
+
+title Function Diagram
+
+class main << (F,orange) >> {
+    script, first = argv
+    - -
+    rc = Console()
+    nbox = NboxApi()
+    create_dm = CreateDm()
+    create_obj = CreateObject()
+    - -
+    dm = create_dm.engine()
+    create_obj.engine()
+}
+
+main ..> class_CreateDm.engine
+main ..> class_CreateObject.engine
+
+namespace class_CreateDm #DDDDDD {
+
+class CreateDm(__init__) {
+    rc: Console()
+    nbox: Console()
+    - -
+    self.rc: rc
+    self.nbox: nbox
+    self.my_vars: dict
+}
+
+class engine << (F,orange) >> {
+    None
+    - -
+    +all_vm: list
+}
+
+class create_vm << (F,orange) >> {
+    clstr_site: dict
+    each_clstr: dict
+    each_vm: dict
+    tmp_vm: dict
+    - -
+    +vm: dict
+}
+note bottom: Create DM of \nVM attributes
+
+class rmv_empty_attr << (F,orange) >> {
+    attr_dict: dict
+    - -
+    +attr_dict: dict
+}
+note bottom: Remove empty dicts\n(attributes) from DM
+
+class create_intf_dm << (F,orange) >> {
+    tmp_intf_dict: dict
+    each_vm: dict
+    each_intf: dict
+    tmp_vm: dict
+    - -
+    +tmp_intf: list
+    +tmp_ip: list
+}
+note bottom: Creates the DM\nof interface and IP
+
+class vm_error << (F,orange) >> {
+    vm_name: string
+    input_err: list
+    - -
+    -vm_name: string
+    -tmp_err: string
+}
+note bottom: Grouped per-VM errors if VM\nor interface objects don't exist
+
+engine - -> create_vm
+engine - -> rmv_empty_attr
+engine - -> create_intf_dm
+engine - -> vm_error
+engine ..> class_NboxApi.get_multi_id
+engine ..> class_NboxApi.get_single_id
+engine ..> class_NboxApi.get_vlan_id
+}
+
+
+
+package class_NboxApi #DDDDDD {
+
+class NboxApi(__init__) {
+    rc: Console()
+    - -
+    self.nb = pynetbox
+}
+
+class obj_create << (F,orange) >> {
+    obj_name: string
+    api_attr: string
+    input_obj: dict
+    error: list
+    - -
+    +return: ['create', result, True]
+    -error: list
+}
+note bottom: Create object returning\noutput and change (T/F)
+
+class obj_update << (F,orange) >> {
+    obj_name: string
+    api_attr: string
+    input_obj: dict
+    error: list
+    - -
+    +return: ['update', nbox_obj, result]
+    -error: list
+}
+note bottom: Update object returning\noutput and change (T/F)
+
+class obj_delete << (F,orange) >> {
+    nbox_obj: object
+    task_type: string
+    - -
+    -nbox_obj: string
+    -task_type: string
+}
+note bottom: Deletes object, nbox_obj\nis the vm or interface
+
+class get_multi_id << (F,orange) >> {
+    api_attr: string
+    input_obj: string
+    input_obj_type: string
+    other_obj_type: string
+    error: list
+    - -
+    +result: dict
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Gets ID of primary and\nsecondary (other_obj_type)\nobject within primary
+
+class get_single_id << (F,orange) >> {
+    vm_name: string
+    api_attr: string
+    input_obj: string
+    error: list
+    - -
+    +obj_id: integer
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Gets the ID for\na primary object
+
+class get_single_fltr_id << (F,orange) >> {
+    api_attr: string
+    input_obj_fltr: string
+    input_obj: string
+    obj_cntr_fltr: string
+    obj_cntr_id: integer
+    obj_cntr_name: string
+    error: list
+    - -
+    +obj_id: integer
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Gets the ID for primary object based\non its name and its container (cntr)
+
+class get_vlan_id << (F,orange) >> {
+    intf: string
+    vl_grp: string
+    vlan: list
+    error: list
+    - -
+    +vlan_id: integer
+    -error: list
+    -vl_grp: string
+    -vlan: list
+    -e: exception
+
+}
+note bottom: Gets unique VLAN IDs\nusing VLAN group slug
+
+class chk_exist << (F,orange) >> {
+    api_attr: string
+    input_obj_fltr: string
+    input_obj: string
+    obj_cntr_fltr: string
+    obj_cntr_id: integer
+    obj_cntr_name: string
+    - -
+    +result: None or nbox_obj
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Check if object exists (VM or IP)\nin the container (cluster or VRF)
+
+}
+
+
+namespace class_CreateObject #DDDDDD {
+
+class CreateObject(__init__) {
+    rc: Console()
+    nbox: Console()
+    - -
+    self.rc: rc
+    self.nbox: nbox
+}
+
+class engine << (F,orange) >> {
+    dm: dict
+    - -
+    None
+}
+
+class format_rslt_err << (F,orange) >> {
+    input_list: list
+    - -
+    +output_dict: dict
+}
+note bottom: Combines interface/ip error or result\nmessages into dict to use in stdout
+
+class format_stdout_intf_ip << (F,orange) >> {
+    obj_type: string
+    input_rslt: dict
+    - -
+    +input_rslt: dict
+}
+note bottom: Formats the output\nfor interface/IP stdout
+
+class crte_upte_stdout << (F,orange) >> {
+    obj_type: string
+    vm_exist: None or nbox_obj
+    dm: dict
+    deploy_err: list
+    vm_result: dict
+    intf_result: dict
+    ip_result: dict
+    - -
+    +vm_result: dict
+    +vm_rslt: dict
+    +intf_rslt: dict
+    +ip_rslt: dict
+    -obj_type: string
+    -err: dict
+
+}
+note bottom: Prints stdout dependant on\nerror or the task performed
+
+class create_vm << (F,orange) >> {
+    vm_exist: None or nbox_obj
+    dm: dict
+    - -
+    +result: [vm_result, deploy_err]
+}
+note bottom: Creates the VM only,\nno interfaces and IPs
+
+class update_vm << (F,orange) >> {
+    vm_exist: None or nbox_obj
+    dm: dict
+    - -
+    +result: [vm_result, deploy_err]
+}
+note bottom: Updates VM if already exists \nand something has changed
+
+class crte_upte_intf << (F,orange) >> {
+    dm: dict
+    vm_exist: None or nbox_obj
+    vm_result: dict
+    deploy_err: list
+    - -
+    +result: [intf_result, deploy_err]
+}
+note top: Creates new or updates\nupdates existing interfaces
+
+class crte_upte_ip << (F,orange) >> {
+    dm: dict
+    vm_exist: None or nbox_obj
+    vm_result: dict
+    intf_result: list
+    deploy_err: list
+    - -
+    None
+}
+note left: Creates new interface IPs\nor adds IPs to interfaces
+
+engine ..> class_NboxApi.chk_exist
+engine - -> create_vm
+create_vm .[#Crimson].> class_NboxApi.obj_create
+create_vm -[#Crimson]-> crte_upte_stdout
+
+engine - -> update_vm
+update_vm .[#Purple].> class_NboxApi.obj_update
+update_vm -[#Purple]-> crte_upte_stdout
+
+engine - -> crte_upte_intf
+crte_upte_intf .[#LimeGreen].> class_NboxApi.chk_exist
+crte_upte_intf .[#LimeGreen].> class_NboxApi.obj_create
+crte_upte_intf .[#LimeGreen].> class_NboxApi.obj_update
+crte_upte_intf -[#LimeGreen]-> crte_upte_stdout
+
+engine - -> crte_upte_ip
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.get_single_fltr_id
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.chk_exist
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.obj_create
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.obj_update
+crte_upte_ip -[#DodgerBlue]-> crte_upte_stdout
+
+crte_upte_stdout .down.> class_NboxApi.obj_delete
+crte_upte_stdout - -> format_rslt_err
+crte_upte_stdout - -> format_stdout_intf_ip
+}
+
+@enduml
+
+PlantUML version 1.2021.7(Sun May 23 13:40:07 BST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: GB
+--></g></svg>

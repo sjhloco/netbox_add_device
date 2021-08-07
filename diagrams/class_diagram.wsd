@@ -1,6 +1,7 @@
 @startuml
-left to right direction
-scale 2
+' top to bottom direction
+' scale 2
+
 title Class Diagram
 
 class main << (F,orange) >> {
@@ -25,14 +26,14 @@ class CreateDm {
     +tmp_vm: dict
     +vm: dict
     +intf_err: list
-    +intf: list
-    +ip: list
+    +attr_dict:dict
+    +tmp_attr_dict: dict
     +tmp_intf_dict: dict
     +tmp_intf_ip: list
     +all_vm: list
     +engine()
     +create_vm()
-    +rmv_empty()
+    +rmv_empty_attr()
     +create_intf_dm()
     +vm_error()
 }
@@ -103,21 +104,5 @@ main ..> CreateDm
 main ..> CreateObject
 CreateDm ..> NboxApi
 CreateObject ..> NboxApi
-
-newpage
-title Function Diagram
-
-class main << (F,orange) >> {
-    script, first = argv
-    --
-    rc = Console()
-    nbox = NboxApi()
-    create_dm = CreateDm()
-    create_obj = CreateObject()
-    --
-    dm = create_dm.engine()
-    create_obj.engine()
-}
-
 
 @enduml

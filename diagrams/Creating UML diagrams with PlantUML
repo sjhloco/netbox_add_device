@@ -42,11 +42,13 @@ title Function Diagram
 newpage
 title Function Diagram
 
--Colours
+-Colour and page fromat
 skinparam monochrome true               Black and White
 skinparam monochrome reverse            Reverse colours, so black background, white front
 
-skinparam packageStyle rect             ??????
+
+
+             ??????
 
 -Layout
 left to write direction                 The direction of diagram, so goes left to write (default) up to down)
@@ -115,3 +117,95 @@ object user {
 }
 
 
+===package and namespaces
+Groups up a number of classes in the one object with a custom background colour (puts folder round them all in diagram).
+Colour is optional, by default without it would be white
+
+package "Class NboxApi()" #DDDDDD {
+class function << (F,orange) >>
+class function1 << (F,orange) >>
+}
+
+Default package style is folder, can change globally or for all (changes it for both namespace and package)
+
+package "Class NboxApi()" #DDDDDD <<Frame>> {
+or
+skinparam packageStyle frame
+
+In packages, the name of a class is the unique identifier of this class meaning cant have 2 classes with the very same name in different packages.
+In that case, you should use namespaces instead of packages.
+It works by using dot(.) in front of names, so either .class for the none namespace or namespace.class for a class in a namespace
+For this reason the name of the namespace cant have " or ', as needs to be raw so can interpret the .
+
+class BaseClass
+
+namespace dummy #DDDDDD {
+class Person
+class Meeting
+
+Meeting o-- Person
+.BaseClass <|-- Person
+.BaseClass <|- Meeting
+}
+
+namespace foo {
+class Person
+.BaseClass <|-- Person
+dummy.Person <|- Person
+dummy.Meeting o-- Person
+}
+
+
+==Adding notes
+
+Class notes (Stereotypes) are defined with the class keyword, ” << ” and ” >> ”.
+
+You can also define notes around a class using:
+note left:
+note right:
+note top:
+note bottom:
+
+note "This is a floating note" as N1
+or attache floating to multiple things:
+Object .. N1
+N1 .. ArrayList
+
+
+
+====Function diagrams
+
+-Second field is the input elements
+-Third field is the output elements.
+-Is the returned varaibles and/or print message. Have used visibility options to say whether printed or returned
+-I use visability (as python not need since all public) to say if return (good is a green circle (+)) or print (error is a red square (-))
+
+
+==Line frromatting:
+
+' Make a dashed line, alternative syntax for ..>
+(*) -[dashed]-> "Write outline"
+
+' Make line bold and use color name
+"Write outline" -[bold,#green]-> "Find example"
+
+' Only change the color with hexadecimal RGB code
+"Find example" -[#ff00ff]-> "Write blog"
+
+' Order of line style and color can be reversed
+"Write blog" -[#6666ff,dashed]-> "Publish"
+
+' Use dotted line style
+"Publish" -[dotted]-> (*)
+
+adding extra '-' to lines makes them longer
+
+For forcing straight lines straight but angled
+skinparam linetype ortho
+skinparam linetype polyline
+
+You can use -> for horizontal arrows. It is possible to force arrow's direction using the following syntax:
+-down-> (default arrow)
+-right-> or ->
+-left->
+-up->

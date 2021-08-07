@@ -51,13 +51,13 @@ class NboxApi():
             error.append({obj_name: ast.literal_eval(e.error), 'task_type': 'update'})
 
 
-    ### OBJ_DELETE: Deletes object, api_obj is pynetbox object (vm) and ask_type informational
-    def obj_delete(self, api_obj, task_type):
+    ### OBJ_DELETE: Deletes object, nbox_obj is the vm or interface and task_type informational
+    def obj_delete(self, nbox_obj, task_type):
         try:
-            api_obj.delete()
+            nbox_obj.delete()
         except Exception as e:
             self.rc.print(":x: [red]def {}[/red] error deleting [i red]{}[/i red] for task {}".format(
-                          'obj_delete', str(api_obj), task_type))
+                          'obj_delete', str(nbox_obj), task_type))
 
 
 ################### GET information from Netbox (object IDs) ###################
@@ -98,7 +98,8 @@ class NboxApi():
     ### GET_SINGLE_FLTR_ID: Gets the ID for a single primary object (input_obj) based on name and its container (cntr)
     def get_single_fltr_id(self, api_attr, input_obj_fltr, input_obj, obj_cntr_fltr, obj_cntr_id, obj_cntr_name, error):
         try:
-            return operator.attrgetter(api_attr)(self.nb).get(**{input_obj_fltr: input_obj, obj_cntr_fltr: obj_cntr_id}).id
+            obj_id = operator.attrgetter(api_attr)(self.nb).get(**{input_obj_fltr: input_obj, obj_cntr_fltr: obj_cntr_id}).id
+            return obj_id
         except AttributeError as e:
             error.append({input_obj + '(' + obj_cntr_name + ')': str(e), 'task_type': 'update'})
         # Catch-all for any other error
@@ -133,7 +134,8 @@ class NboxApi():
     ### CHK_EXIST: Check if object name already exists (VM or IP address) within the container (cluster or VRF)
     def chk_exist(self, api_attr, input_obj_fltr, input_obj, obj_cntr_fltr, obj_cntr_id, obj_cntr_name):
         try:
-            return operator.attrgetter(api_attr)(self.nb).get(**{input_obj_fltr: input_obj, obj_cntr_fltr: obj_cntr_id})
+            result = operator.attrgetter(api_attr)(self.nb).get(**{input_obj_fltr: input_obj, obj_cntr_fltr: obj_cntr_id})
+            return result
         # Catch-all for any other error
         except Exception as e:
             self.rc.print(":x: [red]def {}[/red] using {} [i red]{}[/i red] in {} [i]{}[/i] - {}".format('chk_exist',
@@ -160,23 +162,23 @@ class CreateDm():
 
 
     ### REMOVE_EMPTY: Removes any empty attributes from the VM
-    def rmv_empty(self, attr_list):
-        tmp_attr = copy.deepcopy(attr_list)
+    def rmv_empty_attr(self, attr_dict):
+        tmp_attr_dict = copy.deepcopy(attr_dict)
 
-        for each_attr, each_val in tmp_attr.items():
+        for each_attr, each_val in tmp_attr_dict.items():
             if each_val == None:
-                del attr_list[each_attr]
+                del attr_dict[each_attr]
             elif isinstance(each_val, dict):
                 if list(each_val.values())[0] == None:
-                    del attr_list[each_attr]
+                    del attr_dict[each_attr]
             elif not isinstance(each_val, int):
                 if len(each_val) == 0:
-                    del attr_list[each_attr]
-        return attr_list
+                    del attr_dict[each_attr]
+        return attr_dict
 
 
     ### CREATE_INTF_DM: Creates the data-models to be used to create the VM interface (interface and IP)
-    def create_intf_dm(self, tmp_intf_dict, each_vm, each_intf, tmp_vm, intf, ip):
+    def create_intf_dm(self, tmp_intf_dict, each_vm, each_intf, tmp_vm):
         tmp_intf, tmp_ip = ([] for i in range(2))
 
         if tmp_intf_dict.get('vlan') == None:
@@ -204,7 +206,7 @@ class CreateDm():
                 tmp_err.update(err_obj)
             else:
                 tmp_err[name].update(err_obj)
-        self.rc.print(":x: Virtual Machine [i red]{}[/i red] interface objects may not exist. Failed to get object.id for - {}".
+        self.rc.print(":x: Virtual Machine [i red]{}[/i red] objects may not exist. Failed to get object.id for - {}".
                       format(vm_name, str(dict(tmp_err)).replace('{', '').replace('}', '')))
 
 
@@ -230,7 +232,7 @@ class CreateDm():
                     if len(vm_err) == 0:
                         vm = self.create_vm(clstr_site, each_clstr, each_vm, tmp_vm)
                         # CLEAN_DM: Removes any None values or empty lists
-                        vm = self.rmv_empty(vm)
+                        vm = self.rmv_empty_attr(vm)
                         # GET_INTF_IP: Gathers object IDs (unique VLAN in GRP or IP in VRF) to create VM interfaces and associated IPs
                         if each_vm.get('intf', None) != None:
                             for each_intf in each_vm['intf']:
@@ -243,12 +245,12 @@ class CreateDm():
                                                                                    each_intf['vrf_ip'][0], intf_err)
                                 # CREATE_INTF_DM: If are no errors creates the data-models to be used to create the interface
                                 if len(intf_err) == 0:
-                                    tmp_intf_ip = self.create_intf_dm(tmp_intf_dict, each_vm, each_intf, tmp_vm, intf, ip)
+                                    tmp_intf_ip = self.create_intf_dm(tmp_intf_dict, each_vm, each_intf, tmp_vm)
                                     # CLEAN_DM: Removes any None values or empty lists
                                     for each_intf in tmp_intf_ip[0]:
-                                        intf.append(self.rmv_empty(each_intf))
+                                        intf.append(self.rmv_empty_attr(each_intf))
                                     for each_ip in tmp_intf_ip[1]:
-                                        ip.append(self.rmv_empty(each_ip))
+                                        ip.append(self.rmv_empty_attr(each_ip))
 
                             # FAILFAST_INTF: Reports error message if any of the VM interface objects don't exist
                             if len(intf_err) != 0:
@@ -290,7 +292,7 @@ class CreateObject():
         return output_dict
 
 
-    ### STDOUT_INTF_IP: formats the out put for interface or IP displayed message
+    ### STDOUT_INTF_IP: Formats the output for interface or IP displayed message
     def format_stdout_intf_ip(self, obj_type, input_rslt):
         tmp_obj_list = []
 
@@ -302,7 +304,7 @@ class CreateObject():
 
 
     ### VM_STDOUT: Prints out message for the user dependant on an error or the task perfromed on a VM
-    def crte_upte_stdout(self, obj_type, vm_exist, dm, deploy_err, vm_result, intf_result={}, ip_result={}):
+    def crte_upte_stdout(self, obj_type, vm_exist, dm, deploy_err, vm_result, intf_result=[], ip_result=[]):
         if len(deploy_err) != 0:
 
             # INTF_IP_ERROR: If new VM and has errors with interfaces deletes the VM and changes displayed error msg
@@ -351,8 +353,8 @@ class CreateObject():
         # STDOUT: Only print message if error or no interfaces defined
         if len(deploy_err) != 0 or len(dm['intf']) == 0:
             self.crte_upte_stdout('vm', vm_exist, dm, deploy_err, vm_result)
-        return dict(vm_result=vm_result, deploy_err=deploy_err)
-
+        result = dict(vm_result=vm_result, deploy_err=deploy_err)
+        return result
 
     ### UPDATE_VM: Updates VM if already exists and something has changed
     def update_vm(self, dm, vm_exist):
@@ -367,7 +369,8 @@ class CreateObject():
         # STDOUT: Only print message if error or no interfaces defined
         if len(deploy_err) != 0 or len(dm['intf']) == 0:
             self.crte_upte_stdout('vm', vm_exist, dm, deploy_err, vm_result)
-        return dict(vm_result=vm_result, deploy_err=deploy_err)
+        result = dict(vm_result=vm_result, deploy_err=deploy_err)
+        return result
 
 
     ### CREATE_OR_UPDATE_INTF: Creates new VM interfaces or updates existing ones
@@ -390,8 +393,8 @@ class CreateObject():
         # STDOUT: Prints error messages or if no IPs success or no changes message
         if len(deploy_err) != 0 or len(dm['ip']) == 0:
             self.crte_upte_stdout('interface', vm_exist, dm, deploy_err, vm_result, intf_result)
-        return dict(intf_result=intf_result, deploy_err=deploy_err)
-
+        result = dict(intf_result=intf_result, deploy_err=deploy_err)
+        return result
 
     ### CREATE_OR_UPDATE_IP: Creates new VM interface IP address or adds existing one to a VM interfaces
     def crte_upte_ip(self, dm, vm_exist, vm_result, intf_result, deploy_err):

@@ -1,0 +1,320 @@
+@startuml
+scale 3
+skinparam linetype ortho
+
+title Function Diagram
+
+class main << (F,orange) >> {
+    script, first = argv
+    --
+    rc = Console()
+    nbox = NboxApi()
+    create_dm = CreateDm()
+    create_obj = CreateObject()
+    --
+    dm = create_dm.engine()
+    create_obj.engine()
+}
+
+main ..> class_CreateDm.engine
+main ..> class_CreateObject.engine
+
+' ####### Class CreateDm #######
+namespace class_CreateDm #DDDDDD {
+
+class CreateDm(__init__) {
+    rc: Console()
+    nbox: Console()
+    --
+    self.rc: rc
+    self.nbox: nbox
+    self.my_vars: dict
+}
+
+class engine << (F,orange) >> {
+    None
+    --
+    +all_vm: list
+}
+' note top: runs all methods
+
+class create_vm << (F,orange) >> {
+    clstr_site: dict
+    each_clstr: dict
+    each_vm: dict
+    tmp_vm: dict
+    --
+    +vm: dict
+}
+note bottom: Create DM of \nVM attributes
+
+class rmv_empty_attr << (F,orange) >> {
+    attr_dict: dict
+    --
+    +attr_dict: dict
+}
+note bottom: Remove empty dicts\n(attributes) from DM
+
+class create_intf_dm << (F,orange) >> {
+    tmp_intf_dict: dict
+    each_vm: dict
+    each_intf: dict
+    tmp_vm: dict
+    --
+    +tmp_intf: list
+    +tmp_ip: list
+}
+note bottom: Creates the DM\nof interface and IP
+
+class vm_error << (F,orange) >> {
+    vm_name: string
+    input_err: list
+    --
+    -vm_name: string
+    -tmp_err: string
+}
+note bottom: Grouped per-VM errors if VM\nor interface objects don't exist
+
+engine --> create_vm
+engine --> rmv_empty_attr
+engine --> create_intf_dm
+engine --> vm_error
+engine ..> class_NboxApi.get_multi_id
+engine ..> class_NboxApi.get_single_id
+engine ..> class_NboxApi.get_vlan_id
+}
+
+
+
+' ####### Class CreateDm #######
+package class_NboxApi #DDDDDD {
+
+class NboxApi(__init__) {
+    rc: Console()
+    --
+    self.nb = pynetbox
+}
+
+class obj_create << (F,orange) >> {
+    obj_name: string
+    api_attr: string
+    input_obj: dict
+    error: list
+    --
+    +return: ['create', result, True]
+    -error: list
+}
+note bottom: Create object returning\noutput and change (T/F)
+
+class obj_update << (F,orange) >> {
+    obj_name: string
+    api_attr: string
+    input_obj: dict
+    error: list
+    --
+    +return: ['update', nbox_obj, result]
+    -error: list
+}
+note bottom: Update object returning\noutput and change (T/F)
+
+class obj_delete << (F,orange) >> {
+    nbox_obj: object
+    task_type: string
+    --
+    -nbox_obj: string
+    -task_type: string
+}
+note bottom: Deletes object, nbox_obj\nis the vm or interface
+
+class get_multi_id << (F,orange) >> {
+    api_attr: string
+    input_obj: string
+    input_obj_type: string
+    other_obj_type: string
+    error: list
+    --
+    +result: dict
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Gets ID of primary and\nsecondary (other_obj_type)\nobject within primary
+
+class get_single_id << (F,orange) >> {
+    vm_name: string
+    api_attr: string
+    input_obj: string
+    error: list
+    --
+    +obj_id: integer
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Gets the ID for\na primary object
+
+class get_single_fltr_id << (F,orange) >> {
+    api_attr: string
+    input_obj_fltr: string
+    input_obj: string
+    obj_cntr_fltr: string
+    obj_cntr_id: integer
+    obj_cntr_name: string
+    error: list
+    --
+    +obj_id: integer
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Gets the ID for primary object based\non its name and its container (cntr)
+
+class get_vlan_id << (F,orange) >> {
+    intf: string
+    vl_grp: string
+    vlan: list
+    error: list
+    --
+    +vlan_id: integer
+    -error: list
+    -vl_grp: string
+    -vlan: list
+    -e: exception
+
+}
+note bottom: Gets unique VLAN IDs\nusing VLAN group slug
+
+class chk_exist << (F,orange) >> {
+    api_attr: string
+    input_obj_fltr: string
+    input_obj: string
+    obj_cntr_fltr: string
+    obj_cntr_id: integer
+    obj_cntr_name: string
+    --
+    +result: None or nbox_obj
+    -error: list
+    -input_obj: string
+    -e: exception
+}
+note bottom: Check if object exists (VM or IP)\nin the container (cluster or VRF)
+
+}
+
+
+' ####### Class CreateObject #######
+namespace class_CreateObject #DDDDDD {
+
+class CreateObject(__init__) {
+    rc: Console()
+    nbox: Console()
+    --
+    self.rc: rc
+    self.nbox: nbox
+}
+
+class engine << (F,orange) >> {
+    dm: dict
+    --
+    None
+}
+
+class format_rslt_err << (F,orange) >> {
+    input_list: list
+    --
+    +output_dict: dict
+}
+note bottom: Combines interface/ip error or result\nmessages into dict to use in stdout
+
+class format_stdout_intf_ip << (F,orange) >> {
+    obj_type: string
+    input_rslt: dict
+    --
+    +input_rslt: dict
+}
+note bottom: Formats the output\nfor interface/IP stdout
+
+class crte_upte_stdout << (F,orange) >> {
+    obj_type: string
+    vm_exist: None or nbox_obj
+    dm: dict
+    deploy_err: list
+    vm_result: dict
+    intf_result: dict
+    ip_result: dict
+    --
+    +vm_result: dict
+    +vm_rslt: dict
+    +intf_rslt: dict
+    +ip_rslt: dict
+    -obj_type: string
+    -err: dict
+
+}
+note bottom: Prints stdout dependant on\nerror or the task performed
+
+class create_vm << (F,orange) >> {
+    vm_exist: None or nbox_obj
+    dm: dict
+    --
+    +result: [vm_result, deploy_err]
+}
+note bottom: Creates the VM only,\nno interfaces and IPs
+
+class update_vm << (F,orange) >> {
+    vm_exist: None or nbox_obj
+    dm: dict
+    --
+    +result: [vm_result, deploy_err]
+}
+note bottom: Updates VM if already exists \nand something has changed
+
+class crte_upte_intf << (F,orange) >> {
+    dm: dict
+    vm_exist: None or nbox_obj
+    vm_result: dict
+    deploy_err: list
+    --
+    +result: [intf_result, deploy_err]
+}
+note top: Creates new or updates\nupdates existing interfaces
+
+class crte_upte_ip << (F,orange) >> {
+    dm: dict
+    vm_exist: None or nbox_obj
+    vm_result: dict
+    intf_result: list
+    deploy_err: list
+    --
+    None
+}
+note left: Creates new interface IPs\nor adds IPs to interfaces
+
+engine ..> class_NboxApi.chk_exist
+engine --> create_vm
+create_vm .[#Crimson].> class_NboxApi.obj_create
+create_vm -[#Crimson]-> crte_upte_stdout
+
+engine --> update_vm
+update_vm .[#Purple].> class_NboxApi.obj_update
+update_vm -[#Purple]-> crte_upte_stdout
+
+engine --> crte_upte_intf
+crte_upte_intf .[#LimeGreen].> class_NboxApi.chk_exist
+crte_upte_intf .[#LimeGreen].> class_NboxApi.obj_create
+crte_upte_intf .[#LimeGreen].> class_NboxApi.obj_update
+crte_upte_intf -[#LimeGreen]-> crte_upte_stdout
+
+engine --> crte_upte_ip
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.get_single_fltr_id
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.chk_exist
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.obj_create
+crte_upte_ip .[#DodgerBlue].> class_NboxApi.obj_update
+crte_upte_ip -[#DodgerBlue]-> crte_upte_stdout
+
+crte_upte_stdout .down.> class_NboxApi.obj_delete
+crte_upte_stdout --> format_rslt_err
+crte_upte_stdout --> format_stdout_intf_ip
+}
+
+@enduml
