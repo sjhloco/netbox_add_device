@@ -42,7 +42,7 @@ title Function Diagram
 newpage
 title Function Diagram
 
--Colour and page fromat
+-Colour and page fromat, lost more options here https://plantuml.com/skinparam
 skinparam monochrome true               Black and White
 skinparam monochrome reverse            Reverse colours, so black background, white front
 

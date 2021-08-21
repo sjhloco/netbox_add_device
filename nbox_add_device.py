@@ -145,7 +145,7 @@ class NboxApi():
 
 ############################# CREATE_DM: Ensures objects don't already exist & creates the DMs for API call ############################
 class CreateDm():
-    def __init__(self, nbox, rc):
+    def __init__(self, nbox, rc, argv):
         self.rc = rc
         self.nbox = nbox
         with open(argv[1], 'r') as file_content:
@@ -455,7 +455,7 @@ def main():
     nbox = NboxApi(rc)
 
     #2. DM: Create Data-Model for API calls. Has catchall of exit if empty as no changes need to be made
-    create_dm = CreateDm(nbox, rc)
+    create_dm = CreateDm(nbox, rc, argv)
     dm = create_dm.engine()
     if len(dm) == 0:
         exit()

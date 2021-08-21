@@ -1,0 +1,40 @@
+############################################# TEST #############################################
+test_env:
+  cluster_type: UTEST_CLUSTER_TYPE
+  cluster: UTEST_CLUSTER_TYPE
+  site: UTEST_SITE
+  tenant: UTEST_TENANT
+  role: UTEST_DVC_ROLE
+  platform: UTEST_PLATFORM
+  vrf: UTEST_VRF
+  grp_vl: UTEST_VLAN_GRP
+
+cluster:
+  - name: UTEST_CLSTR
+    vm:
+      - name: UTEST_VM1
+      - name: UTEST_VM2
+        tenant: UTEST_TNT
+        role: UTEST_DVC_ROLE
+        platform: UTEST_PLTFM
+        cpu: 1
+        mem: 2
+        disk: 32
+        tags: [UTEST_TAG]
+        comments: COMMENT
+        intf:
+          - name: eth0
+          - name: eth1
+            grp_vl: [stesworld, 10]
+            tags: [access_port]
+          - name: eth2
+            grp_vl: [UTEST_VLAN_GRP, [10,20,30]]
+          - name: eth3
+            vrf_ip: [UTEST_VRF, 99.99.99.202/24]
+            secondary_ip: true
+          - name: eth4
+            vrf_ip: [UTEST_VRF, 99.99.99.201/24]
+            dns: mob-win-ws01.utest.com
+            grp_vl: [UTEST_VLAN_GRP, 10]
+            tags: [mgmt_ip]
+

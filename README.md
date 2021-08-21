@@ -20,7 +20,8 @@ The VMs are defined in in a YAML file in a hierarchical structure that starts at
 | intf    | `grp_vl` | *list* | No | A two element list of VLAN group and a VLAN or list of VLANs
 | intf    | `vrf_ip` | *list* | No | A two element list of VRF and IP address/mask
 | intf    | `secondary_ip` | *True* | No | Required if the IP address is not the VMs primary IP
-| intf    | `dns` | *string* | No | Domain name for the VM
+| intf    | `dns` | *string* | No | Domain name for the VM interface
+| intf    | `tags` | *string* | No | List of tags assigned to the interface and if defined the IP address
 
 - Only the Mandatory keys need to be defined
 - Site is automatically automatically worked out from the cluster
@@ -177,3 +178,13 @@ TODO:
 ✅ Virtual Machine TEST updated with   IP addresses: '10.10.20.169/24'
 4. Update all
 ✅ Virtual Machine TEST4 updated with attributes: 'tenant', 'role', 'vcpus', 'memory', 'disk', 'comments', 'tags' interfaces: 'eth3' IP addresses: '10.10.20.185/24'
+
+
+##########
+write up one line if statements, can either use just if
+if each_intf.get('grp_vl') != None: tmp_intf_dict['vlan'] = each_intf.get('grp_vl')[0])
+
+or if/else
+tmp_intf_dict['vlan'] = each_intf.get('grp_vl')[1] if each_intf.get('grp_vl') != None else None
+
+https://www.codegrepper.com/code-examples/python/one+line+if+statement+python+without+else
