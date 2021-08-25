@@ -6,7 +6,7 @@ The VMs are defined in in a YAML file in a hierarchical structure that starts at
 
 | Parent  | Key    | value    | Mand | Description
 |---------|--------|----------|------|------------
-| cluster | `name` | *string* | Yes | The cluster all VMs below it are in
+| cluster | `name` | *string* | Yes | The cluster all VMs below it are in (site automatically got from cluster)
 | vm      | `name` | *string* | Yes | The VM name
 | vm      | `tenant` | *string* | No | The tenant the VM will be created in
 | vm      | `role` | *string* | No | The VM device-role
@@ -179,6 +179,14 @@ TODO:
 4. Update all
 ✅ Virtual Machine TEST4 updated with attributes: 'tenant', 'role', 'vcpus', 'memory', 'disk', 'comments', 'tags' interfaces: 'eth3' IP addresses: '10.10.20.185/24'
 
+
+######## testing
+Add methods out of this to my notes https://stackoverflow.com/questions/36456920/is-there-a-way-to-specify-which-pytest-tests-to-run-from-a-file
+
+pytest -vv test/test_main.py::TestNboxApi
+
+
+test_main.py
 
 ##########
 write up one line if statements, can either use just if

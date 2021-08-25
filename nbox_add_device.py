@@ -21,16 +21,16 @@ from rich.theme import Theme
 # Netbox login details (create from your user profile or in admin for other users)
 netbox_url = "https://10.10.10.101"
 token = "dc08510a144d487fc4048965594df7aa642de0c8"
-# If using Self-signed cert must have been signed by a CA (can all be done on same box in openssl) and this points to that CA cert
+# If using Self-signed cert rather than disbaling SSL verification (nb.http_session.verify = False) can specify the CA cert
 os.environ['REQUESTS_CA_BUNDLE'] = os.path.expanduser('~/Documents/Coding/Netbox/nbox_py_scripts/myCA.pem')
 
 
 ############################ NBOX_API: Opens netbox connection and performs API requests ############################
 class NboxApi():
-    def __init__(self, rc):
-        self.nb = pynetbox.api(url=netbox_url, token=token)
+    def __init__(self, nb, rc):
+        nb.http_session.verify = False
+        self.nb = nb
         self.rc = rc
-
 
 ################### Make changes in Netbox ###################
     ### OBJ_CREATE: Create objects and return output and whether changed (T or F) in list or errors in dictionary
@@ -330,7 +330,9 @@ class CreateObject():
             else:
                 # VM_VAR: If VM created or updated remove unneeded attributes and create variable of changes
                 if vm_rslt['changed'] == True:
-                    del dm['vm']['name'], dm['vm']['clstr_name'], dm['vm']['cluster'], dm['vm']['site']
+                    del dm['vm']['name'], dm['vm']['clstr_name'], dm['vm']['cluster']
+                    if dm['vm'].get('site') != None:    # As site is not always present
+                         dm['vm']['site']
                     vm_rslt = dict(details=str(list(dm['vm'].keys())).replace('[', '').replace(']', ''))
                     vm_rslt['details'] = '[b #000000]attributes:[/b #000000] [i]{}[/i]'.format(vm_rslt['details'])
                 # INTF_IP_VAR: If Interface or IP created/updated create variable of changes
@@ -452,7 +454,9 @@ def main():
     #1. LOAD: Opens netbox connection and loads the variable file
     script, first = argv
     rc = Console(theme=Theme({"repr.str": "black italic", "repr.ipv4": "black italic", "repr.number": "black italic"}))
-    nbox = NboxApi(rc)
+    nb = pynetbox.api(url=netbox_url, token=token)
+
+    nbox = NboxApi(nb, rc)
 
     #2. DM: Create Data-Model for API calls. Has catchall of exit if empty as no changes need to be made
     create_dm = CreateDm(nbox, rc, argv)

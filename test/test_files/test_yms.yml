@@ -1,18 +1,27 @@
 ############################################# TEST #############################################
 test_env:
-  cluster_type: UTEST_CLUSTER_TYPE
-  cluster: UTEST_CLUSTER_TYPE
+  # Test environment objects that needed creating as cant be got from VM info
+  cluster_type: UTEST_CLSTR_TYPE
   site: UTEST_SITE
-  tenant: UTEST_TENANT
-  role: UTEST_DVC_ROLE
-  platform: UTEST_PLATFORM
-  vrf: UTEST_VRF
-  grp_vl: UTEST_VLAN_GRP
+  prefixes: ['10.10.10.0/24', '10.10.20.0/24', '10.10.30.0/24']
+  vlans: {10: UTEST_VL10, 20: UTEST_VL20, 30: UTEST_VL30}
 
+# VM used mostly for full testing rather than unit testing (except VM create/delete). Also used for some of Test environment objects
 cluster:
-  - name: UTEST_CLSTR
+  - name: UTEST_CLSTR1        # Used for cluster not in a site
     vm:
       - name: UTEST_VM1
+        tenant: UTEST_TNT
+        intf:
+          - name: eth0
+            vrf_ip: [UTEST_VRF, 10.10.30.1/24]
+            grp_vl: [UTEST_VL_GRP, 10]
+          - name: eth1
+            grp_vl: [UTEST_VL_GRP, [20, 30]]
+
+
+  - name: UTEST_CLSTR2
+    vm:
       - name: UTEST_VM2
         tenant: UTEST_TNT
         role: UTEST_DVC_ROLE
@@ -25,16 +34,16 @@ cluster:
         intf:
           - name: eth0
           - name: eth1
-            grp_vl: [stesworld, 10]
-            tags: [access_port]
+            grp_vl: [UTEST_VL_GRP, 10]
+            tags: [UTEST_TAG]
           - name: eth2
-            grp_vl: [UTEST_VLAN_GRP, [10,20,30]]
+            grp_vl: [UTEST_VL_GRP, [10,20,30]]
           - name: eth3
-            vrf_ip: [UTEST_VRF, 99.99.99.202/24]
+            vrf_ip: [UTEST_VRF, 10.10.20.1/24]
             secondary_ip: true
           - name: eth4
-            vrf_ip: [UTEST_VRF, 99.99.99.201/24]
+            vrf_ip: [UTEST_VRF, 10.10.10.1/24]
             dns: mob-win-ws01.utest.com
-            grp_vl: [UTEST_VLAN_GRP, 10]
-            tags: [mgmt_ip]
+            grp_vl: [UTEST_VL_GRP, 10]
+            tags: [UTEST_TAG]
 
