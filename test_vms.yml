@@ -1,28 +1,75 @@
 ############################################# TEST #############################################
 cluster:
-  - name: ESX Home
-    vm:
-      - name: TEST6
-        tenant: stesworld
-        role: compute
-        cpu: 2
-        mem: 2
-        disk: 32
-        tags: [os_linux]
-        comments: RHEL8 GUI workstation (in ESX)
+  - name: ESX Home                          # Mandatory name of the cluster
+    site: stesworld HQ                      # Mandatory, needed to get unique cluster
+    tenant: stesworld                       # Optional, can be here or under vm
+    device_role: firewall                   # Optional, can be here or under vm
+    platform: ASA                           # Optional, can be here or under vm
+    vm:                                     # Mandatory List of VMs
+      - name: asa1                          # Mandatory name of the vm
+        cpu: 3                              # Optional
+        mem: 2                              # Optional
+        disk: 32                            # Optional
+        comments: ASA firewall              # Optional
+        tags: {fw: 9e9e9e}                  # Optional dictionary of {tag: tag_colour}
+      # - name: router
+      #   tenant: Crispy Dog
+      #   device_role: router
+      #   platform: IOS
+      #   status: decommissioning
         intf:
-        #   - name: eth0
-        #     vrf_ip: [HME_BLU, 10.10.20.183/24]
-        #     dns: mob-win-ws01.stesworld.com
-        #   - name: eth0
-        #     vrf_ip: [HME_BLU, 10.10.20.185/24]
-        #     secondary_ip: true
-        # #   - name: eth1
-        # #     vrf_ip: [HME_BLU, 10.10.20.172/24]
-        # #     secondary_ip: true
-        # # #   - name: eth2
-        # # #     grp_vl: [stesworld, 20]
-        #   - name: eth3
-        #     grp_vl: [stesworld, [30]]
+          - name: eth0
+            vrf_ip: [HME_BLU, 10.10.20.183/24]
+            dns: mob-win-ws01.stesworld.com
+          - name: eth0
+            vrf_ip: [HME_BLU, 10.10.20.185/24]
+            secondary_ip: true
+          - name: eth1
+            vrf_ip: [HME_BLU, 10.10.20.172/24]
+            secondary_ip: true
+          - name: eth2
+            grp_vl: [stesworld, 20]
+          - name: eth3
+            grp_vl: [stesworld, [30]]
           - name: Port1
             grp_vl: [stesworld, 20]
+
+device_type:
+  - name: Catalyst 3560-CX-12PC-S             # Mandatory, will automatically workout manufacturer
+    site: stesworld HQ                        # Mandatory, can be here or under device
+    tenant: stesworld                         # Optional, can be here or under vm
+    device_role: switch                       # Mandatory, can be here or under device
+    platform: ASA                             # Optional, can be here or under vm
+    # cluster: ESX Home                         # Optional, can be here or under vm
+    location: hme_floor5                      # Optional, MUST be the slug. Can be here or under device,
+    rack: HME-FL5-A1                          # Optional, can be here or under vm
+    device:                                   # Mandatory List of devices
+      - name: SWI01                           # Mandatory name of the vm
+        cluster: ESX Home                      # Optional, can be here or under vm
+        position: 1                            # Optional devices position in the rack
+        rear: true                            # Optional, front or rear facing, default is front
+        serial: FOC2414L6TJ                   # Optional
+        asset_tag: "12345"                    # Optional (If is an integer netbox always thinks changed)
+        comments: Core switch                 # Optional
+        tags: {swi: 9e9e9e}                   # Optional dictionary of {tag: tag_colour}
+      - name: SWI02
+        site: Crispy Dog HQ
+        tenant: Crispy Dog
+        platform: NXOS
+        device_role: router
+        location: dog_floor1
+        rack: DOG-FL1-A1
+
+
+
+        #### If interface is defined only name is mandatory. ALl IPs are by default the primary IP, add 'secondary_ip: true' for any other IP interfaces (vrf_ip)
+        # intf:
+        # - name: vlan10
+        #   grp_vl: [stesworld, 10]
+        #   vrf_ip: [HME_BLU, 10.10.10.11/24]
+        #   dns: hme-air-wlc01.stesworld.com
+        # - name: vlan20
+        #   grp_vl: [stesworld, 20]
+        #   vrf_ip: [HME_BLU, 10.10.10.11/24]
+        #   secondary_ip: true
+

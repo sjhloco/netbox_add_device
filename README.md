@@ -4,24 +4,59 @@ This script will create or update virtual machines, their interfaces the IP addr
 
 The VMs are defined in in a YAML file in a hierarchical structure that starts at the cluster and ends at the interface. The following variables can be defined for each VM with only a few of them being mandatory.
 
-| Parent  | Key    | value    | Mand | Description
+| Parent  | Key    | Mand | Description
 |---------|--------|----------|------|------------
-| cluster | `name` | *string* | Yes | The cluster all VMs below it are in (site automatically got from cluster)
-| vm      | `name` | *string* | Yes | The VM name
-| vm      | `tenant` | *string* | No | The tenant the VM will be created in
-| vm      | `role` | *string* | No | The VM device-role
-| vm      | `platform` | *string* | No | The VM platform
-| vm      | `cpu` | *integer* | No | The number of vCPUs
-| vm      | `mem` | *integer* | No | The amount of memory in MB
-| vm      | `disk` | *integer* | No | The amount of HDD in GB
-| vm      | `tags` | *list* | No | List of tags to assign to the VM
-| vm      | `comments` | *string* | No | Description for the VM
-| intf    | `name` | *string* | Yes | Name of the interface (must be a string), is only mandatory if `intf` defined
+| cluster | `name` | Yes | The cluster all VMs below it are in
+| cluster | `site` | Yes | The site that the cluster is in
+| cluster/vm | `tenant` | No | The tenant the VM will be created in
+| cluster/vm | `role` | No | The VM device-role
+| cluster/vm | `platform` | No | The VM platform
+| vm      | `name` | Yes | The VM name
+| vm      | `name` | No | VM status, offline, active (default), planned, staged, failed, decommissioning
+| vm      | `cpu` | No | The number of vCPUs (integer)
+| vm      | `mem` | No | The amount of memory in MB  (integer)
+| vm      | `disk` | No | The amount of HDD in GB  (integer)
+| vm      | `comments` | No | Description for the VM
+| vm      | `tags` | No | Dictionary {tag: tag_colour} of tags to assign to the VM
+
+
+
+| intf    | `name` | Yes | Name of the interface (must be a string), is only mandatory if `intf` defined
 | intf    | `grp_vl` | *list* | No | A two element list of VLAN group and a VLAN or list of VLANs
 | intf    | `vrf_ip` | *list* | No | A two element list of VRF and IP address/mask
 | intf    | `secondary_ip` | *True* | No | Required if the IP address is not the VMs primary IP
-| intf    | `dns` | *string* | No | Domain name for the VM interface
-| intf    | `tags` | *string* | No | List of tags assigned to the interface and if defined the IP address
+| intf    | `dns` | No | Domain name for the VM interface
+| intf    | `tags` | No | List of tags assigned to the interface and if defined the IP address
+
+
+
+
+| Parent  | Key    | value    | Mand | Description
+|---------|--------|----------|------|------------
+| device_type | `name` | Yes | The device-type that the devices are grouped under
+| device_type/ device | `site` | Yes | The site that the device is in
+| device_type/ device | `tenant` | No | The tenant that the device is in
+| device_type/ device | `device_role` | Yes | The role of the device
+| device_type/ device | `platform` | No | The device platform
+| device_type/ device | `cluster` | No | The cluster the device is in/ part of
+| device_type/ device | `location` | No | The location of the device, MUST be the slug
+| device_type/ device | `rack` | No | The rack within the location
+| device | `name` | Yes | The device name
+| device | `name` | No | Device status, offline, active (active), planned, staged, failed, inventory, decommissioning
+| device | `position` | No | Devices position in the rack (integer)
+| device | `face` | No | Front or rear facing, default is front
+| device | `serial' | No | Device serial number
+| device | `asset_tag' | No | Asset tag number
+| device | `comments` | No | Description for the VM
+| device | `tags` | No | Dictionary {tag: tag_colour} of tags to assign to the VM
+
+
+VMs: Cluster name, Site and VM name are mandatory
+Devices: Device-type name, Site, tenantm Device-role and device name are mandatory
+
+ONLY thing that cant be inherited from cluster are cpu, mem, disk, comments
+ONLY thing that cant be inherited from device-type are asset and serial numnber, comments, positin and face
+
 
 - Only the Mandatory keys need to be defined
 - Site is automatically automatically worked out from the cluster
@@ -109,16 +144,16 @@ Checks whether an objected with that name already exists (VM or IP address) with
 
 TODO:
 ~~1. Create class diagram~~
-2. Create function diagram
-3. Create unit tests
-4. Rewrite readme
-5. Add validation checker using NTC
-6. Design adding devices to script
-7. Write tests for devices
-8. Write script for devices
+1. Create function diagram
+2. Create unit tests
+3. Rewrite readme
+4. Add validation checker using NTC
+5. Design adding devices to script
+6. Write tests for devices
+7. Write script for devices
 
-9. Redo create env, so refactor, draw up and add testing
-10. fix cluster-group issue, doesnt seem to be working as not added azure cluster to azure VSC cluster group
+8. Redo create env, so refactor, draw up and add testing
+9.  fix cluster-group issue, doesnt seem to be working as not added azure cluster to azure VSC cluster group
 
 
 

@@ -1,0 +1,69 @@
+############################################# TEST #############################################
+test: {}              # Needed incase cluster and device_type both hashed-out
+# cluster:
+## Test missing mand device-type
+  # - nam: no cluster
+  # - nam: no cluster
+  # - name: ESX Home
+  #   site: no site
+## Test missing cluster in nbox
+  # - name: ESX Home1
+  #   site: stesworld HQ
+  #   vm: []
+## Test missing VM errors
+  # - name: ESX Home
+  #   site: stesworld HQ
+  #   vm:
+  #     - nam: no_vm
+  # - name: ESX Home
+  #   site: stesworld HQ
+  #   tenant: stesworld1
+  #   vm:
+  #     - name: TEST1
+  #       tenant: no_tenant
+  #       device_role: no_role
+  #       platform: no_platform
+  #     - name: TEST2
+
+  # - name: ESX Home
+  #   site: stesworld HQ
+  #   tenant: stesworld
+  #   device_role: no_role
+  #   platform: ASA
+  #   vm:
+  #     - name: TEST3
+
+
+# device_type:
+## Test missing mand device-type
+  # - nam: no dtype
+  # - nam: no dtype
+  # - name: AIR-CAP2602I-E-K9
+  #   devic: {}
+## Test missing device-type in nbox
+  # - name: AIR-CAP2602I-E-K
+  #   device: {}
+## Test missing device errors
+  # - name: ASA5505
+  #   device:
+  #     - name: TEST1
+  #       platform: no_platform
+  #       site: London
+  #       location: no_loc
+  #       rack: HME-FL5-A1
+  #       tenant: no_site
+  # - name: ASA5506-X
+  #   platform: ASA
+  #   device_role: switch
+  #   location: hme_floor5
+  #   rack: HME-FL5-A
+  #   tenant: no tenant
+  #   cluster: ESX Home
+  #   device:
+  #     - name: TEST2
+  #     - name: TEST3
+  #       site: stesworld HQ
+
+
+
+

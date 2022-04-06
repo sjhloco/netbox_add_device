@@ -1,0 +1,90 @@
+TO DO
+
+-GO through errors once more, make sure they are working
+-Finish create_vm
+
+CHeck readme as lots info on how it runs
+
+No manufaturer in api help, see if tit adds, if not need to update
+
+-Try running without Interfaces
+-Add interfaces back
+-Add tag to bottom of interfaces
+-Redo unit tests
+-Write
+
+
+
+
+replaced by using same function as twice
+
+    # def engine(self):
+    #     all_vm = []
+    #     all_dvc = []
+    #     cltr_err = []
+    #     dtype_err = []
+
+    #     ## VIRTUAL MACHINE: Creates the VM data model by getting the VMs attributes object IDs
+    #     if self.my_vars.get("cluster") == None:
+    #         cltr_err.append(("unknown", "cluster", None))
+    #     # CLTR: Cluster attributes object IDs collection
+    #     else:
+    #         for each_cltr in self.my_vars["cluster"]:
+    #             cltr = self.clstr_dtype_info(each_cltr, "cluster", cltr_err)
+    #             if each_cltr.get("vm") == None:
+    #                 cltr_err.append((each_cltr.get("name", "unknown"), "vm", None))
+    #             # VM: VM attributes object IDs collection, only proceeds if no cluster errors
+    #             if len(cltr_err) == 0:
+    #                 for each_vm in each_cltr["vm"]:
+    #                     vm_err, intf_err, intf, ip = ([] for i in range(4))
+    #                     tmp_vm = self.vm_device_info(each_cltr, each_vm, "vm", vm_err)
+    #                     # CREATE_VM_DM: If there are no errors builds the data-model for creating the VM
+    #                     if len(vm_err) == 0:
+    #                         vm = self.create_vm_dvc("vm", cltr, tmp_vm)
+    #                         # CLEAN_DM: Removes any None values or empty lists
+    #                         vm = self.rmv_empty_attr(vm)
+
+    #                     # VM_ERR: Groups and reports any VM based errors
+    #                     if len(vm_err) != 0:
+    #                         self.obj_err_msg(
+    #                             "Virtual machine", each_vm.get("name"), vm_err
+    #                         )
+
+    #                     all_vm.append(dict(vm=vm, intf=intf, ip=ip))
+
+    #     # CLTR_ERR: Groups and reports any cluster based errors
+    #     if len(cltr_err) != 0:
+    #         self.obj_err_msg("cluster", None, cltr_err)
+
+    #     ## DEVICE: Creates the device data model by getting the device attributes object IDs
+    #     if self.my_vars.get("device_type") == None:
+    #         dtype_err.append(("unknown", "device_type", None))
+    #     # D-TYPE: Device-type attributes object IDs collection
+    #     else:
+    #         for each_dtype in self.my_vars["device_type"]:
+    #             dtype = self.clstr_dtype_info(each_dtype, "device_type", dtype_err)
+    #             if each_dtype.get("device") == None:
+    #                 dtype_err.append(
+    #                     (each_dtype.get("name", "unknown"), "device", None)
+    #                 )
+    #             # DVC: Device attributes object IDs collection, only proceeds if no device-type errors
+    #             if len(dtype_err) == 0:
+    #                 for each_dvc in each_dtype["device"]:
+    #                     dvc_err, intf_err, intf, ip = ([] for i in range(4))
+    #                     tmp_dvc = self.vm_device_info(
+    #                         each_dtype, each_dvc, "device", dvc_err
+    #                     )
+    #                     if len(dvc_err) == 0:
+    #                         dvc = self.create_vm_dvc("dvc", dtype, tmp_dvc)
+    #                         # CLEAN_DM: Removes any None values or empty lists
+    #                         dvc = self.rmv_empty_attr(dvc)
+
+    #                     # DVC_ERR: Groups and reports any device based errors
+    #                     if len(dvc_err) != 0:
+    #                         self.obj_err_msg("device", each_dvc.get("Name"), dvc_err)
+
+    #                     all_dvc.append(dict(dvc=dvc, intf=intf, ip=ip))
+
+    #     # D-TYPE: Groups and reports any device-type based error
+    #     if len(dtype_err) != 0:
+    #         self.obj_err_msg("device-type", None, dtype_err)
