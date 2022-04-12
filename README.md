@@ -20,17 +20,6 @@ The VMs are defined in in a YAML file in a hierarchical structure that starts at
 | vm      | `tags` | No | Dictionary {tag: tag_colour} of tags to assign to the VM
 
 
-
-| intf    | `name` | Yes | Name of the interface (must be a string), is only mandatory if `intf` defined
-| intf    | `grp_vl` | *list* | No | A two element list of VLAN group and a VLAN or list of VLANs
-| intf    | `vrf_ip` | *list* | No | A two element list of VRF and IP address/mask
-| intf    | `secondary_ip` | *True* | No | Required if the IP address is not the VMs primary IP
-| intf    | `dns` | No | Domain name for the VM interface
-| intf    | `tags` | No | List of tags assigned to the interface and if defined the IP address
-
-
-
-
 | Parent  | Key    | value    | Mand | Description
 |---------|--------|----------|------|------------
 | device_type | `name` | Yes | The device-type that the devices are grouped under
@@ -49,6 +38,25 @@ The VMs are defined in in a YAML file in a hierarchical structure that starts at
 | device | `asset_tag' | No | Asset tag number
 | device | `comments` | No | Description for the VM
 | device | `tags` | No | Dictionary {tag: tag_colour} of tags to assign to the VM
+
+
+virtual_chassis*	integer         x-nullable: true
+vc_position	        integer         x-nullable: true
+vc_priority	        integer         x-nullable: true
+
+
+Interfaces are the same for VMs or devices
+
+| Parent  | Key    | Mand | Description
+|---------|--------|----------|------|------------
+| intf    | `name` | Yes | Name of the interface (must be a string), is only mandatory if `intf` defined
+| intf    | `grp_vl` | No | A two element list representing an access port [VLAN group, VLAN] or trunk [VLAN group, [VLAN]]
+| intf    | `vrf_ip` | No | A two element list of [VRF, IPaddress/mask]
+| intf    | `primary_ip` | No | By default first interface IP address is primary ip, set this to true on an other interface to overide
+| intf    | `dns` | No | Domain name for the interface
+
+
+If updated IP on an intefrace the original IP is  delted as if not wouldappendnew IP to interface with existing, so is only way to remove
 
 
 VMs: Cluster name, Site and VM name are mandatory
