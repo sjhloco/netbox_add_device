@@ -24,7 +24,7 @@ VMs and devices are defined in a hierarchically structured YAML file that starts
 | cluster/vm | `role` | No | The VM device-role
 | cluster/vm | `platform` | No | The VM platform
 | vm      | `name` | Yes | The VM name
-| vm      | `name` | No | VM status, offline, active (default), planned, staged, failed, decommissioning
+| vm      | `name` | No | VM status, default is active
 | vm      | `cpu` | No | The number of vCPUs (integer)
 | vm      | `mem` | No | The amount of memory in MB (integer)
 | vm      | `disk` | No | The amount of HDD in GB (integer)
@@ -44,21 +44,21 @@ VMs and devices are defined in a hierarchically structured YAML file that starts
 | device_type/ device | `location` | No | The location of the device, ***MUST be the slug***
 | device_type/ device | `rack` | No | The rack within the location
 | device | `name` | Yes | The device name
-| device | `name` | No | Device status, offline, active (active), planned, staged, failed, inventory, decommissioning
+| device | `name` | No | Device status, default is active
 | device | `position` | No | Devices position in the rack (integer)
 | device | `face` | No | Front or rear facing, default is front
 | device | `serial' | No | Device serial number
 | device | `asset_tag' | No | Asset tag number
 | device | `comments` | No | Description for the VM
 | device | `tags` | No | Dictionary {tag: tag_colour} of tags to assign to the VM
-| device | `virtual_chassis` | No | The virtual chassis in the format {vc_name: [vc_position, vc_priority]}
+| device | `virtual_chassis` | No | Virtual chassis in format {vc_name: [vc_position, vc_priority]}
 
 #### Virtual Machine/ Device attributes
 
 Interfaces are the same for VMs or devices except for `type` which only applies to physical device interfaces. It is is not specified it will either use the existing interfaces type (includes those defined in the device-type) or for new interfaces default to *virtual*.
 
 | Parent  | Key    | Mand | Description
-|---------|--------|----------|------|------------
+|---------|--------|------|-------------
 | intf    | `name` | Yes | Name of the interface (must be a string), is only mandatory if `intf` defined
 | intf    | `grp_vl` | No | A two element list representing an access port [VLAN group, VLAN] or trunk [VLAN group, [VLAN]]
 | intf    | `vrf_ip` | No | A two element list of [VRF, IPaddress/mask]
