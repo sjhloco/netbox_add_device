@@ -1,0 +1,54 @@
+############################################# TEST #############################################
+test_env:
+  # Test environment objects that needed creating as cant be got from VM info
+  cluster_type: UTEST_CLSTR_TYPE
+  site: UTEST_SITE
+  manufacturer: UTEST_MFTR
+  prefixes: ['10.10.10.0/24', '10.10.20.0/24', '10.10.30.0/24']
+  vlans: {10: UTEST_VL10, 20: UTEST_VL20, 30: UTEST_VL30}
+
+# VM used mostly for full testing rather than unit testing (except VM create/delete). Also used for some of Test environment objects
+cluster:
+  - name: UTEST_CLSTR
+    site: UTEST_SITE
+    # tenant: tenant1                       # Optional, can be here or under vm
+    # device_role: firewall                 # Optional, can be here or under vm
+    # platform: ASA                         # Optional, can be here or under vm
+    vm:
+      - name: UTEST_VM1
+        tenant: UTEST_TNT
+        intf:
+          - name: eth0
+            vrf_ip: [UTEST_VRF, 10.10.30.1/24]
+            grp_vl: [UTEST_VL_GRP, 10]
+          - name: eth1
+            grp_vl: [UTEST_VL_GRP, [20, 30]]
+
+
+  # - name: UTEST_CLSTR2
+  #   vm:
+  #     - name: UTEST_VM2
+  #       tenant: UTEST_TNT
+  #       role: UTEST_DVC_ROLE
+  #       platform: UTEST_PLTFM
+  #       cpu: 1
+  #       mem: 2
+  #       disk: 32
+  #       tags: [UTEST_TAG]
+  #       comments: COMMENT
+  #       intf:
+  #         - name: eth0
+  #         - name: eth1
+  #           grp_vl: [UTEST_VL_GRP, 10]
+  #           tags: [UTEST_TAG]
+  #         - name: eth2
+  #           grp_vl: [UTEST_VL_GRP, [10,20,30]]
+  #         - name: eth3
+  #           vrf_ip: [UTEST_VRF, 10.10.20.1/24]
+  #           secondary_ip: true
+  #         - name: eth4
+  #           vrf_ip: [UTEST_VRF, 10.10.10.1/24]
+  #           dns: mob-win-ws01.utest.com
+  #           grp_vl: [UTEST_VL_GRP, 10]
+  #           tags: [UTEST_TAG]
+

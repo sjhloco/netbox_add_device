@@ -1,3 +1,7 @@
+"""
+Run by nbox_add_device.py to perform all the NetBox interaction by pynetbox
+"""
+
 import pynetbox
 from pynetbox.core.query import RequestError
 import ast
@@ -12,9 +16,9 @@ class NboxApi:
         self.rc = rc
 
     # ----------------------------------------------------------------------------
-    # CRUD: Methods that interact with netbox to create, update or delete devices, VMs and interfaces
+    # 1. CRUD: Methods that interact with netbox to create, update or delete devices, VMs and interfaces
     # ----------------------------------------------------------------------------
-    ## OBJ_CREATE: Create objects and return output and whether changed (T or F) in list or errors in dictionary
+    ## 1a. OBJ_CREATE: Create objects and return output and whether changed (T or F) in list or errors in dictionary
     def obj_create(self, obj_name, api_attr, input_obj, error):
         try:
             result = operator.attrgetter(api_attr)(self.nb).create(input_obj)
@@ -23,7 +27,7 @@ class NboxApi:
             error.append({obj_name: ast.literal_eval(e.error), "task_type": "create"})
             return ["create", obj_name, False]
 
-    ## OBJ_UPDATE: Update objects return output and whether changed (T or F) in list or errors in dictionary
+    ## 1b. OBJ_UPDATE: Update objects return output and whether changed (T or F) in list or errors in dictionary
     def obj_update(self, obj_name, nbox_obj, input_obj, error):
         try:
             result = nbox_obj.update(input_obj)
@@ -32,7 +36,7 @@ class NboxApi:
         except RequestError as e:
             error.append({obj_name: ast.literal_eval(e.error), "task_type": "update"})
 
-    ## OBJ_DELETE: Deletes object, nbox_obj is the vm or interface and task_type informational
+    ## 1c. OBJ_DELETE: Deletes object, nbox_obj is the vm or interface and task_type informational
     def obj_delete(self, nbox_obj, task_type):
         try:
             nbox_obj.delete()
@@ -43,7 +47,7 @@ class NboxApi:
                 )
             )
 
-    ## DELETE_IP: Deletes IP address so that a new IP is assigned to interface (without would add extra IP to interface)
+    ## 1d. DELETE_IP: Deletes IP address so that a new IP is assigned to interface (without would add extra IP to interface)
     def remove_intf_ip(self, obj_type, ip_dm):
         intf_id = ip_dm["assigned_object_id"]
         try:
@@ -57,9 +61,9 @@ class NboxApi:
             pass
 
     # ----------------------------------------------------------------------------
-    # GET: Methods that GET information from Netbox (object IDs) to be used in CRUD
+    # 2. GET: Methods that GET information from Netbox (object IDs) to be used in CRUD
     # ----------------------------------------------------------------------------
-    ## GET_SINGLE_ID: Gets the ID for a single primary object (input_obj)
+    ## 2a. GET_SINGLE_ID: Gets the ID for a single primary object (input_obj)
     def get_single_id(self, api_attr, obj, fltr, err):
         if obj.get("name") != None:
             name = obj["name"]
@@ -91,7 +95,7 @@ class NboxApi:
             )
             exit()
 
-    ## GET_VLAN_ID: Gets the VLAN group slug used to get single VLAN ID or create a list of all VLAN IDs
+    ## 2b. GET_VLAN_ID: Gets the VLAN group slug used to get single VLAN ID or create a list of all VLAN IDs
     def get_vlan_id(self, intf, error):
         vl_grp = intf["grp_vl"][0]
         vlan = intf["grp_vl"][1]
@@ -116,7 +120,7 @@ class NboxApi:
             )
             exit()
 
-    ## CHK_EXIST: Check if object name already exists (VM or IP address) within the container (cluster or VRF)
+    ## 2c.  CHK_EXIST: Check if object name already exists (VM or IP address) within the container (cluster or VRF)
     def chk_exist(self, api_attr, fltr, parent_obj_name):
         try:
             result = operator.attrgetter(api_attr)(self.nb).get(**fltr)
@@ -131,13 +135,13 @@ class NboxApi:
             )
             exit()
 
-    # SLUG: Makes slug from name by making integers string, all characters lowercase and replacing whitespace with '_'
+    # 2d. SLUG: Makes slug from name by making integers string, all characters lowercase and replacing whitespace with '_'
     def make_slug(self, obj: str) -> str:
         if isinstance(obj, int):
             obj = str(obj)
         return obj.replace(" ", "_").lower()
 
-    ## TAGS: Gathers ID of existing tag or creates new one and returns ID (list of IDs)
+    ## 2e. TAGS: Gathers ID of existing tag or creates new one and returns ID (list of IDs)
     def get_or_create_tag(self, tag, tag_exists, tag_created):
         tags = []
         if tag != None:
@@ -155,9 +159,9 @@ class NboxApi:
         return tags
 
     # ----------------------------------------------------------------------------
-    # PRINT: Methods to edit the STDOUT formatting returned by CRUD operations
+    # 3. PRINT: Methods to edit the STDOUT formatting returned by CRUD operations
     # ----------------------------------------------------------------------------
-    ## FORMAT_RSLT_ERR: Combines interface/ip error or result messages into dicts so easier to use in STDOUT messages
+    ## 3a. FORMAT_RSLT_ERR: Combines interface/ip error or result messages into dicts so easier to use in STDOUT messages
     def format_rslt_err(self, input_list):
         output_dict = defaultdict(list)
         for each_ele in input_list:
@@ -171,7 +175,7 @@ class NboxApi:
                     output_dict["changed"] = True
         return output_dict
 
-    ## STDOUT_INTF_IP: Formats the output for interface or IP displayed message
+    ## 3b. STDOUT_INTF_IP: Formats the output for interface or IP displayed message
     def format_stdout_intf_ip(self, obj_type, input_result):
         tmp_obj_list = []
 
@@ -182,7 +186,7 @@ class NboxApi:
         ] = f"[i]{obj_type}: {', '.join(list(tmp_obj_list))}[/i], "
         return input_result
 
-    ## FAIL_STDOUT: Prints out message for the user dependant on the task performed on VM/Device
+    ## 3c. FAIL_STDOUT: Prints out message for the user dependant on the task performed on VM/Device
     def crte_upte_err(self, obj_type, vm_dvc_exist, vm_dvc, deploy_err, intf_ip):
         # VM/DVC_NAME: Sets vm/device name dependant on whether is a new or existing
         if vm_dvc_exist != None:
@@ -211,7 +215,7 @@ class NboxApi:
                             f" -[i]{obj_name} {err_type}: {'.'.join(err_msg)}[/i]"
                         )
 
-    ## SUCCESS_STDOUT: Prints out message for the user dependant on the task performed on VM/Device
+    ## 3d. SUCCESS_STDOUT: Prints out message for the user dependant on the task performed on VM/Device
     def crte_upte_stdout(
         self, obj_type, vm_dvc_dm, vm_dvc, intf_result={}, ip_result={}
     ):
@@ -225,12 +229,12 @@ class NboxApi:
             + ip_result.get("changed", False)
         )
 
-        ## NO_CHANGE: STDOUT if no changes made to VM/Device, Interface or IP
+        # NO_CHANGE: STDOUT if no changes made to VM/Device, Interface or IP
         if changed == False:
             self.rc.print(
                 f"⚠️  {obj_type} '{vm_dvc[1]}' already exists with the correct details"
             )
-        ## CHANGES: STDOUT if changes made to VM/Device, Interface or IP
+        # CHANGES: STDOUT if changes made to VM/Device, Interface or IP
         else:
             # VM_VAR: If VM created or updated remove unneeded attributes and create variable of changes
             if vm_dvc_result["changed"] == True:
@@ -253,19 +257,23 @@ class NboxApi:
                 )
             )
 
-    ## PRINT_TAG_RT: Prints the result of existing and newly created tags
+    ## 3e. PRINT_TAG_RT: Prints the result of existing and newly created tags
     def print_tag_rt(self, obj_type, exists, created) -> None:
         if len(created) != 0:
+            non_dup_tags = set(created)
             self.rc.print(
-                f":white_check_mark: {obj_type} tags '{', '.join(created)}' successfully created"
+                f":white_check_mark: {obj_type} tags '{', '.join(non_dup_tags)}' successfully created"
             )
         elif len(exists) != 0:
-            self.rc.print(f"⚠️  {obj_type} tags '{', '.join(exists)}' already exist")
+            non_dup_tags = set(exists)
+            self.rc.print(
+                f"⚠️  {obj_type} tags '{', '.join(non_dup_tags)}' already exist"
+            )
 
     # ----------------------------------------------------------------------------
-    # TASK: Tasks run by the engine that call the CRUD and STD methods
+    # 4. TASK: Tasks run by the engine that call the CRUD and STD methods
     # ----------------------------------------------------------------------------
-    ## GET_CREATE_VC: Gets the details or creates the virtual-chassis
+    ## 4a. GET_CREATE_VC: Gets the details or creates the virtual-chassis
     def chk_create_vc(self, dvc_dm, deploy_err):
         vc_name = list(dvc_dm["vm_dvc"]["virtual_chassis"].keys())[0]
         vc_pos = list(dvc_dm["vm_dvc"]["virtual_chassis"].values())[0][0]
@@ -286,7 +294,7 @@ class NboxApi:
             self.crte_upte_err("Device", None, result, deploy_err, "")
         return deploy_err
 
-    ## CREATE_VM_DVC: Creates the VM or device with all attributes or already exists updates it
+    ## 4b. CREATE_VM_DVC: Creates the VM or device with all attributes or already exists updates it
     def create_update_vm_dvc(self, api_attr, dm, vm_dvc_exist):
         obj_type = api_attr.split(".")[1][:-1].capitalize()
         deploy_err = []
@@ -311,7 +319,7 @@ class NboxApi:
         result = dict(obj_type=obj_type, result=vm_dvc_result, deploy_err=deploy_err)
         return result
 
-    ## CREATE_OR_UPDATE_INTF: Creates new VM interfaces or updates existing ones
+    ## 4c. CREATE_OR_UPDATE_INTF: Creates new VM interfaces or updates existing ones
     def crte_upte_intf(self, api_attr, dm, vm_dvc_exist, vm_dvc_result):
         intf_result = []
         obj_type = vm_dvc_result["obj_type"]
@@ -326,16 +334,22 @@ class NboxApi:
                 "name": each_intf["name"],
                 obj_type.lower() + "_id": vm_dvc_id,
             }
+
             intf_exist = self.chk_exist(api_attr, fltr, vm_dvc_name)
 
             # CREATE_INTF: Created individually so that error messages can have the interface name
             if intf_exist == None:
+                # If device interface type not sets sets as virtual
+                if obj_type == "Device" and each_intf.get("type") == None:
+                    each_intf["type"] = "virtual"
                 intf_result.append(
                     self.obj_create(each_intf["name"], api_attr, each_intf, deploy_err)
                 )
             # UPDATE_INTF: Update existing interface. If goes from access (untagged) to trunk (tagged) removes untagged VLAN
             elif intf_exist != None:
-
+                # Gets the existing device interface type if not specifically set
+                if obj_type == "Device" and each_intf.get("type") == None:
+                    each_intf["type"] = intf_exist["type"]["value"]
                 if each_intf.get("mode") == "tagged":
                     each_intf["untagged_vlan"] = None
                 del each_intf[obj_type.lower()], each_intf["name"]
@@ -353,7 +367,7 @@ class NboxApi:
         result = dict(result=intf_result, deploy_err=deploy_err)
         return result
 
-    ## CREATE_OR_UPDATE_IP: Creates new VM interface IP address or adds existing one to a VM interfaces
+    ## 4d. CREATE_OR_UPDATE_IP: Creates new VM interface IP address or adds existing one to a VM interfaces
     def crte_upte_ip(self, api_attr, dm, vm_dvc_exist, vm_dvc_result, intf_result):
         obj_type = vm_dvc_result["obj_type"]
         deploy_err = vm_dvc_result["deploy_err"]
@@ -422,12 +436,12 @@ class NboxApi:
             )
 
     # ----------------------------------------------------------------------------
-    # ENGINE: Runs the methods in this class to perform API calls to create VMs, interfaces and IPs
+    # 5. ENGINE: Runs the methods in this class to perform API calls to create VMs, interfaces and IPs
     # ----------------------------------------------------------------------------
     def engine(self, obj_type, api_attr, dm):
         tag_exists, tag_created = ([] for i in range(2))
 
-        # CHECK_VM: First checks whether the VM already exists and either creates new VM or updates existing VM if changes
+        ## 5a. CHECK_VM: First checks whether the VM already exists and either creates new VM or updates existing VM if changes
         for each_vm_dvc in dm:
             # FLTR: Creates filter for checking if VM or Device exists
             if obj_type == "vm":
@@ -458,19 +472,19 @@ class NboxApi:
                     each_vm_dvc["vm_dvc"]["tags"] = self.get_or_create_tag(
                         each_vm_dvc["vm_dvc"]["tags"], tag_exists, tag_created
                     )
-                # CREATE_UPDATE: Done one at a time with all elements created at same iteration for easier reporting and rollback
+                ## 5b. CREATE_UPDATE: Done one at a time with all elements created at same iteration for easier reporting and rollback
                 vm_dvc_result = self.create_update_vm_dvc(
                     api_attr, each_vm_dvc, vm_dvc_exist
                 )
 
-            # # CREATE_UPDATE_INTF: If VM create/update successful creates and/or updates (if interface already exist) interfaces
+            ## 5c. CREATE_UPDATE_INTF: If VM create/update successful creates and/or updates (if interface already exist) interfaces
             if len(each_vm_dvc["intf"]) != 0:
                 if len(vm_dvc_result.get("deploy_err", ["dummy"])) == 0:
                     intf_result = self.crte_upte_intf(
                         intf_api, each_vm_dvc, vm_dvc_exist, vm_dvc_result
                     )
 
-                # CREATE_UPDATE_IP: If VM and INTF create/update successful creates (if IP doesn't exist) and associates IP to interfaces
+                ## 5d. CREATE_UPDATE_IP: If VM and INTF create/update successful creates (if IP doesn't exist) and associates IP to interfaces
                 if len(each_vm_dvc["ip"]) != 0:
                     if (
                         len(vm_dvc_result.get("deploy_err", ["dummy"])) == 0

@@ -1,0 +1,83 @@
+# ----------------------------------------------------------------------------
+# Examples of adding a couple of VMs and physical devices
+# ----------------------------------------------------------------------------
+
+###################################### Create Virtual Machines ######################################
+cluster:
+  - name: ESX Cluster                               # Mandatory name of the cluster
+    site: site1                                     # Mandatory, needed to get unique cluster
+    tenant: tenant1                                 # Optional, can be here or under vm
+    device_role: firewall                           # Optional, can be here or under vm
+    platform: ASA                                   # Optional, can be here or under vm
+    vm:                                             # Mandatory List of VMs
+      - name: asa1                                  # Mandatory name of the vm
+        cpu: 4                                      # Optional
+        mem: 2                                      # Optional
+        disk: 32                                    # Optional
+        comments: ASA firewall                      # Optional
+        tags: {fw: 9e9e9e}                          # Optional dictionary of {tag: tag_colour}
+        intf:                                       # Optionally define interface for the VM
+          - name: eth0                              # Mandatory name of the VM if 'intf' defined
+            vrf_ip: [INSIDE, 10.10.10.1/24]         # Optional L3 {VRF: IP} of the VM if 'intf' defined
+            descr: Inside interface                 # Optional description
+          - name: eth1
+            grp_vl: [vl_grp1, [20, 30]]             # Optional L2 trunk port with {VLAN_group: [vlan, vlan]}
+          - name: eth1
+            grp_vl: [vl_grp1, 20]                   # Optional L2 access port with {VLAN_group: vlan}
+      - name: server1
+        tenant: tenant2
+        device_role: compute
+        status: decommissioning
+        intf:
+          - name: eth1
+            vrf_ip: [RED, 10.99.99.1/24]
+          - name: eth0
+            vrf_ip: [MGMT, 10.10.30.10/24]
+            dns: svr1@example.com                   # Optional DNS name of the device
+            primary_ip: True                        # Optionally set this interface as the primary interface
+
+###################################### Create Devices ######################################
+device_type:
+  - name: Catalyst 3560-CX-12PC-S                   # Mandatory, will automatically workout manufacturer
+    site: site1                                     # Mandatory, can be here or under device
+    tenant: tenant1                                 # Optional, can be here or under vm
+    device_role: switch                             # Mandatory, can be here or under device
+    platform: IOS                                   # Optional, can be here or under vm
+    # cluster: ESX Home                             # Optional, can be here or under vm
+    location: office1_floor5                        # Optional, MUST be the slug. Can be here or under device,
+    rack: FL5-A1                                    # Optional, can be here or under vm
+    device:                                         # Mandatory List of devices
+      - name: SWI01                                 # Mandatory name of the vm
+        cluster: cluster1                           # Optional, can be here or under vm
+        position: 2                                 # Optional devices position in the rack
+        face: rear                                  # Optional, front or rear facing, default is front
+        serial: FOC2414L6TJ                         # Optional
+        asset_tag: "12345"                          # Optional (If is an integer netbox always thinks changed)
+        comments: Core switch                       # Optional
+        tags: {swi: 9e9e9e}                         # Optional dictionary of {tag: tag_colour}
+        virtual_chassis: {stack2: [1, 1]}           # Optional  create/ add to virtual chassis {vc_name: [vc_position, vc_priority]}
+        intf:
+        - name: vlan30
+          vrf_ip: [COMPUTE, 10.10.50.1/24]          # Optional L3 {VRF: IP} of the VM if 'intf' defined
+        - name: GigabitEthernet0/1
+          grp_vl: [vl_grp1, 30]                     # Optional L2 access port with {VLAN_group: vlan}
+        - name: GigabitEthernet0/2
+          grp_vl: [vl_grp1, [20, 30]]               # Optional L2 trunk port with {VLAN_group: [vlan, vlan]}
+      - name: SWI02
+        site: site2
+        tenant: tenant3
+        platform: NXOS
+        device_role: router
+        location: dc_floor1
+        rack: FL1-A1
+        intf:
+        - name: vlan20
+          vrf_ip: [BLU, 10.10.20.11/24]
+          type: virtual                              # Optionally set the port type, if port doesn't exist will default to virtual
+        - name: vlan10
+          vrf_ip: [BLU, 10.10.10.10/24]
+          dns: sw2.stesworld.com
+          primary_ip: True
+        - name: GigabitEthernet0/1
+          grp_vl: [vl_grp1, [20, 30]]
+          type: 10gbase-t                           # Optionally set as 10 gig port (overrides whats in device-type)

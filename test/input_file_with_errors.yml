@@ -1,4 +1,6 @@
-############################################# TEST #############################################
+# ----------------------------------------------------------------------------
+# TEST_ERR: Used for testing picks up input file errors and reports on them
+# ----------------------------------------------------------------------------
 test: {}              # Needed incase cluster and device_type both hashed-out
 # cluster:
 ## Test missing mand device-type
