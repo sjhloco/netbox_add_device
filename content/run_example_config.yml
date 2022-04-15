@@ -1,0 +1,155 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/mucholoco/Documents/Coding/Netbox/nbox_py_scripts/netbox_add_device
+
+  # Export additional ENV variables
+  env:
+    recording: true
+
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 105
+
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 25
+
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+
+  # Quality
+  # 1 - 100
+  quality: 100
+
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+
+  # The size of the font
+  fontSize: 12
+
+  # The height of lines
+  lineHeight: 1
+
+  # The spacing between letters
+  letterSpacing: 0
+
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+
+# Records, feel free to edit them
+records:
+  - delay: 1000
+    content: "(nbox) macoloco:\e[36mnetbox_add_device\e[32m (master)\e[34m\e(B\e[m$"
+  - delay: 600
+    content: python nbox_add_device.py devices_vms.yml
+  - delay: 400
+    content: "\r\n"
+  - delay: 25
+    content: "❌ The mandatory top level \e[32m'device_type'\e[0m dictionary is needed if you are trying to create Devices\r\n"
+  - delay: 1300
+    content: "✅ Virtual_machine \e[32m'azu-ubt-eve01'\e[0m created with attributes: \e[3mtenant, status, comments, tags, role, vcpus, memory, disk\e[0m, \e[3minterfaces: \e[0m\r\n\e[3meth0, eth1\e[0m, \e[3mIP addresses: \e[0m\e[3m10.20.10.5\e[0m\e[3m/\e[0m\e[3m24\e[0m\e[3m, \e[0m\e[3m10.20.20.5\e[0m\e[3m/\e[0m\e[3m24\e[0m\r\n⚠️  Virtual_machine tags \e[32m'os_linux'\e[0m already exist\r\n"
+  - delay: 1700
+    content: "(nbox) macoloco:\e[36mnetbox_add_device\e[32m (master)\e[34m\e(B\e[m$"
+  - delay: 1000
+    content: "\r\n"
+  - delay: 25
+    content: "(nbox) macoloco:\e[36mnetbox_add_device\e[32m (master)\e[34m\e(B\e[m$"
+  - delay: 1000
+    content: python nbox_add_device.py devices_vms.yml
+  - delay: 2000
+    content: "\r\n"
+  - delay: 25
+    content: "⚠️  Virtual_machine \e[32m'azu-ubt-eve01'\e[0m already exists with the correct details\r\n⚠️  Virtual_machine tags \e[32m'os_linux'\e[0m already exist\r\n"
+  - delay: 1300
+    content: "✅ Device \e[32m'HME-ASA-XFW01'\e[0m created with attributes: \e[3mtenant, platform, status, tags, device_type, manufacturer, device_role, site, \e[0m\r\n\e[3mlocation, serial, rack, position, face\e[0m, \e[3minterfaces: GigabitEthernet1/\e[0m\e[3m1\e[0m\e[3m, GigabitEthernet1/\e[0m\e[3m2\e[0m\e[3m, GigabitEthernet1/\e[0m\e[3m3\e[0m\e[3m, GigabitEthernet1/\e[0m\e[3m4\e[0m,\r\n\e[3mIP addresses: \e[0m\e[3m192.168.1.253\e[0m\e[3m/\e[0m\e[3m24\e[0m\e[3m, \e[0m\e[3m192.168.255.1\e[0m\e[3m/\e[0m\e[3m29\e[0m\e[3m, \e[0m\e[3m10.10.20.1\e[0m\e[3m/\e[0m\e[3m24\e[0m\e[3m, \e[0m\e[3m10.10.30.1\e[0m\e[3m/\e[0m\e[3m24\e[0m\r\n⚠️  Device tags \e[32m'os_network'\e[0m already exist\r\n"
+  - delay: 1700
+    content: "(nbox) macoloco:\e[36mnetbox_add_device\e[32m (master)\e[34m\e(B\e[m$"
+  - delay: 1000
+    content: "\r\n"
+  - delay: 25
+    content: "(nbox) macoloco:\e[36mnetbox_add_device\e[32m (master)\e[34m\e(B\e[m$"
+  - delay: 1000
+    content: python nbox_add_device.py devices_vms.yml
+  - delay: 2000
+    content: "\r\n"
+  - delay: 25
+    content: "✅ Virtual_machine \e[32m'azu-ubt-eve01'\e[0m updated with attributes: \e[3mtenant, status\e[0m, \e[3mIP addresses: \e[0m\e[3m10.20.10.6\e[0m\e[3m/\e[0m\e[3m24\e[0m\r\n"
+  - delay: 1700
+    content: "⚠️  Device \e[32m'HME-ASA-XFW01'\e[0m already exists with the correct details\r\n⚠️  Device tags \e[32m'os_network'\e[0m already exist\r\n"
+  - delay: 6000
+    content: "(nbox) macoloco:\e[36mnetbox_add_device\e[32m (master)\e[34m\e(B\e[m$"
+
+
