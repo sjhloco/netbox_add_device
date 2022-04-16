@@ -110,4 +110,4 @@ There are three possible outcomes from the attempt to create each object which a
 ⚠️ VM or device already exists in the desired state\
 ❌ Object can’t be created or updated because of the returned error or the cluster/device-type is not defined
 
-![run_example_video](https://user-images.githubusercontent.com/33333983/163570380-a50ff335-8eb3-4608-9c77-5c8b28368c6c.gif)
+![run_example_video](https://user-images.githubusercontent.com/33333983/163674996-87ace222-a460-4d79-bcd5-b2a03a4b87c4.gif)
