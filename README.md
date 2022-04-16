@@ -8,10 +8,10 @@ VMs and devices are defined in a hierarchically structured YAML file that starts
 
 - The majority of the attributes are optional, with a few of the higher level being mandatory
 - Some of the attributes can be defined under the cluster or device-type to use them for all VMs or devices (can be overridden on a per-vm or pre-device basis)
-- For physical devices if the location is specified it MUST be the location slug (the only one that uses the slug, all other attributes use names)
-- Defining interfaces is not mandatory, however if defined the `name` is mandatory and must be a string (if is an integer add '' to make it string)
+- For physical devices if the location is specified it MUST be the location slug (all other attributes use names)
+- Defining interfaces is not mandatory, however if defined the *name* is mandatory and must be a string (use '' to make integers a string)
 - For Layer2 interfaces if only 1 VLAN is specified it is an untagged *'access'* port, if a list of VLANs is specified it is a tagged *'trunk'*
-- For Layer3 interfaces by default the first IP address is the primary IP, this can be overridden using `primary_ip`
+- For Layer3 interfaces by default the first IP address is the primary IP, this can be overridden using *primary_ip*
 - If an interface IP address is updated the original IP will be deleted
 
 #### Virtual Machine attributes
