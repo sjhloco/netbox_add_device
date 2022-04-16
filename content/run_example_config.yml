@@ -23,7 +23,7 @@ config:
   # Explicitly set the number of rows
   # or use `auto` to take the current
   # number of rows of your shell
-  rows: 25
+  rows: 22
 
   # Amount of times to repeat GIF
   # If value is -1, play once
@@ -120,7 +120,7 @@ records:
   - delay: 25
     content: "❌ The mandatory top level \e[32m'device_type'\e[0m dictionary is needed if you are trying to create Devices\r\n"
   - delay: 1300
-    content: "✅ Virtual_machine \e[32m'azu-ubt-eve01'\e[0m created with attributes: \e[3mtenant, status, comments, tags, role, vcpus, memory, disk\e[0m, \e[3minterfaces: \e[0m\r\n\e[3meth0, eth1\e[0m, \e[3mIP addresses: \e[0m\e[3m10.20.10.5\e[0m\e[3m/\e[0m\e[3m24\e[0m\e[3m, \e[0m\e[3m10.20.20.5\e[0m\e[3m/\e[0m\e[3m24\e[0m\r\n⚠️  Virtual_machine tags \e[32m'os_linux'\e[0m already exist\r\n"
+    content: "✅ Virtual_machine \e[32m'azu-ubt-eve01'\e[0m created with attributes: \e[3mtenant, status, comments, tags, role, vcpus, memory, disk\e[0m, \e[3minterfaces: \e[0m\e[3meth0, eth1\e[0m, \e[3mIP addresses: \e[0m\e[3m10.20.10.5\e[0m\e[3m/\e[0m\e[3m24\e[0m\e[3m, \e[0m\e[3m10.20.20.5\e[0m\e[3m/\e[0m\e[3m24\e[0m\r\n⚠️  Virtual_machine tags \e[32m'os_linux'\e[0m already exist\r\n"
   - delay: 1700
     content: "(nbox) macoloco:\e[36mnetbox_add_device\e[32m (master)\e[34m\e(B\e[m$"
   - delay: 1000
@@ -134,7 +134,7 @@ records:
   - delay: 25
     content: "⚠️  Virtual_machine \e[32m'azu-ubt-eve01'\e[0m already exists with the correct details\r\n⚠️  Virtual_machine tags \e[32m'os_linux'\e[0m already exist\r\n"
   - delay: 1300
-    content: "✅ Device \e[32m'HME-ASA-XFW01'\e[0m created with attributes: \e[3mtenant, platform, status, tags, device_type, manufacturer, device_role, site, \e[0m\r\n\e[3mlocation, serial, rack, position, face\e[0m, \e[3minterfaces: GigabitEthernet1/\e[0m\e[3m1\e[0m\e[3m, GigabitEthernet1/\e[0m\e[3m2\e[0m\e[3m, GigabitEthernet1/\e[0m\e[3m3\e[0m\e[3m, GigabitEthernet1/\e[0m\e[3m4\e[0m,\r\n\e[3mIP addresses: \e[0m\e[3m192.168.1.253\e[0m\e[3m/\e[0m\e[3m24\e[0m\e[3m, \e[0m\e[3m192.168.255.1\e[0m\e[3m/\e[0m\e[3m29\e[0m\e[3m, \e[0m\e[3m10.10.20.1\e[0m\e[3m/\e[0m\e[3m24\e[0m\e[3m, \e[0m\e[3m10.10.30.1\e[0m\e[3m/\e[0m\e[3m24\e[0m\r\n⚠️  Device tags \e[32m'os_network'\e[0m already exist\r\n"
+    content: "✅ Device \e[32m'HME-ASA-XFW01'\e[0m created with attributes: \e[3mtenant, platform, status, tags, device_type, manufacturer, device_role, site, \e[0m\e[3mlocation, serial, rack, position, face\e[0m, \e[3minterfaces: GigabitEthernet1/\e[0m\e[3m1\e[0m\e[3m, GigabitEthernet1/\e[0m\e[3m2\e[0m\e[3m, GigabitEthernet1/\e[0m\e[3m3\e[0m\e[3m, GigabitEthernet1/\e[0m\e[3m4\e[0m,\e[3mIP addresses: \e[0m\e[3m192.168.1.253\e[0m\e[3m/\e[0m\e[3m24\e[0m\e[3m, \e[0m\e[3m192.168.255.1\e[0m\e[3m/\e[0m\e[3m29\e[0m\e[3m, \e[0m\e[3m10.10.20.1\e[0m\e[3m/\e[0m\e[3m24\e[0m\e[3m, \e[0m\e[3m10.10.30.1\e[0m\e[3m/\e[0m\e[3m24\e[0m\r\n⚠️  Device tags \e[32m'os_network'\e[0m already exist\r\n"
   - delay: 1700
     content: "(nbox) macoloco:\e[36mnetbox_add_device\e[32m (master)\e[34m\e(B\e[m$"
   - delay: 1000
