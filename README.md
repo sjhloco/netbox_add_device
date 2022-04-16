@@ -29,7 +29,7 @@ VMs and devices are defined in a hierarchically structured YAML file that starts
 | vm      | `mem` | No | The amount of memory in MB (integer)
 | vm      | `disk` | No | The amount of HDD in GB (integer)
 | vm      | `comments` | No | Description for the VM
-| vm      | `tags` | No | Dictionary {tag: tag_colour} of tags to assign to the VM
+| vm      | `tags` | No | Dictionary *{tag: tag_colour}* of tags to assign to the VM
 
 #### Device attributes
 
@@ -50,18 +50,18 @@ VMs and devices are defined in a hierarchically structured YAML file that starts
 | device | `serial` | No | Device serial number
 | device | `asset_tag` | No | Asset tag number
 | device | `comments` | No | Description for the VM
-| device | `tags` | No | Dictionary {tag: tag_colour} of tags to assign to the VM
-| device | `virtual_chassis` | No | Virtual chassis in format {vc_name: [vc_position, vc_priority]}
+| device | `tags` | No | Dictionary *{tag: tag_colour}* of tags to assign to the VM
+| device | `virtual_chassis` | No | Virtual chassis in format *{vc_name: [vc_position, vc_priority]}*
 
 #### Virtual Machine/ Device attributes
 
-Interfaces are the same for VMs or devices except for `type` which only applies to physical device interfaces. It is is not specified it will either use the existing interfaces type (includes those defined in the device-type) or for new interfaces default to *virtual*.
+Interfaces are the same for VMs or devices except for *type* which only applies to physical device interfaces. It is is not specified it will either use the existing interfaces type (includes those defined in the device-type) or for new interfaces default to *virtual*.
 
 | Parent  | Key    | Mand | Description
 |---------|--------|------|-------------
 | intf    | `name` | Yes | Name of the interface (must be a string), is only mandatory if `intf` defined
-| intf    | `grp_vl` | No | A two element list representing an access port [VLAN group, VLAN] or trunk [VLAN group, [VLAN]]
-| intf    | `vrf_ip` | No | A two element list of [VRF, IPaddress/mask]
+| intf    | `grp_vl` | No | A two element list representing an access port *[VLAN group, VLAN]* or trunk *[VLAN group, [VLAN]]*
+| intf    | `vrf_ip` | No | A two element list of *[VRF, IP/mask]*
 | intf    | `primary_ip` | No | By default first interface IP address is primary ip, set this to true on an other interface to override
 | intf    | `dns` | No | Domain name for the interface
 | intf    | `descr` | No | Description for the interface
