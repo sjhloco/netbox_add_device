@@ -36,19 +36,19 @@ VMs and devices are defined in a hierarchically structured YAML file that starts
 | Parent  | Key    | Mand | Description
 |---------|--------|------|-------------
 | device_type | `name` | Yes | The device-type that the devices are grouped under
-| device_type/ device | `site` | Yes | The site that the device is in
-| device_type/ device | `tenant` | No | The tenant that the device is in
-| device_type/ device | `device_role` | Yes | The role of the device
-| device_type/ device | `platform` | No | The device platform
-| device_type/ device | `cluster` | No | The cluster the device is part of
-| device_type/ device | `location` | No | The location of the device, ***MUST be the slug***
-| device_type/ device | `rack` | No | The rack within the location
+| device_type/device | `site` | Yes | The site that the device is in
+| device_type/device | `tenant` | No | The tenant that the device is in
+| device_type/device | `device_role` | Yes | The role of the device
+| device_type/device | `platform` | No | The device platform
+| device_type/device | `cluster` | No | The cluster the device is part of
+| device_type/device | `location` | No | The location of the device, ***MUST be the slug***
+| device_type/device | `rack` | No | The rack within the location
 | device | `name` | Yes | The device name
 | device | `name` | No | Device status, default is active
 | device | `position` | No | Devices position in the rack (integer)
 | device | `face` | No | Front or rear facing, default is front
-| device | `serial' | No | Device serial number
-| device | `asset_tag' | No | Asset tag number
+| device | `serial` | No | Device serial number
+| device | `asset_tag` | No | Asset tag number
 | device | `comments` | No | Description for the VM
 | device | `tags` | No | Dictionary {tag: tag_colour} of tags to assign to the VM
 | device | `virtual_chassis` | No | Virtual chassis in format {vc_name: [vc_position, vc_priority]}
@@ -65,7 +65,7 @@ Interfaces are the same for VMs or devices except for `type` which only applies 
 | intf    | `primary_ip` | No | By default first interface IP address is primary ip, set this to true on an other interface to override
 | intf    | `dns` | No | Domain name for the interface
 | intf    | `descr` | No | Description for the interface
-| intf    | `type' | No | Only needed on device interfaces. if not specified and a new interface will default to *virtual*
+| intf    | `type` | No | Only needed on device interfaces. if not specified and a new interface will default to *virtual*
 
 ## Installation and Prerequisites
 
