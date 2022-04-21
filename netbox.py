@@ -7,6 +7,9 @@ from pynetbox.core.query import RequestError
 import ast
 import operator
 from collections import defaultdict
+import urllib3
+
+urllib3.disable_warnings()
 
 
 class NboxApi:
