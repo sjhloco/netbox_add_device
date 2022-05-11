@@ -81,3 +81,10 @@ device_type:
         - name: GigabitEthernet0/1
           grp_vl: [vl_grp1, [20, 30]]
           type: 10gbase-t                           # Optionally set as 10 gig port (overrides whats in device-type)
+        - name: Port-channel1
+          descr: UPLINK > SW01 - Po1
+          grp_vl: [vl_grp1, [10, 20]]
+          type: lag                                 # Set the interface as a LAG
+        - name: GigabitEthernet0/2
+          lag: Port-channel1                        # Add physical interface as a member of the LAG
+
