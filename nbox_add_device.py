@@ -87,6 +87,7 @@ class CreateDm:
             del intf["virtual_machine"]
             intf["device"] = dict(name=vm_dvc["name"])
             intf["type"] = each_intf.get("type", None)
+            intf["lag"] = each_intf.get("lag", None)
         # INTF_DM: Sets whether an access or trunk port
         if vl_vrf.get("vlan") != None:
             if isinstance(vl_vrf["vlan"], int):

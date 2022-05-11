@@ -210,7 +210,7 @@ class NboxApi:
         for each_err in err["err"]:
             for obj_name, err_dict in each_err.items():
                 for err_type, err_msg in err_dict.items():
-                    # If is interface or ip adds that to rhe error message
+                    # If is interface or ip adds that to the error message
                     if obj_name == str(vm_dvc_name):
                         self.rc.print(f" -[i]{err_type}: {'.'.join(err_msg)}[/i]")
                     else:
@@ -332,12 +332,18 @@ class NboxApi:
         vm_dvc_result = vm_dvc_result["result"]
 
         for each_intf in dm["intf"]:
+            # LAG: If is a LAG member port adds the device_id that is used to filter and get the unique LAG
+            if each_intf.get("lag") != None:
+                each_intf["lag"] = {
+                    "name": each_intf["lag"],
+                    obj_type.lower() + "_id": vm_dvc_id,
+                }
+
             # CHK_EXIST: Checks if interface exists to know whether to create new or update existing interface
             fltr = {
                 "name": each_intf["name"],
                 obj_type.lower() + "_id": vm_dvc_id,
             }
-
             intf_exist = self.chk_exist(api_attr, fltr, vm_dvc_name)
 
             # CREATE_INTF: Created individually so that error messages can have the interface name

@@ -55,7 +55,7 @@ VMs and devices are defined in a hierarchically structured YAML file that starts
 
 #### Virtual Machine/ Device attributes
 
-Interfaces are the same for VMs or devices except for *type* which only applies to physical device interfaces. It is is not specified it will either use the existing interfaces type (includes those defined in the device-type) or for new interfaces default to *virtual*.
+Interfaces are the same for VMs or devices except for *type* which only applies to physical device interfaces. It type is not specified it will either use the existing interface type (includes those defined in the device-type) or for new interfaces default to *virtual*.
 
 | Parent  | Key    | Mand | Description
 |---------|--------|------|-------------
@@ -65,7 +65,8 @@ Interfaces are the same for VMs or devices except for *type* which only applies 
 | intf    | `primary_ip` | No | By default first interface IP address is primary ip, set this to true on an other interface to override
 | intf    | `dns` | No | Domain name for the interface
 | intf    | `descr` | No | Description for the interface
-| intf    | `type` | No | Only needed on device interfaces. if not specified and a new interface will default to *virtual*
+| intf    | `type` | No | Only needed on device interfaces. If not specified and a new interface will default to *virtual*
+| intf    | `lag` | No | Name of of the LAG this interface is a member of
 
 ## Installation and Prerequisites
 
