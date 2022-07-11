@@ -65,8 +65,8 @@ Interfaces are the same for VMs or devices except for *type* which only applies 
 | intf    | `primary_ip` | No | By default first interface IP address is primary ip, set this to true on another interface to override
 | intf    | `dns` | No | Domain name for the interface
 | intf    | `descr` | No | Description for the interface
-| intf    | `type` | No | Only needed on device interfaces. If not specified and a new interface will default to *virtual*
-| intf    | `lag` | No | Name of of the LAG this interface is a member of
+| intf    | `type` | No | Only needed on device interfaces. If not specified and a new interface will default to *virtual* otherwise uses the type from the device-type such as 1000Base-TE (1GE)
+| intf    | `lag` | No | Name of the LAG (port-channel) this interface is a member of
 
 ## Installation and Prerequisites
 
