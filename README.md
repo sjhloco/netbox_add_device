@@ -62,7 +62,7 @@ Interfaces are the same for VMs or devices except for *type* which only applies 
 | intf    | `name` | Yes | Name of the interface (must be a string), is only mandatory if `intf` defined
 | intf    | `grp_vl` | No | A two element list representing an access port *[VLAN group, VLAN]* or trunk *[VLAN group, [VLAN]]*
 | intf    | `vrf_ip` | No | A two element list of *[VRF, IP/mask]*
-| intf    | `primary_ip` | No | By default first interface IP address is primary ip, set this to true on an other interface to override
+| intf    | `primary_ip` | No | By default first interface IP address is primary ip, set this to true on another interface to override
 | intf    | `dns` | No | Domain name for the interface
 | intf    | `descr` | No | Description for the interface
 | intf    | `type` | No | Only needed on device interfaces. If not specified and a new interface will default to *virtual*
