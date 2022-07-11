@@ -24,7 +24,7 @@ VMs and devices are defined in a hierarchically structured YAML file that starts
 | cluster/vm | `role` | No | The VM device-role
 | cluster/vm | `platform` | No | The VM platform
 | vm      | `name` | Yes | The VM name
-| vm      | `name` | No | VM status, default is active
+| vm      | `status` | No | VM status, default is active
 | vm      | `cpu` | No | The number of vCPUs (integer)
 | vm      | `mem` | No | The amount of memory in MB (integer)
 | vm      | `disk` | No | The amount of HDD in GB (integer)
