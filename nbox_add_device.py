@@ -107,6 +107,7 @@ class CreateDm:
                 intf_name=dict(name=each_intf["name"]),
                 dns_name=each_intf.get("dns", ""),
                 primary_ip=each_intf.get("primary_ip", False),
+                role=each_intf.get("role"),
             )
         return dict(intf=intf, ip=ip)
 

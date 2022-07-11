@@ -67,6 +67,7 @@ Interfaces are the same for VMs or devices except for *type* which only applies 
 | intf    | `descr` | No | Description for the interface
 | intf    | `type` | No | Only needed on device interfaces. If not specified and a new interface will default to *virtual*
 | intf    | `lag` | No | Name of of the LAG this interface is a member of
+| intf    | `role` | No | Role of the IP address, by default nothing
 
 ## Installation and Prerequisites
 
