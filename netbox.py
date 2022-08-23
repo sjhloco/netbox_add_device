@@ -8,6 +8,7 @@ import ast
 import operator
 from collections import defaultdict
 import urllib3
+import copy
 
 urllib3.disable_warnings()
 
@@ -34,6 +35,11 @@ class NboxApi:
     def obj_update(self, obj_name, nbox_obj, input_obj, error):
         try:
             result = nbox_obj.update(input_obj)
+            # Try/Except needed as port returns an integer value from the __str__() method
+            try:
+                str(nbox_obj)
+            except:
+                nbox_obj = nbox_obj["name"]
             # pynetbox obj returns device name, result (T or F) whether updated
             return ["update", nbox_obj, result]
         except RequestError as e:
@@ -220,15 +226,15 @@ class NboxApi:
 
     ## 3d. SUCCESS_STDOUT: Prints out message for the user dependant on the task performed on VM/Device
     def crte_upte_stdout(
-        self, obj_type, vm_dvc_dm, vm_dvc, intf_result={}, ip_result={}
+        self, obj_type, vm_dvc_dm, vm_dvc, intf_port_result={}, ip_result={}
     ):
         vm_dvc_result = dict(changed=vm_dvc[2])
-        intf_result = self.format_rslt_err(intf_result)
+        intf_port_result = self.format_rslt_err(intf_port_result)
         ip_result = self.format_rslt_err(ip_result)
 
         changed = (
             vm_dvc_result["changed"]
-            + intf_result.get("changed", False)
+            + intf_port_result.get("changed", False)
             + ip_result.get("changed", False)
         )
 
@@ -248,14 +254,14 @@ class NboxApi:
                     "details"
                 ] = f"attributes: [i]{', '.join(list(vm_dvc_dm.keys()))}[/i], "
             # INTF_IP_VAR: If Interface or IP created/updated create variable of changes
-            if intf_result.get("changed", False) == True:
-                self.format_stdout_intf_ip("interfaces", intf_result)
+            if intf_port_result.get("changed", False) == True:
+                self.format_stdout_intf_ip("interfaces/ports", intf_port_result)
             if ip_result.get("changed", False) == True:
                 self.format_stdout_intf_ip("IP addresses", ip_result)
             # STDOUT_CHANGE: Prints out message for user with result dependant tasks were perfromed (early variables)
             self.rc.print(
                 f":white_heavy_check_mark: {obj_type} '{vm_dvc[1]}' {vm_dvc[0]}d with {vm_dvc_result.get('details', '')}"
-                f"{intf_result.get('details', '')}{ip_result.get('details', '')}".rstrip(
+                f"{intf_port_result.get('details', '')}{ip_result.get('details', '')}".rstrip(
                     ", "
                 )
             )
@@ -312,8 +318,12 @@ class NboxApi:
                 dm["vm_dvc"]["name"], vm_dvc_exist, dm["vm_dvc"], deploy_err
             )
 
-        # STDOUT: Only print message if error or no interfaces defined
-        if len(deploy_err) == 0 and len(dm["intf"]) == 0:
+        # STDOUT: Only print message if error or no interfaces or ports defined
+        if (
+            len(deploy_err) == 0
+            and len(dm.get("intf", [])) == 0
+            and len(dm.get("port", [])) == 0
+        ):
             self.crte_upte_stdout(obj_type, dm["vm_dvc"], vm_dvc_result)
 
         elif len(deploy_err) != 0:
@@ -444,6 +454,92 @@ class NboxApi:
                 obj_type, vm_dvc_exist, vm_dvc_result, deploy_err, "and IP"
             )
 
+    ## 4e. CREATE_OR_UPDATE_PORT: Creates new patch panel port or updates existing ones
+    def crte_upte_port(self, dm, vm_dvc_exist, vm_dvc_result):
+        port_result = []
+        old_rport = {}
+        obj_type = vm_dvc_result["obj_type"]
+        vm_dvc_name = vm_dvc_result["result"][1]
+        vm_dvc_id = vm_dvc_result["result"][1].id
+        deploy_err = vm_dvc_result["deploy_err"]
+        vm_dvc_result = vm_dvc_result["result"]
+
+        for each_port in dm["port"]:
+            new_rport = dict(
+                device=each_port["device"],
+                name=each_port["name"],
+                type=each_port["type"],
+            )
+            # CHK_EXIST: Checks if port exists to know whether to create new or update existing port
+            fltr = {
+                "name": each_port["name"],
+                obj_type.lower() + "_id": vm_dvc_id,
+            }
+            port_exist = self.chk_exist("dcim.front-ports", fltr, vm_dvc_name)
+
+            # CREATE_PORT: Created individually so that error messages can have the port name
+            if port_exist == None:
+                # Create rear port, uses front port name unless specifically set
+                if each_port["rear_port"] != each_port["name"]:
+                    new_rport["name"] = each_port["rear_port"]
+                rport = self.obj_create(
+                    new_rport["name"], "dcim.rear-ports", new_rport, deploy_err
+                )
+                # If rear port does not error create front port (does not add rport to list as dont want to print rport)
+                if rport[2] == True:
+                    each_port["rear_port"] = dict(id=rport[1].id)
+                    port_result.append(
+                        self.obj_create(
+                            each_port["name"], "dcim.front-ports", each_port, deploy_err
+                        )
+                    )
+
+            # UPDATE_PORT: Update existing port by marking change as True
+            elif port_exist != None:
+                change = False
+                # If rear port has changed creates rear-port and updates ID
+                if str(each_port["rear_port"]) != port_exist["rear_port"]["name"]:
+                    old_rport["id"] = port_exist["rear_port"]["id"]
+                    new_rport["name"] = each_port["rear_port"]
+                    rport = self.obj_create(
+                        new_rport["name"], "dcim.rear-ports", new_rport, deploy_err
+                    )
+                    if rport[2] == True:
+                        change = True
+                        each_port["rear_port"] = dict(id=rport[1].id)
+                # If type has changed mark as True and add rear_port ID
+                elif each_port["type"] != port_exist["type"]["value"]:
+                    each_port["rear_port"] = dict(id=port_exist["rear_port"]["id"])
+                    change = True
+                # Checks if any other port attribute have changed, add rear_port ID
+                else:
+                    each_port["rear_port"] = dict(id=port_exist["rear_port"]["id"])
+                    port_attr = ["label", "description"]
+                    for each_attr in port_attr:
+                        if str(each_port[each_attr]) != port_exist[each_attr]:
+                            change = change + True
+                # If any attribute has changed updates the port
+                if change == True:
+                    port_result.append(
+                        self.obj_update(
+                            str(port_exist), port_exist, each_port, deploy_err
+                        )
+                    )
+                    # Deletes old rear-port if rear-port was changed
+                    if old_rport.get("id") != None:
+                        rport = self.nb.dcim.rear_ports.get(id=old_rport["id"])
+                        self.obj_delete(rport, "crte_upte_port")
+
+        # STDOUT: Only print message if error
+        if len(deploy_err) == 0:
+            self.crte_upte_stdout(obj_type, dm["vm_dvc"], vm_dvc_result, port_result)
+        elif len(deploy_err) != 0:
+            self.crte_upte_err(
+                obj_type, vm_dvc_exist, vm_dvc_result, deploy_err, "and port"
+            )
+        result = dict(result=port_result, deploy_err=deploy_err)
+        return result
+
     # ----------------------------------------------------------------------------
     # 5. ENGINE: Runs the methods in this class to perform API calls to create VMs, interfaces and IPs
     # ----------------------------------------------------------------------------
@@ -487,7 +583,7 @@ class NboxApi:
                 )
 
             ## 5c. CREATE_UPDATE_INTF: If VM create/update successful creates and/or updates (if interface already exist) interfaces
-            if len(each_vm_dvc["intf"]) != 0:
+            if len(each_vm_dvc.get("intf", [])) != 0:
                 if len(vm_dvc_result.get("deploy_err", ["dummy"])) == 0:
                     intf_result = self.crte_upte_intf(
                         intf_api, each_vm_dvc, vm_dvc_exist, vm_dvc_result
@@ -506,6 +602,11 @@ class NboxApi:
                             vm_dvc_result,
                             intf_result,
                         )
+
+            ## 5e. CREATE_UPDATE_PORT: If device create/update successful creates and/or updates (if port already exist) ports
+            elif len(each_vm_dvc.get("port", [])) != 0:
+                if len(vm_dvc_result.get("deploy_err", ["dummy"])) == 0:
+                    self.crte_upte_port(each_vm_dvc, vm_dvc_exist, vm_dvc_result)
 
         # TAGs: Prints tag changes
         obj_type = api_attr.split(".")[1][:-1].capitalize()

@@ -1,6 +1,6 @@
 # NetBox - Add Virtual Machine or Device
 
-Creates or updates virtual machines or devices as well as the the interfaces and IP addresses associated to those interface. There maybe a few hidden gotchas but the majority of it is kind of idempotent. The script doesn't check that every objects exists so to get meaningful outputs returned to screen it is best to only define the options that your are changing, is no need to define everything.
+Creates or updates virtual machines or devices as well as the the interfaces or ports and IP addresses associated to those interface. There maybe a few hidden gotchas but the majority of it is kind of idempotent. The script doesn't check that every objects exists so to get meaningful outputs returned to screen it is best to only define the options that your are changing, is no need to define everything each time it is run.
 
 ## Input yaml file
 
@@ -9,10 +9,12 @@ VMs and devices are defined in a hierarchically structured YAML file that starts
 - The majority of the attributes are optional, with a few of the higher level being mandatory
 - Some of the attributes can be defined under the cluster or device-type to use them for all VMs or devices (can be overridden on a per-vm or pre-device basis)
 - For physical devices if the location is specified it MUST be the location slug (all other attributes use names)
-- Defining interfaces is not mandatory, however if defined the *name* is mandatory and must be a string (use '' to make integers a string)
+- Defining interfaces or ports is not mandatory, however if defined the *name* is mandatory and must be a string (use '' to make integers a string)
 - For Layer2 interfaces if only 1 VLAN is specified it is an untagged *'access'* port, if a list of VLANs is specified it is a tagged *'trunk'*
 - For Layer3 interfaces by default the first IP address is the primary IP, this can be overridden using *primary_ip*
 - If an interface IP address is updated the original IP will be deleted
+- If a port-channel is defined the device will always show as updated in the printed output even nothing was changed
+- The printed device output doesn't include the interfaces/ports from a device-type template unless you have edited any of those device-type interface or port attributes
 
 #### Virtual Machine attributes
 
@@ -53,9 +55,9 @@ VMs and devices are defined in a hierarchically structured YAML file that starts
 | device | `tags` | No | Dictionary *{tag: tag_colour}* of tags to assign to the VM
 | device | `virtual_chassis` | No | Virtual chassis in format *{vc_name: [vc_position, vc_priority]}*
 
-#### Virtual Machine/ Device attributes
+#### Virtual Machine/ Device interface attributes
 
-Interfaces are the same for VMs or devices except for *type* which only applies to physical device interfaces. It type is not specified it will either use the existing interface type (includes those defined in the device-type) or for new interfaces default to *virtual*.
+Interfaces are the same for VMs or devices except for *type* which only applies to physical device interfaces. It type is not specified it will either use the existing interface type (includes those defined in the device-type template) or for new interfaces default to *virtual*.
 
 | Parent  | Key    | Mand | Description
 |---------|--------|------|-------------
@@ -68,6 +70,18 @@ Interfaces are the same for VMs or devices except for *type* which only applies 
 | intf    | `type` | No | Only needed on device interfaces. If not specified and a new interface will default to *virtual* otherwise uses the type from the device-type such as 1000Base-TE (1GE)
 | intf    | `lag` | No | Name of the LAG (port-channel) this interface is a member of
 | intf    | `role` | No | Role of the IP address, by default nothing
+
+#### Patch panel port attributes
+
+Patch panels are also classed as a device, although they have ports (front-ports/rear-ports) rather than interfaces. If *type* is not defined it either uses the device-type value or for new ports defaults to *110-punch*. All front-ports must be mapped to a rear-port so if a rear-port is not defined one of the same number as the front-port is created and mapped to it.
+
+| Parent  | Key    | Mand | Description
+|---------|--------|------|-------------
+| port    | `name` | Yes | Name of the port, is only mandatory if `port` is defined
+| port    | `rear_port` | No | Mapped to the front-port, if not defined created with same number as front-port
+| port    | `type` | No | Port type, if not specified and a new port defaults to *110-punch*
+| port    | `label` | No | Label of the port
+| port    | `descr` | No | Description for the port
 
 ## Installation and Prerequisites
 

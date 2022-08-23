@@ -26,7 +26,7 @@ from netbox import NboxApi
 netbox_url = config.netbox_url
 api_token = config.api_token
 ssl = False
-# If using Self-signed cert rather than disbaling SSL verification (nb.http_session.verify = False) can specify the CA cert
+# If using Self-signed cert rather than disabling SSL verification (nb.http_session.verify = False) can specify the CA cert
 # os.environ['REQUESTS_CA_BUNDLE'] = os.path.expanduser('~/Documents/Coding/Netbox/nbox_py_scripts/myCA.pem')
 
 
@@ -111,7 +111,19 @@ class CreateDm:
             )
         return dict(intf=intf, ip=ip)
 
-    ## 1c. REMOVE_EMPTY: Removes any empty attributes from the VM/DVC, INTF or IP DMs
+    ## 1c. CREATE_PORT_DM: Creates the data-models to be used to create the patch panel ports
+    def create_port_dm(self, pp_name, each_port):
+        port = dict(
+            device=dict(name=pp_name),
+            name=each_port["name"],
+            rear_port=each_port.get("rear_port", each_port["name"]),
+            type=each_port.get("type", "110-punch"),
+            description=each_port.get("descr", ""),
+            label=each_port.get("label", ""),
+        )
+        return port
+
+    ## 1d. REMOVE_EMPTY: Removes any empty attributes from the VM/DVC, INTF or IP DMs
     def rmv_empty_attr(self, attr_dict):
         tmp_attr_dict = copy.deepcopy(attr_dict)
 
@@ -128,7 +140,7 @@ class CreateDm:
                     del attr_dict[each_attr]
         return attr_dict
 
-    ## 1d. PRIM_IP: Sets 1st IP as primary if not set on any other interface
+    ## 1e. PRIM_IP: Sets 1st IP as primary if not set on any other interface
     def set_primary_ip(self, ip):
         primary_ip_set = False
 
@@ -305,7 +317,9 @@ class CreateDm:
                 ## 4b. VM/DVC: VM or device attributes object IDs collection, only proceeds if no cluster/device-type errors
                 if len(cltr_dtype_err) == 0:
                     for each_vm_dvc in each_cltr_dtype[vm_dvc]:
-                        vm_dvc_err, intf_err, intf, ip = ([] for i in range(4))
+                        vm_dvc_err, intf_err, port_err, intf, ip, port = (
+                            [] for i in range(6)
+                        )
                         tmp_vm_dvc = self.vm_device_info(
                             each_cltr_dtype, each_vm_dvc, vm_dvc, vm_dvc_err
                         )
@@ -336,12 +350,12 @@ class CreateDm:
                                             vl_vrf["vrf"] = self.nbox.get_single_id(
                                                 "ipam.vrfs", each_intf, fltr, intf_err
                                             )
-                                        # 4d. CREATE_INTF_DM: If are no errors creates the data-models to be used to create the interface
+                                        # 4ca. CREATE_INTF_DM: If are no errors creates the data-models to be used to create the interface
                                         if len(intf_err) == 0:
                                             tmp_intf_ip = self.create_intf_dm(
                                                 vm_dvc, vl_vrf, dm_vm_dvc, each_intf
                                             )
-                                            # 4e. CLEAN_DM: Removes any None values or empty lists
+                                            # 4cb. CLEAN_DM: Removes any None values or empty lists
                                             intf.append(
                                                 self.rmv_empty_attr(tmp_intf_ip["intf"])
                                             )
@@ -351,17 +365,40 @@ class CreateDm:
                                                         tmp_intf_ip["ip"]
                                                     )
                                                 )
+                            # 4d. CREATE_PORT_DM: If there are no errors builds the data-model for creating the patch panel ports
+                            elif each_vm_dvc.get("port", None) != None:
+                                for each_port in each_vm_dvc["port"]:
+                                    if each_port.get("name") == None:
+                                        port_err.append(
+                                            (each_vm_dvc["name"], "port name", None)
+                                        )
+                                    else:
+                                        port.append(
+                                            self.create_port_dm(
+                                                each_vm_dvc["name"], each_port
+                                            )
+                                        )
 
                             # INTF_IP_ERR: Reports error message if any of the VM interface objects don't exist
                             if len(intf_err) != 0:
                                 self.obj_err_msg(
                                     vm_dvc_fname, each_vm_dvc.get("name"), intf_err
                                 )
-                            # 4f. CREATE_DM: If no VM/device errors and no interface/IP errors sets primary IP and creates the DM
-                            elif len(intf_err) == 0:
+                            # PORT_ERR: Reports error message if any of the PP port object don't exist
+                            elif len(port_err) != 0:
+                                self.obj_err_msg(
+                                    vm_dvc_fname, each_vm_dvc.get("name"), port_err
+                                )
+                            # 4e. CREATE_INTF_DM: If no VM/device errors and no interface/IP errors sets primary IP and creates the DM
+                            elif len(intf_err) == 0 and len(intf) != 0:
                                 ip = self.set_primary_ip(ip)
                                 all_obj.append(dict(vm_dvc=dm_vm_dvc, intf=intf, ip=ip))
-
+                            # 4f. CREATE_PORT_DM: If no PP errors and no port errors sets primary IP and creates the DM
+                            elif len(port_err) == 0 and len(port) != 0:
+                                all_obj.append(dict(vm_dvc=dm_vm_dvc, port=port))
+                            # CATCHALL: If no intf or PP port just creates VM/device - !!NEED TO TEST IF this works !!!!!
+                            else:
+                                all_obj.append(dict(vm_dvc=dm_vm_dvc))
                         # VM/DVC_ERR: Groups and reports any VM based errors
                         if len(vm_dvc_err) != 0:
                             self.obj_err_msg(

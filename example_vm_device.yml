@@ -22,7 +22,7 @@ cluster:
             descr: Inside interface                 # Optional description
           - name: eth1
             grp_vl: [vl_grp1, [20, 30]]             # Optional L2 trunk port with {VLAN_group: [vlan, vlan]}
-          - name: eth1
+          - name: eth2
             grp_vl: [vl_grp1, 20]                   # Optional L2 access port with {VLAN_group: vlan}
       - name: server1
         tenant: tenant2
@@ -33,10 +33,10 @@ cluster:
             vrf_ip: [RED, 10.99.99.1/24]
           - name: eth0
             vrf_ip: [MGMT, 10.10.30.10/24]
-            dns: svr1@example.com                   # Optional DNS name of the device
+            dns: svr1.example.com                   # Optional DNS name of the device
             primary_ip: True                        # Optionally set this interface as the primary interface
 
-###################################### Create Devices ######################################
+# ###################################### Create Devices ######################################
 device_type:
   - name: Catalyst 3560-CX-12PC-S                   # Mandatory, will automatically workout manufacturer
     site: site1                                     # Mandatory, can be here or under device
@@ -88,3 +88,21 @@ device_type:
         - name: GigabitEthernet0/2
           lag: Port-channel1                        # Add physical interface as a member of the LAG
 
+  - name: PP Copper 24P 1U
+    site: site1
+    tenant: tenant1
+    device_role: Patch Panel
+    location: office1_floor5
+    device:
+      - name: PP1
+        rack: FL5-A1 
+        port:
+          - name: 1
+            label: "01"                               # Set the port label
+            descr: test1 port                         # Set the port label
+          - name: 26                                  # Create new port, uses rear-port number same as front-port and type of 110-punch
+          - name: 27
+            rear_port: 47                             # Set the rear port-number
+            label: "01"
+            descr: test1 port
+            type: 4p2c                                # Change the port type from default of 110-punch
