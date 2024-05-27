@@ -90,12 +90,13 @@ Clone the repository and create a virtual environment.
 ```css
 git clone https://github.com/sjhloco/netbox_add_device
 python -m venv ~/venv/nbox/
-source ~/venv/nbox1/bin/activate
+source ~/venv/nbox/bin/activate
 ```
 
 Install all required the python packages into the virtual environment.
 
 ```bash
+cd netbox_add_device
 pip install -r requirements.txt
 ```
 
