@@ -16,17 +16,19 @@ from collections import defaultdict
 import copy
 from rich.console import Console
 from rich.theme import Theme
-
+import os
 import config
 from netbox import NboxApi
 
 # ----------------------------------------------------------------------------
-# Variables to change dependant on environment
+# ENV VARS: Either set as env vars or fallback to defaults
 # ----------------------------------------------------------------------------
-netbox_url = config.netbox_url
-api_token = config.api_token
-ssl = False
-# If using Self-signed cert rather than disabling SSL verification (nb.http_session.verify = False) can specify the CA cert
+# Default netbox instance, falls back to docker version on Orb
+NBOX_URL = os.environ.get("NBOX_URL", "http://netbox.netbox-docker.orb.local")
+# Netbox API token (don't include Bearer, just the token) created under user profile
+NBOX_TOKEN = os.environ.get("NBOX_TOKEN")
+# By default use HTTP, if using Self-signed cert disable SSL verification (nb.http_session.verify = False) or specify the CA cert
+SSL = os.environ.get("SSL", False)
 # os.environ['REQUESTS_CA_BUNDLE'] = os.path.expanduser('~/Documents/Coding/Netbox/nbox_py_scripts/myCA.pem')
 
 
@@ -420,7 +422,7 @@ def main():
     script, first = argv
     my_theme = {"repr.ipv4": "none", "repr.number": "none", "repr.call": "none"}
     rc = Console(theme=Theme(my_theme))
-    nbox = NboxApi(netbox_url, api_token, ssl, rc)
+    nbox = NboxApi(NBOX_URL, NBOX_TOKEN, SSL, rc)
 
     ## 2. DM: Create Data-Model for API calls. Has catchall of exit if empty as no changes need to be made
     create_dm = CreateDm(nbox, rc, argv)

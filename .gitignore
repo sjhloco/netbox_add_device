@@ -43,6 +43,3 @@ docs/_templates/
 # Claude
 .claude/settings.local.json
 CLAUDE.local.md
-
-# Project-specific
-config.py

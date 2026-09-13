@@ -8,10 +8,14 @@
 # from nbox_add_device import NboxApi
 # from nbox_add_device import CreateDm
 # from nbox_add_device import CreateObject
+# import os
 
 
 # ############################ INZT_LOAD: Opens netbox connection and loads the variable file ############################
-
+# # Default netbox instance, token and SSL verification, falls back to docker version on Orb
+# NBOX_URL = os.environ.get("NBOX_URL", "http://netbox.netbox-docker.orb.local"
+# NBOX_TOKEN = os.environ.get("NBOX_TOKEN")
+# SSL = os.environ.get("SSL", False)
 
 # # Fixture is run everytime pytest run to create variables from input file
 # @pytest.fixture(scope="session", autouse=True)
@@ -53,9 +57,8 @@
 #     import creds
 #     import operator
 
-#     netbox_url = creds.netbox_url
-#     token = creds.api_token
-#     nb = pynetbox.api(url=netbox_url, token=token)
+#  
+#     nb = pynetbox.api(url=NBOX_URL, token=NBOX_TOKEN)
 #     nb.http_session.verify = False
 #     obj_exist, all_obj = ([] for i in range(2))
 #     obj_id = {}
