@@ -1,0 +1,97 @@
+[project]
+name = "netbox-add-device"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14"
+]
+
+dependencies = [
+    "pynetbox>=7.8.0",
+    "pyyaml>=6.0.3",
+    "rich>=15.0.0",
+    "urllib3>=2.7.0",
+]
+
+[dependency-groups]
+dev = [
+    "ipdb>=0.13.13",
+    "mypy>=2.3.0",
+    "pytest>=9.1.1",
+    "ruff>=0.16.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/sjhloco/netbox-add-device"
+Repository = "https://github.com/sjhloco/netbox-add-device"
+Issues = "https://github.com/sjhloco/netbox-add-device/issues"
+
+[build-system]
+requires = ["uv_build>=0.9.5,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.uv]
+# To make it a PYPi published package, delete this line (and add src/netbox_add_device/)
+package = false
+
+[tool.mypy]
+python_version = "3.12"
+# Core type checking (not as aggressive as strict)
+check_untyped_defs = true          # Check body of untyped functions
+disallow_untyped_calls = true      # Can't call untyped functions from typed ones
+disallow_incomplete_defs = true    # Functions need all args typed, or none
+# Practical warnings
+warn_unused_configs = true         # config options that don't actually do anything (typos, deprecated options, etc.)
+warn_redundant_casts = true        # Warns about unnecessary type casts
+warn_unused_ignores = true         # Warns when `# type: ignore` comments aren't needed anymore.
+warn_return_any = true             # Warns when a typed function returns `Any` (defeats the purpose of type hints)
+# None/Optional handling
+no_implicit_optional = true        # Prevents default `None` from automatically making parameters `Optional`
+
+# [tool.ruff]
+# line-length = 88
+[tool.ruff.lint]
+# RUFF DEFAULTS
+# (These are all the default groups, even if you don’t currently select them)
+# select = [
+#     "F",    # Pyflakes – detects syntax errors and basic mistakes
+#     "E4",   # Pycodestyle errors (part of E group)
+#     "E7",   # Pycodestyle E7xx errors (naming, etc.)
+#     "E9",   # Pycodestyle E9xx errors (syntax)
+# ]
+select = [
+    "E",    # Pycodestyle errors (style issues)
+    "UP",   # Pyupgrade – upgrades syntax to newer Python versions
+    "I",    # isort – import ordering checks
+    "D",    # Pydocstyle – docstring formatting
+    "B",    # Flake8-bugbear – common bug patterns
+    "SIM",  # Flake8-simplify – code simplification hints
+    "ANN",  # Flake8-annotations – enforces type annotation style
+    # Extra I added
+    "YTT",  # Flake8-2020 – checks for Python 2020 best practices
+    "N",    # PEP8 Naming – naming conventions
+    "A",    # Flake8-builtins – misuse of Python built-in names
+    "PT",   # Flake8-pytest-style – pytest best practices
+    "TC",   # Flake8-type-checking – proper import of typing in type checks
+    "ARG",  # Flake8-unused-arguments – flags unused function arguments
+    "EM",   # Flake8-errmsg – error message style
+]
+ignore = [
+    "E501",  # Pycodestyle - line too long
+    "D1",    # Pydocstyle - missing docstring in public module, class, or function
+]
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+pythonpath = ["."]   # project is not installed (package = false), so put the root on sys.path
