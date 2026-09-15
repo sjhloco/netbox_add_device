@@ -17,7 +17,6 @@ import copy
 from rich.console import Console
 from rich.theme import Theme
 import os
-import config
 from netbox import NboxApi
 
 # ----------------------------------------------------------------------------
@@ -52,19 +51,18 @@ class CreateDm:
             status=vm_dvc_orig.get("status", "active"),
             comments=vm_dvc_orig.get("comments", ""),
             tags=vm_dvc_orig.get("tags", None),
+            role=vm_dvc.get("device_role", None)
         )
 
         if obj_type == "vm":
             dm["cluster"] = cltr_dtype["cltr"]
             dm["site"] = cltr_dtype["site"]
-            dm["role"] = vm_dvc.get("device_role", None)
             dm["vcpus"] = vm_dvc_orig.get("cpu", None)
             dm["memory"] = vm_dvc_orig.get("mem", None)
             dm["disk"] = vm_dvc_orig.get("disk", None)
         elif obj_type == "device":
             dm["device_type"] = cltr_dtype["dtype"]
             dm["manufacturer"] = cltr_dtype["mftr"]
-            dm["device_role"] = vm_dvc["device_role"]
             dm["site"] = vm_dvc["site"]
             dm["cluster"] = vm_dvc.get("cluster")
             dm["location"] = vm_dvc.get("location")
