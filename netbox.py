@@ -309,14 +309,21 @@ class NboxApi:
         obj_type = api_attr.split(".")[1][:-1].capitalize()
         deploy_err = []
 
+        # cltr_dtype_name is bookkeeping only (used for display, not a real API
+        # field) - pynetbox's update-diff treats any unrecognized field as
+        # "always changed", so it must not be sent to create()/update()
+        api_payload = {
+            k: v for k, v in dm["vm_dvc"].items() if k != "cltr_dtype_name"
+        }
+
         # VM/DVC: create or update the VM or device
         if vm_dvc_exist is None:
             vm_dvc_result = self.obj_create(
-                dm["vm_dvc"]["name"], api_attr, dm["vm_dvc"], deploy_err
+                dm["vm_dvc"]["name"], api_attr, api_payload, deploy_err
             )
         elif vm_dvc_exist is not None:
             vm_dvc_result = self.obj_update(
-                dm["vm_dvc"]["name"], vm_dvc_exist, dm["vm_dvc"], deploy_err
+                dm["vm_dvc"]["name"], vm_dvc_exist, api_payload, deploy_err
             )
 
         # STDOUT: Only print message if error or no interfaces or ports defined
@@ -425,15 +432,24 @@ class NboxApi:
         # ADD_ASSIGN_IP: Either create IP and assign to interface or if IP already exists assign it to the interface
         elif len(deploy_err) == 0:
             for each_ip in dm["ip"]:
+                # vrf_name/intf_name/ip_obj/primary_ip are bookkeeping only,
+                # not real ipam.ip_addresses fields - pynetbox's update-diff
+                # treats any unrecognized field as "always changed", so they
+                # must not be sent to create()/update()
+                api_payload = {
+                    k: v
+                    for k, v in each_ip.items()
+                    if k not in ("vrf_name", "intf_name", "ip_obj", "primary_ip")
+                }
                 if each_ip["ip_obj"] is None:
                     self.remove_intf_ip(obj_type, each_ip)
                     tmp_ip_result = self.obj_create(
-                        each_ip["address"], "ipam.ip_addresses", each_ip, deploy_err
+                        each_ip["address"], "ipam.ip_addresses", api_payload, deploy_err
                     )
                 elif each_ip["ip_obj"] is not None:
                     self.remove_intf_ip(obj_type, each_ip)
                     tmp_ip_result = self.obj_update(
-                        each_ip["address"], each_ip["ip_obj"], each_ip, deploy_err
+                        each_ip["address"], each_ip["ip_obj"], api_payload, deploy_err
                     )
                 # PRIMARY_IP: If it is the primary IP address updates the VM with the details
                 if len(deploy_err) == 0:
@@ -488,7 +504,13 @@ class NboxApi:
                 )
                 # If rear port does not error create front port (does not add rport to list as dont want to print rport)
                 if rport[2] == True:
-                    each_port["rear_port"] = dict(id=rport[1].id)
+                    # NetBox 4.x: front-port write field is "rear_ports" (a list), not "rear_port"
+                    each_port["rear_ports"] = [
+                        dict(rear_port=rport[1].id, position=1, rear_port_position=1)
+                    ]
+                    # rear_port (singular) is now stale - an unrecognized field
+                    # would make pynetbox's update-diff always report "changed"
+                    del each_port["rear_port"]
                     port_result.append(
                         self.obj_create(
                             each_port["name"], "dcim.front-ports", each_port, deploy_err
@@ -498,29 +520,43 @@ class NboxApi:
             # UPDATE_PORT: Update existing port by marking change as True
             elif port_exist is not None:
                 change = False
+                # NetBox 4.x: read field is "rear_ports" (a list of {position, rear_port, rear_port_position}),
+                # where "rear_port" is the rear port's plain ID, not a nested object
+                cur_rport_id = port_exist["rear_ports"][0]["rear_port"]
+                cur_rport_name = self.nb.dcim.rear_ports.get(id=cur_rport_id).name
                 # If rear port has changed creates rear-port and updates ID
-                if str(each_port["rear_port"]) != port_exist["rear_port"]["name"]:
-                    old_rport["id"] = port_exist["rear_port"]["id"]
+                if str(each_port["rear_port"]) != cur_rport_name:
+                    old_rport["id"] = cur_rport_id
                     new_rport["name"] = each_port["rear_port"]
                     rport = self.obj_create(
                         new_rport["name"], "dcim.rear-ports", new_rport, deploy_err
                     )
                     if rport[2] == True:
                         change = True
-                        each_port["rear_port"] = dict(id=rport[1].id)
-                # If type has changed mark as True and add rear_port ID
+                        each_port["rear_ports"] = [
+                            dict(rear_port=rport[1].id, position=1, rear_port_position=1)
+                        ]
+                # If type has changed mark as True (rear_ports is unchanged - PATCH
+                # is a partial update, and resending the same rear_ports entry
+                # trips NetBox's "must make a unique set" constraint on the
+                # front-port/rear-port mapping)
                 elif each_port["type"] != port_exist["type"]["value"]:
-                    each_port["rear_port"] = dict(id=port_exist["rear_port"]["id"])
                     change = True
-                # Checks if any other port attribute have changed, add rear_port ID
+                # Checks if any other port attribute have changed
                 else:
-                    each_port["rear_port"] = dict(id=port_exist["rear_port"]["id"])
                     port_attr = ["label", "description"]
                     for each_attr in port_attr:
                         if str(each_port[each_attr]) != port_exist[each_attr]:
-                            change = change + True
+                            # NOTE: was `change = change + True`, which can reach 2 -
+                            # and `2 == True` is False in Python, silently skipping
+                            # the update below when both label and description differ
+                            change = True
                 # If any attribute has changed updates the port
                 if change == True:
+                    # rear_port (singular) is stale once rear_ports is set -
+                    # an unrecognized field would make pynetbox's update-diff
+                    # always report "changed"
+                    del each_port["rear_port"]
                     port_result.append(
                         self.obj_update(
                             str(port_exist), port_exist, each_port, deploy_err
