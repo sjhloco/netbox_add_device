@@ -2,13 +2,14 @@
 Run by nbox_add_device.py to perform all the NetBox interaction by pynetbox
 """
 
-import pynetbox
-from pynetbox.core.query import RequestError
 import ast
+import copy
 import operator
 from collections import defaultdict
+
+import pynetbox
 import urllib3
-import copy
+from pynetbox.core.query import RequestError
 
 urllib3.disable_warnings()
 
@@ -74,9 +75,9 @@ class NboxApi:
     # ----------------------------------------------------------------------------
     ## 2a. GET_SINGLE_ID: Gets the ID for a single primary object (input_obj)
     def get_single_id(self, api_attr, obj, fltr, err):
-        if obj.get("name") != None:
+        if obj.get("name") is not None:
             name = obj["name"]
-        elif obj.get("address") != None:
+        elif obj.get("address") is not None:
             name = obj["address"]
         obj_type = api_attr.split(".")[1][:-1]
         input_obj = list(fltr.values())[0]
@@ -84,7 +85,7 @@ class NboxApi:
         try:
             output = operator.attrgetter(api_attr)(self.nb).get(**fltr)
             # Incase doesnt error and returns nothing, add this to errors as no ID
-            if output == None:
+            if output is None:
                 err.append(
                     (name, {obj_type.capitalize(): input_obj}, "no object found")
                 )
@@ -153,7 +154,7 @@ class NboxApi:
     ## 2e. TAGS: Gathers ID of existing tag or creates new one and returns ID (list of IDs)
     def get_or_create_tag(self, tag, tag_exists, tag_created):
         tags = []
-        if tag != None:
+        if tag is not None:
             for name, colour in tag.items():
                 name = str(name)
                 tag = self.nb.extras.tags.get(name=name)
@@ -190,17 +191,17 @@ class NboxApi:
 
         for each_obj in input_result["details"]:
             tmp_obj_list.append(str(each_obj))
-        input_result[
-            "details"
-        ] = f"[i]{obj_type}: {', '.join(list(tmp_obj_list))}[/i], "
+        input_result["details"] = (
+            f"[i]{obj_type}: {', '.join(list(tmp_obj_list))}[/i], "
+        )
         return input_result
 
     ## 3c. FAIL_STDOUT: Prints out message for the user dependant on the task performed on VM/Device
     def crte_upte_err(self, obj_type, vm_dvc_exist, vm_dvc, deploy_err, intf_ip):
         # VM/DVC_NAME: Sets vm/device name dependant on whether is a new or existing
-        if vm_dvc_exist != None:
+        if vm_dvc_exist is not None:
             vm_dvc_name = vm_dvc_exist
-        elif vm_dvc != None:
+        elif vm_dvc is not None:
             vm_dvc_name = vm_dvc[1]
 
         # INTF_IP_ERROR: If new VM and has errors with interfaces deletes the VM and changes displayed error msg
@@ -250,9 +251,9 @@ class NboxApi:
                 del vm_dvc_dm["name"], vm_dvc_dm["cltr_dtype_name"]
                 if obj_type == "Virtual_machine":
                     del (vm_dvc_dm["cluster"], vm_dvc_dm["site"])
-                vm_dvc_result[
-                    "details"
-                ] = f"attributes: [i]{', '.join(list(vm_dvc_dm.keys()))}[/i], "
+                vm_dvc_result["details"] = (
+                    f"attributes: [i]{', '.join(list(vm_dvc_dm.keys()))}[/i], "
+                )
             # INTF_IP_VAR: If Interface or IP created/updated create variable of changes
             if intf_port_result.get("changed", False) == True:
                 self.format_stdout_intf_ip("interfaces/ports", intf_port_result)
@@ -292,7 +293,7 @@ class NboxApi:
 
         fltr = {"name": vc_name}
         result = self.chk_exist("dcim.virtual-chassis", fltr, dvc_dm["vm_dvc"]["name"])
-        if result != None:
+        if result is not None:
             dvc_dm["vm_dvc"]["virtual_chassis"] = result.id
         else:
             result = self.obj_create(vc_name, "dcim.virtual-chassis", fltr, deploy_err)
@@ -309,11 +310,11 @@ class NboxApi:
         deploy_err = []
 
         # VM/DVC: create or update the VM or device
-        if vm_dvc_exist == None:
+        if vm_dvc_exist is None:
             vm_dvc_result = self.obj_create(
                 dm["vm_dvc"]["name"], api_attr, dm["vm_dvc"], deploy_err
             )
-        elif vm_dvc_exist != None:
+        elif vm_dvc_exist is not None:
             vm_dvc_result = self.obj_update(
                 dm["vm_dvc"]["name"], vm_dvc_exist, dm["vm_dvc"], deploy_err
             )
@@ -343,7 +344,7 @@ class NboxApi:
 
         for each_intf in dm["intf"]:
             # LAG: If is a LAG member port adds the device_id that is used to filter and get the unique LAG
-            if each_intf.get("lag") != None:
+            if each_intf.get("lag") is not None:
                 each_intf["lag"] = {
                     "name": each_intf["lag"],
                     obj_type.lower() + "_id": vm_dvc_id,
@@ -357,17 +358,17 @@ class NboxApi:
             intf_exist = self.chk_exist(api_attr, fltr, vm_dvc_name)
 
             # CREATE_INTF: Created individually so that error messages can have the interface name
-            if intf_exist == None:
+            if intf_exist is None:
                 # If device interface type not sets sets as virtual
-                if obj_type == "Device" and each_intf.get("type") == None:
+                if obj_type == "Device" and each_intf.get("type") is None:
                     each_intf["type"] = "virtual"
                 intf_result.append(
                     self.obj_create(each_intf["name"], api_attr, each_intf, deploy_err)
                 )
             # UPDATE_INTF: Update existing interface. If goes from access (untagged) to trunk (tagged) removes untagged VLAN
-            elif intf_exist != None:
+            elif intf_exist is not None:
                 # Gets the existing device interface type if not specifically set
-                if obj_type == "Device" and each_intf.get("type") == None:
+                if obj_type == "Device" and each_intf.get("type") is None:
                     each_intf["type"] = intf_exist["type"]["value"]
                 if each_intf.get("mode") == "tagged":
                     each_intf["untagged_vlan"] = None
@@ -424,12 +425,12 @@ class NboxApi:
         # ADD_ASSIGN_IP: Either create IP and assign to interface or if IP already exists assign it to the interface
         elif len(deploy_err) == 0:
             for each_ip in dm["ip"]:
-                if each_ip["ip_obj"] == None:
+                if each_ip["ip_obj"] is None:
                     self.remove_intf_ip(obj_type, each_ip)
                     tmp_ip_result = self.obj_create(
                         each_ip["address"], "ipam.ip_addresses", each_ip, deploy_err
                     )
-                elif each_ip["ip_obj"] != None:
+                elif each_ip["ip_obj"] is not None:
                     self.remove_intf_ip(obj_type, each_ip)
                     tmp_ip_result = self.obj_update(
                         each_ip["address"], each_ip["ip_obj"], each_ip, deploy_err
@@ -478,7 +479,7 @@ class NboxApi:
             port_exist = self.chk_exist("dcim.front-ports", fltr, vm_dvc_name)
 
             # CREATE_PORT: Created individually so that error messages can have the port name
-            if port_exist == None:
+            if port_exist is None:
                 # Create rear port, uses front port name unless specifically set
                 if each_port["rear_port"] != each_port["name"]:
                     new_rport["name"] = each_port["rear_port"]
@@ -495,7 +496,7 @@ class NboxApi:
                     )
 
             # UPDATE_PORT: Update existing port by marking change as True
-            elif port_exist != None:
+            elif port_exist is not None:
                 change = False
                 # If rear port has changed creates rear-port and updates ID
                 if str(each_port["rear_port"]) != port_exist["rear_port"]["name"]:
@@ -526,7 +527,7 @@ class NboxApi:
                         )
                     )
                     # Deletes old rear-port if rear-port was changed
-                    if old_rport.get("id") != None:
+                    if old_rport.get("id") is not None:
                         rport = self.nb.dcim.rear_ports.get(id=old_rport["id"])
                         self.obj_delete(rport, "crte_upte_port")
 
@@ -565,7 +566,7 @@ class NboxApi:
 
             # VC: If a device and virtual chassis gets or creates the VC
             deploy_err = []
-            if each_vm_dvc["vm_dvc"].get("virtual_chassis") != None:
+            if each_vm_dvc["vm_dvc"].get("virtual_chassis") is not None:
                 self.chk_create_vc(each_vm_dvc, deploy_err)
             if len(deploy_err) == 0:
                 # EXIST: Gets netbox object ID for any VM/Devices that already exist
@@ -573,7 +574,7 @@ class NboxApi:
                     api_attr, fltr, each_vm_dvc["vm_dvc"]["cltr_dtype_name"]
                 )
                 # Checks if tag exists and gathers the ID. If doesn't exist creates it
-                if each_vm_dvc["vm_dvc"].get("tags") != None:
+                if each_vm_dvc["vm_dvc"].get("tags") is not None:
                     each_vm_dvc["vm_dvc"]["tags"] = self.get_or_create_tag(
                         each_vm_dvc["vm_dvc"]["tags"], tag_exists, tag_created
                     )

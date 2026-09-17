@@ -1,5 +1,6 @@
-"""
-Creates VMs and devices from a YAML file that starts at either the clusters (VMs) or devices-types (devices) and ends at the interface.
+"""Creates VMs and devices from a YAML file.
+
+Starts at either the clusters (VMs) or devices-types (devices) and ends at the interface.
 -VMs: Cluster name, Site and VM name are mandatory
 -Devices: Device-type name, Site, tenants, Device-role and device name are mandatory
 
@@ -10,13 +11,15 @@ To run the script reference the VM variable file
 python nbox_add_device.py devices_and_vms.yml
 """
 
-import yaml
-from sys import argv
-from collections import defaultdict
 import copy
+import os
+from collections import defaultdict
+from sys import argv
+
+import yaml
 from rich.console import Console
 from rich.theme import Theme
-import os
+
 from netbox import NboxApi
 
 # ----------------------------------------------------------------------------
@@ -51,7 +54,7 @@ class CreateDm:
             status=vm_dvc_orig.get("status", "active"),
             comments=vm_dvc_orig.get("comments", ""),
             tags=vm_dvc_orig.get("tags", None),
-            role=vm_dvc.get("device_role", None)
+            role=vm_dvc.get("device_role", None),
         )
 
         if obj_type == "vm":
@@ -69,7 +72,7 @@ class CreateDm:
             dm["serial"] = vm_dvc_orig.get("serial", None)
             dm["asset_tag"] = vm_dvc_orig.get("asset_tag", None)
             dm["virtual_chassis"] = vm_dvc_orig.get("virtual_chassis", None)
-            if vm_dvc.get("rack") != None:
+            if vm_dvc.get("rack") is not None:
                 dm["rack"] = vm_dvc.get("rack")
                 dm["position"] = vm_dvc_orig.get("position", None)
                 dm["face"] = vm_dvc_orig.get("face", "front")
@@ -89,7 +92,7 @@ class CreateDm:
             intf["type"] = each_intf.get("type", None)
             intf["lag"] = each_intf.get("lag", None)
         # INTF_DM: Sets whether an access or trunk port
-        if vl_vrf.get("vlan") != None:
+        if vl_vrf.get("vlan") is not None:
             if isinstance(vl_vrf["vlan"], int):
                 intf["mode"] = "access"
                 intf["untagged_vlan"] = vl_vrf["vlan"]
@@ -98,7 +101,7 @@ class CreateDm:
                 intf["tagged_vlans"] = vl_vrf["vlan"]
         # CREATE_IP_DM: Creates the data-models to be used to create the IP addresses
         ip = {}
-        if each_intf.get("vrf_ip", None) != None:
+        if each_intf.get("vrf_ip", None) is not None:
             ip = dict(
                 address=each_intf["vrf_ip"][1],
                 tenant=vm_dvc.get("tenant", None),
@@ -130,10 +133,10 @@ class CreateDm:
         for each_attr, each_val in tmp_attr_dict.items():
             if each_attr == "tenant" or each_attr == "rack":
                 pass
-            elif each_val == None:
+            elif each_val is None:
                 del attr_dict[each_attr]
             elif isinstance(each_val, dict):
-                if list(each_val.values())[0] == None:
+                if list(each_val.values())[0] is None:
                     del attr_dict[each_attr]
             elif not isinstance(each_val, int):
                 if len(each_val) == 0:
@@ -158,10 +161,10 @@ class CreateDm:
     def clstr_dtype_info(self, obj, info, err):
         all_obj = {}
 
-        if obj.get("name") != None:
+        if obj.get("name") is not None:
             all_obj["name"] = obj["name"]
             # Cluster checks (site is a missing mandatory object as used to get unique cluster ID)
-            if info == "cluster" and obj.get("site") == None:
+            if info == "cluster" and obj.get("site") is None:
                 err.append([obj["name"], "site", None])
             elif info == "cluster":
                 fltr = dict(name=obj["site"])
@@ -174,7 +177,7 @@ class CreateDm:
             elif info == "device_type":
                 fltr = dict(model=obj["name"])
                 tmp_obj = self.nbox.get_single_id("dcim.device-types", obj, fltr, err)
-                if tmp_obj != None:
+                if tmp_obj is not None:
                     all_obj["dtype"] = tmp_obj.id
                     all_obj["mftr"] = tmp_obj["manufacturer"]["id"]
         else:
@@ -185,15 +188,15 @@ class CreateDm:
     def vm_device_info(self, parent_obj, obj, info, err):
         all_obj = {}
 
-        if obj.get("name") != None:
+        if obj.get("name") is not None:
             all_obj["name"] = obj["name"]
             # For devices both site and role is mandatory (as site can be inherited is not done in clstr_dtype_info)
             if info == "device":
                 inherit_dvc_role = obj.get("device_role", parent_obj.get("device_role"))
                 inherit_dvc_site = obj.get("site", parent_obj.get("site"))
-                if inherit_dvc_role == None:
+                if inherit_dvc_role is None:
                     err.append([obj["name"], "device_role", None])
-                if inherit_dvc_site == None:
+                if inherit_dvc_site is None:
                     err.append([obj["name"], "site", None])
             # ALL_OPTIONAL: Shared VM/device objects, checks if defined in cluster/device-type if empty
             for api_attr in [
@@ -204,24 +207,24 @@ class CreateDm:
             ]:
                 obj_type = api_attr.split(".")[1][:-1]
                 inherit_obj = obj.get(obj_type, parent_obj.get(obj_type))
-                if inherit_obj != None:
+                if inherit_obj is not None:
                     all_obj[obj_type] = self.nbox.get_single_id(
                         api_attr, obj, {"name": inherit_obj}, err
                     )
             # DVC_OPTIONAL: Device only optional attributes
             inherit_cltr = obj.get("cluster", parent_obj.get("cluster"))
-            if info == "device" and inherit_cltr != None:
+            if info == "device" and inherit_cltr is not None:
                 fltr = dict(name=inherit_cltr, site_id=all_obj.get("site"))
                 all_obj["cltr"] = self.nbox.get_single_id(
                     "virtualization.clusters", obj, fltr, err
                 )
             inherit_loc = obj.get("location", parent_obj.get("location"))
-            if info == "device" and inherit_loc != None:
+            if info == "device" and inherit_loc is not None:
                 all_obj["location"] = self.nbox.get_single_id(
                     "dcim.locations", obj, {"slug": inherit_loc}, err
                 )
                 inherit_rack = obj.get("rack", parent_obj.get("rack"))
-                if all_obj["location"] != None and inherit_rack != None:
+                if all_obj["location"] is not None and inherit_rack is not None:
                     fltr = dict(name=inherit_rack, location_id=all_obj["location"])
                     all_obj["rack"] = self.nbox.get_single_id(
                         "dcim.racks", obj, fltr, err
@@ -262,12 +265,12 @@ class CreateDm:
     def obj_err_msg(self, obj_type, vm_name, input_err):
         tmp_err = defaultdict(dict)
         mand_err = []
-        if vm_name == None:
+        if vm_name is None:
             vm_name = "unknown"
 
         for name, err_obj, err in input_err:
             # MAND: If a mandatory element does not exist adds to list run by mand_err_msg
-            if err == None:
+            if err is None:
                 mand_err.append([name, err_obj, err])
             # TOP-LEVEL-DICT: Error if cant get cluster or device-type object ID (top level dictionary)
             elif (
@@ -302,14 +305,14 @@ class CreateDm:
         cltr_dtype_err = []
 
         ## 4a. CLTR/DTYPE:: Based on parent object (cluster or device-type) creates the objects (VM or device) DM by its getting attributes IDs
-        if self.my_vars.get(cltr_dtype) == None:
+        if self.my_vars.get(cltr_dtype) is None:
             cltr_dtype_err.append(("unknown", cltr_dtype, None))
         else:
             for each_cltr_dtype in self.my_vars[cltr_dtype]:
                 cltr = self.clstr_dtype_info(
                     each_cltr_dtype, cltr_dtype, cltr_dtype_err
                 )
-                if each_cltr_dtype.get(vm_dvc) == None:
+                if each_cltr_dtype.get(vm_dvc) is None:
                     cltr_dtype_err.append(
                         (each_cltr_dtype.get("name", "unknown"), vm_dvc, None)
                     )
@@ -332,20 +335,20 @@ class CreateDm:
                             dm_vm_dvc = self.rmv_empty_attr(dm_vm_dvc)
 
                             ## 4c. GET_INTF_IP: Gathers object IDs (unique VLAN in GRP or IP in VRF) to create VM interfaces and associated IPs
-                            if each_vm_dvc.get("intf", None) != None:
+                            if each_vm_dvc.get("intf", None) is not None:
                                 for each_intf in each_vm_dvc["intf"]:
                                     vl_vrf = {}
-                                    if each_intf.get("name") == None:
+                                    if each_intf.get("name") is None:
                                         intf_err.append(
                                             (each_vm_dvc["name"], "intf name", None)
                                         )
                                     else:
                                         # Get VLAN IDs and VRF ID
-                                        if each_intf.get("grp_vl") != None:
+                                        if each_intf.get("grp_vl") is not None:
                                             vl_vrf["vlan"] = self.nbox.get_vlan_id(
                                                 each_intf, intf_err
                                             )
-                                        if each_intf.get("vrf_ip", None) != None:
+                                        if each_intf.get("vrf_ip", None) is not None:
                                             fltr = dict(name=each_intf["vrf_ip"][0])
                                             vl_vrf["vrf"] = self.nbox.get_single_id(
                                                 "ipam.vrfs", each_intf, fltr, intf_err
@@ -366,9 +369,9 @@ class CreateDm:
                                                     )
                                                 )
                             # 4d. CREATE_PORT_DM: If there are no errors builds the data-model for creating the patch panel ports
-                            elif each_vm_dvc.get("port", None) != None:
+                            elif each_vm_dvc.get("port", None) is not None:
                                 for each_port in each_vm_dvc["port"]:
-                                    if each_port.get("name") == None:
+                                    if each_port.get("name") is None:
                                         port_err.append(
                                             (each_vm_dvc["name"], "port name", None)
                                         )
