@@ -1,0 +1,78 @@
+# Happy-path fixture data for the live-NetBox test suite.
+# Object names are prefixed UTEST_ so they're easy to identify/clean up and
+# match the base objects provisioned in tests/conftest.py.
+
+cluster:
+  - name: UTEST_cluster1
+    site: UTEST_site1
+    tenant: UTEST_tenant1
+    device_role: UTEST_role_vm
+    platform: UTEST_platform1
+    vm:
+      - name: UTEST_vm1
+        cpu: 4
+        mem: 2
+        disk: 32
+        comments: UTEST vm1 comment
+        tags: {UTEST_tag_fw: 9e9e9e}
+        intf:
+          - name: eth0
+            vrf_ip: [UTEST_vrf1, 10.10.10.1/24]
+            descr: Inside interface
+          - name: eth1
+            grp_vl: [UTEST_vlgrp1, [20, 30]]
+          - name: eth2
+            grp_vl: [UTEST_vlgrp1, 20]
+      - name: UTEST_vm2
+        tenant: UTEST_tenant2
+        device_role: UTEST_role_vm
+        intf:
+          - name: eth0
+            vrf_ip: [UTEST_vrf1, 10.10.10.2/24]
+            primary_ip: True
+
+device_type:
+  - name: UTEST_dtype1
+    site: UTEST_site1
+    tenant: UTEST_tenant1
+    device_role: UTEST_role_switch
+    platform: UTEST_platform1
+    location: utest_location1
+    rack: UTEST_rack1
+    device:
+      - name: UTEST_dvc1
+        position: 2
+        face: rear
+        serial: UTESTSERIAL01
+        virtual_chassis: {UTEST_vc1: [1, 1]}
+        intf:
+          - name: vlan30
+            vrf_ip: [UTEST_vrf1, 10.10.50.1/24]
+          - name: GigabitEthernet0/1
+            grp_vl: [UTEST_vlgrp1, 20]
+          - name: GigabitEthernet0/2
+            grp_vl: [UTEST_vlgrp1, [20, 30]]
+      - name: UTEST_dvc2
+        tenant: UTEST_tenant2
+        device_role: UTEST_role_switch
+        intf:
+          - name: vlan20
+            vrf_ip: [UTEST_vrf1, 10.10.20.11/24]
+            type: virtual
+
+  - name: UTEST_dtype_pp
+    site: UTEST_site1
+    tenant: UTEST_tenant1
+    device_role: UTEST_role_pp
+    device:
+      - name: UTEST_pp1
+        port:
+          - name: "1"
+            label: "01"
+            descr: UTEST test1 port
+          - name: "26"
+          - name: "27"
+            rear_port: "47"
+            label: "01"
+            descr: UTEST test2 port
+            type: 4p2c

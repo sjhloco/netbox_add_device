@@ -119,6 +119,26 @@ There are three possible outcomes from the attempt to create each object which a
 
 ![run_example_video](https://user-images.githubusercontent.com/33333983/163674996-87ace222-a460-4d79-bcd5-b2a03a4b87c4.gif)
 
+## Running tests
+
+The test suite runs entirely against a real, running NetBox instance (no mocking) — the
+same instance and env vars used for normal runs. Test objects are prefixed `UTEST_` and
+are created/torn down automatically.
+
+| Environment variable | Default | Required for tests |
+| --------------------- | ------- | ------------------- |
+| `NBOX_URL` | `http://netbox.netbox-docker.orb.local` | No |
+| `NBOX_TOKEN` | n/a | **Yes** |
+| `SSL` | `False` | No |
+
+```bash
+NBOX_TOKEN=<token> uv run pytest -v
+```
+
+Do not point this at a NetBox instance holding data you care about — while everything
+created is prefixed `UTEST_` and cleaned up on teardown, an interrupted run can leave
+`UTEST_` objects behind (safe to delete manually by name/slug prefix).
+
 ## AI Disclaimer
 
 Everything up to 2026-09-13 was written without AI assistance. Since then, some changes are made with AI assistance (mainly Claude Code).

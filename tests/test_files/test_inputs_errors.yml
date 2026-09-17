@@ -1,0 +1,23 @@
+# Deliberately broken input for CreateDm.engine() error-path tests.
+# Do not "fix" the schema issues here — they're the point of the file.
+#
+# Only per-vm/device-level errors live here (bad interface reference, a vm
+# entry with no name) — the cluster's own site/tenant/device_role are valid.
+# Cluster/device-type-level errors (missing site, missing top-level dict) are
+# tested by mutating create_dm_errors.my_vars directly instead: engine()
+# shares one error accumulator across all clusters in the file, so a cluster
+# error earlier in the list would silently skip every cluster after it,
+# making those errors untestable side-by-side in one YAML file.
+
+cluster:
+  - name: UTEST_cluster1
+    site: UTEST_site1
+    tenant: UTEST_tenant1
+    device_role: UTEST_role_vm
+    vm:
+      - name: UTEST_vm_bad_intf
+        intf:
+          - name: eth0
+            vrf_ip: [UTEST_nonexistent_vrf, 10.10.10.99/24]
+      - intf:
+          - name: eth0
