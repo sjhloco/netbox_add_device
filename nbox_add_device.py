@@ -34,7 +34,7 @@ NBOX_URL = os.environ.get("NBOX_URL", "http://netbox.netbox-docker.orb.local")
 # Netbox API token (don't include Bearer, just the token) created under user profile
 NBOX_TOKEN = os.environ.get("NBOX_TOKEN")
 # By default use HTTP, if using Self-signed cert disable SSL verification (nb.http_session.verify = False) or specify the CA cert
-SSL = os.environ.get("SSL", False)
+NBOX_SSL = os.environ.get("NBOX_SSL", False)
 # os.environ['REQUESTS_CA_BUNDLE'] = os.path.expanduser('~/Documents/Coding/Netbox/nbox_py_scripts/myCA.pem')
 
 
@@ -454,7 +454,7 @@ def main() -> None:
     script, first = argv
     my_theme = {"repr.ipv4": "none", "repr.number": "none", "repr.call": "none"}
     rc = Console(theme=Theme(my_theme))
-    nbox = NboxApi(NBOX_URL, NBOX_TOKEN, SSL, rc)
+    nbox = NboxApi(NBOX_URL, NBOX_TOKEN, NBOX_SSL, rc)
 
     ## 2. DM: Create Data-Model for API calls. Has catchall of exit if empty as no changes need to be made
     create_dm = CreateDm(nbox, rc, argv)

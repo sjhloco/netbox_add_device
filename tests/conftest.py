@@ -1,8 +1,8 @@
 """Shared fixtures for the netbox_add_device test suite.
 
 Every test here runs against a real NetBox instance (no mocking), using the
-same NBOX_URL/NBOX_TOKEN/SSL convention as nbox_add_device.py and the sibling
-netbox_env_setup project.
+same NBOX_URL/NBOX_TOKEN/NBOX_SSL convention as nbox_add_device.py and the
+sibling netbox_env_setup project.
 """
 
 import operator
@@ -28,7 +28,7 @@ TEST_INPUT_ERRORS = TEST_DIR / "test_files" / "test_inputs_errors.yml"
 # Same env vars/defaults as nbox_add_device.py
 NBOX_URL = os.environ.get("NBOX_URL", "http://netbox.netbox-docker.orb.local")
 NBOX_TOKEN = os.environ.get("NBOX_TOKEN")
-SSL = os.environ.get("SSL", False)
+NBOX_SSL = os.environ.get("NBOX_SSL", False)
 
 # Base objects provisioned once per session (see provision_base below) and
 # shared by name across test modules.
@@ -52,7 +52,11 @@ VLAN_IDS = (10, 20, 30)
 
 
 def _ssl_verify() -> bool:
-    return SSL if isinstance(SSL, bool) else SSL.strip().lower() in ("1", "true", "yes")
+    return (
+        NBOX_SSL
+        if isinstance(NBOX_SSL, bool)
+        else NBOX_SSL.strip().lower() in ("1", "true", "yes")
+    )
 
 
 @pytest.fixture(scope="session")

@@ -102,14 +102,14 @@ To get started set the Netbox API URL and token environment variables, SSL check
 | -------------------- | ------- | ----------- |
 | `NBOX_URL` | `http://netbox.netbox-docker.orb.local` | Default netbox instance, falls back to docker version on Orb |
 | `NBOX_TOKEN` | n/a | Netbox API token (don't include Bearer, just the token) |
-| `SSL` | `False` | To enable HTTPS for netbox API, vy default uses HTTP |
+| `NBOX_SSL` | `False` | To enable HTTPS for netbox API, vy default uses HTTP |
 
 ## Usage
 
 To allow for easier reporting and rollback each VM is created or updated on a one-by-one basis so that all VM elements (VM attributes, interfaces and IP addresses) are created under the same loop iteration. For newly created VMs if any of the element creation fails ((VM attributes, interfaces or IPs) that VM creation is rollback by removing the VM.
 
 ```bash
-python nbox_add_device.py input_file.yml
+uv run nbox_add_device.py input_file.yml
 ```
 
 There are three possible outcomes from the attempt to create each object which are relayed back in stdout:\
@@ -123,9 +123,11 @@ There are three possible outcomes from the attempt to create each object which a
 
 The test suite runs entirely against a real, running NetBox instance (no mocking) — the same instance and env vars used for normal runs. Test objects are prefixed `UTEST_` and are created/torn down automatically.
 
+```bash
 uv run pytest -vv
 uv run pytest tests/test_nbox_add_device.py -vv
 uv run pytest tests/test_netbox.py -vv
+```
 
 ## AI Disclaimer
 
