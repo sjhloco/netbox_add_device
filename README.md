@@ -121,23 +121,11 @@ There are three possible outcomes from the attempt to create each object which a
 
 ## Running tests
 
-The test suite runs entirely against a real, running NetBox instance (no mocking) — the
-same instance and env vars used for normal runs. Test objects are prefixed `UTEST_` and
-are created/torn down automatically.
+The test suite runs entirely against a real, running NetBox instance (no mocking) — the same instance and env vars used for normal runs. Test objects are prefixed `UTEST_` and are created/torn down automatically.
 
-| Environment variable | Default | Required for tests |
-| --------------------- | ------- | ------------------- |
-| `NBOX_URL` | `http://netbox.netbox-docker.orb.local` | No |
-| `NBOX_TOKEN` | n/a | **Yes** |
-| `SSL` | `False` | No |
-
-```bash
-NBOX_TOKEN=<token> uv run pytest -v
-```
-
-Do not point this at a NetBox instance holding data you care about — while everything
-created is prefixed `UTEST_` and cleaned up on teardown, an interrupted run can leave
-`UTEST_` objects behind (safe to delete manually by name/slug prefix).
+uv run pytest -vv
+uv run pytest tests/test_nbox_add_device.py -vv
+uv run pytest tests/test_netbox.py -vv
 
 ## AI Disclaimer
 
