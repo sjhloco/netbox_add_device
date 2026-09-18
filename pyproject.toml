@@ -57,6 +57,10 @@ warn_return_any = true             # Warns when a typed function returns `Any` (
 # None/Optional handling
 no_implicit_optional = true        # Prevents default `None` from automatically making parameters `Optional`
 
+[[tool.mypy.overrides]]
+module = ["pynetbox.*"]
+ignore_missing_imports = true      # pynetbox ships no py.typed marker and has no types-pynetbox stub package
+
 # [tool.ruff]
 # line-length = 88
 [tool.ruff.lint]

@@ -126,6 +126,7 @@ class TestGetSingleId:
         )
 
         assert not isinstance(result, int)
+        assert result is not None
         assert result.model == DTYPE1
         assert err == []
 
@@ -348,6 +349,7 @@ class TestObjUpdate:
             "UTEST_scratch_u1", scratch_tenant, {"description": "changed"}, err
         )
 
+        assert result is not None
         assert result[0] == "update"
         assert result[2] is True
         assert err == []
@@ -361,6 +363,7 @@ class TestObjUpdate:
             "UTEST_scratch_u1", scratch_tenant, {"description": "orig"}, err
         )
 
+        assert result is not None
         assert result[2] is False
 
     @pytest.mark.usefixtures("provision_base")

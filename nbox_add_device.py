@@ -15,12 +15,16 @@ import copy
 import os
 from collections import defaultdict
 from sys import argv
+from typing import TYPE_CHECKING, Any, cast
 
 import yaml
 from rich.console import Console
 from rich.theme import Theme
 
 from netbox import NboxApi
+
+if TYPE_CHECKING:
+    import pynetbox
 
 # ----------------------------------------------------------------------------
 # ENV VARS: Either set as env vars or fallback to defaults
@@ -35,51 +39,65 @@ SSL = os.environ.get("SSL", False)
 
 
 class CreateDm:
-    def __init__(self, nbox, rc, argv):
+    def __init__(self, nbox: NboxApi, rc: Console, argv: list[str]) -> None:
         self.rc = rc
         self.nbox = nbox
-        with open(argv[1], "r") as file_content:
-            self.my_vars = yaml.load(file_content, Loader=yaml.FullLoader)
+        with open(argv[1]) as file_content:
+            self.my_vars: dict[str, Any] = yaml.load(
+                file_content, Loader=yaml.FullLoader
+            )
 
     # ----------------------------------------------------------------------------
     # 1. DM: Creates the DMs for VM, Device, Interfaces and IP addresses
     # ----------------------------------------------------------------------------
     ## 1a. CREATE_VM_DM: Creates the data-model with all options for creating the VM
-    def create_vm_dvc(self, obj_type, cltr_dtype, vm_dvc, vm_dvc_orig):
+    def create_vm_dvc(
+        self,
+        obj_type: str,
+        cltr_dtype: dict[str, Any],
+        vm_dvc: dict[str, Any],
+        vm_dvc_orig: dict[str, Any],
+    ) -> dict[str, Any]:
         dm = dict(
             cltr_dtype_name=cltr_dtype["name"],
             name=vm_dvc["name"],
-            tenant=vm_dvc.get("tenant", None),
-            platform=vm_dvc.get("platform", None),
+            tenant=vm_dvc.get("tenant"),
+            platform=vm_dvc.get("platform"),
             status=vm_dvc_orig.get("status", "active"),
             comments=vm_dvc_orig.get("comments", ""),
-            tags=vm_dvc_orig.get("tags", None),
-            role=vm_dvc.get("device_role", None),
+            tags=vm_dvc_orig.get("tags"),
+            role=vm_dvc.get("device_role"),
         )
 
         if obj_type == "vm":
             dm["cluster"] = cltr_dtype["cltr"]
             dm["site"] = cltr_dtype["site"]
-            dm["vcpus"] = vm_dvc_orig.get("cpu", None)
-            dm["memory"] = vm_dvc_orig.get("mem", None)
-            dm["disk"] = vm_dvc_orig.get("disk", None)
+            dm["vcpus"] = vm_dvc_orig.get("cpu")
+            dm["memory"] = vm_dvc_orig.get("mem")
+            dm["disk"] = vm_dvc_orig.get("disk")
         elif obj_type == "device":
             dm["device_type"] = cltr_dtype["dtype"]
             dm["manufacturer"] = cltr_dtype["mftr"]
             dm["site"] = vm_dvc["site"]
             dm["cluster"] = vm_dvc.get("cluster")
             dm["location"] = vm_dvc.get("location")
-            dm["serial"] = vm_dvc_orig.get("serial", None)
-            dm["asset_tag"] = vm_dvc_orig.get("asset_tag", None)
-            dm["virtual_chassis"] = vm_dvc_orig.get("virtual_chassis", None)
+            dm["serial"] = vm_dvc_orig.get("serial")
+            dm["asset_tag"] = vm_dvc_orig.get("asset_tag")
+            dm["virtual_chassis"] = vm_dvc_orig.get("virtual_chassis")
             if vm_dvc.get("rack") is not None:
                 dm["rack"] = vm_dvc.get("rack")
-                dm["position"] = vm_dvc_orig.get("position", None)
+                dm["position"] = vm_dvc_orig.get("position")
                 dm["face"] = vm_dvc_orig.get("face", "front")
         return dm
 
     ## 1b. CREATE_INTF_DM: Creates the data-models to be used to create the VM interface (interface and IP)
-    def create_intf_dm(self, obj_type, vl_vrf, vm_dvc, each_intf):
+    def create_intf_dm(
+        self,
+        obj_type: str,
+        vl_vrf: dict[str, Any],
+        vm_dvc: dict[str, Any],
+        each_intf: dict[str, Any],
+    ) -> dict[str, Any]:
         intf = dict(
             virtual_machine=dict(name=vm_dvc["name"]),
             name=each_intf["name"],
@@ -89,8 +107,8 @@ class CreateDm:
         if obj_type == "device":
             del intf["virtual_machine"]
             intf["device"] = dict(name=vm_dvc["name"])
-            intf["type"] = each_intf.get("type", None)
-            intf["lag"] = each_intf.get("lag", None)
+            intf["type"] = each_intf.get("type")
+            intf["lag"] = each_intf.get("lag")
         # INTF_DM: Sets whether an access or trunk port
         if vl_vrf.get("vlan") is not None:
             if isinstance(vl_vrf["vlan"], int):
@@ -100,11 +118,11 @@ class CreateDm:
                 intf["mode"] = "tagged"
                 intf["tagged_vlans"] = vl_vrf["vlan"]
         # CREATE_IP_DM: Creates the data-models to be used to create the IP addresses
-        ip = {}
-        if each_intf.get("vrf_ip", None) is not None:
+        ip: dict[str, Any] = {}
+        if each_intf.get("vrf_ip") is not None:
             ip = dict(
                 address=each_intf["vrf_ip"][1],
-                tenant=vm_dvc.get("tenant", None),
+                tenant=vm_dvc.get("tenant"),
                 vrf_name=each_intf["vrf_ip"][0],
                 vrf=vl_vrf["vrf"],
                 intf_name=dict(name=each_intf["name"]),
@@ -115,7 +133,7 @@ class CreateDm:
         return dict(intf=intf, ip=ip)
 
     ## 1c. CREATE_PORT_DM: Creates the data-models to be used to create the patch panel ports
-    def create_port_dm(self, pp_name, each_port):
+    def create_port_dm(self, pp_name: str, each_port: dict[str, Any]) -> dict[str, Any]:
         port = dict(
             device=dict(name=pp_name),
             name=each_port["name"],
@@ -127,7 +145,7 @@ class CreateDm:
         return port
 
     ## 1d. REMOVE_EMPTY: Removes any empty attributes from the VM/DVC, INTF or IP DMs
-    def rmv_empty_attr(self, attr_dict):
+    def rmv_empty_attr(self, attr_dict: dict[str, Any]) -> dict[str, Any]:
         tmp_attr_dict = copy.deepcopy(attr_dict)
 
         for each_attr, each_val in tmp_attr_dict.items():
@@ -138,19 +156,18 @@ class CreateDm:
             elif isinstance(each_val, dict):
                 if list(each_val.values())[0] is None:
                     del attr_dict[each_attr]
-            elif not isinstance(each_val, int):
-                if len(each_val) == 0:
-                    del attr_dict[each_attr]
+            elif not isinstance(each_val, int) and len(each_val) == 0:
+                del attr_dict[each_attr]
         return attr_dict
 
     ## 1e. PRIM_IP: Sets 1st IP as primary if not set on any other interface
-    def set_primary_ip(self, ip):
+    def set_primary_ip(self, ip: list[dict[str, Any]]) -> list[dict[str, Any]]:
         primary_ip_set = False
 
         if len(ip) != 0:
             for each_ip in ip[1:]:
                 primary_ip_set = primary_ip_set + each_ip["primary_ip"]
-            if primary_ip_set == False:
+            if not primary_ip_set:
                 ip[0]["primary_ip"] = True
         return ip
 
@@ -158,8 +175,10 @@ class CreateDm:
     # 2. GET_OBJ: Methods used by VM and Device DMs to call netbox.py methods and get object IDs
     # ----------------------------------------------------------------------------
     ## 2a. Get the top level cluster and device type attribute object IDs
-    def clstr_dtype_info(self, obj, info, err):
-        all_obj = {}
+    def clstr_dtype_info(
+        self, obj: dict[str, Any], info: str, err: list[Any]
+    ) -> dict[str, Any]:
+        all_obj: dict[str, Any] = {}
 
         if obj.get("name") is not None:
             all_obj["name"] = obj["name"]
@@ -178,6 +197,9 @@ class CreateDm:
                 fltr = dict(model=obj["name"])
                 tmp_obj = self.nbox.get_single_id("dcim.device-types", obj, fltr, err)
                 if tmp_obj is not None:
+                    # "dcim.device-types" always returns the Record, never the int
+                    # branch, of get_single_id's polymorphic return type
+                    tmp_obj = cast("pynetbox.core.response.Record", tmp_obj)
                     all_obj["dtype"] = tmp_obj.id
                     all_obj["mftr"] = tmp_obj["manufacturer"]["id"]
         else:
@@ -185,8 +207,10 @@ class CreateDm:
         return all_obj
 
     ## 2b. Get the VM or device attribute object IDs
-    def vm_device_info(self, parent_obj, obj, info, err):
-        all_obj = {}
+    def vm_device_info(
+        self, parent_obj: dict[str, Any], obj: dict[str, Any], info: str, err: list[Any]
+    ) -> dict[str, Any]:
+        all_obj: dict[str, Any] = {}
 
         if obj.get("name") is not None:
             all_obj["name"] = obj["name"]
@@ -237,10 +261,10 @@ class CreateDm:
     # 3. ERRORS: Prettifies error messages and prints to stdout
     # ---------------------------------------------------------------------------
     ## 3a. MAND_ERROR_MSG: Prettifies and prints error messages for missing mandatory dictionaries
-    def mand_err_msg(self, obj_type, input_err):
-        tmp_err = defaultdict(list)
+    def mand_err_msg(self, obj_type: str, input_err: list[Any]) -> None:
+        tmp_err: defaultdict[str, list[Any]] = defaultdict(list)
         # Group errors as {missing_key: [obj_names]} before printing
-        for name, err_obj, err in input_err:
+        for name, err_obj, _err in input_err:
             tmp_err[err_obj].append(name)
         # STDOUT for the differnet missing mandatory attribute errors
         for dict_name, obj_name in tmp_err.items():
@@ -262,9 +286,11 @@ class CreateDm:
                 )
 
     ## 3b. OBJ_ERROR_MSG: Error messages if any VM/device or interface objects don't exist (groups interfaces together to report in one line)
-    def obj_err_msg(self, obj_type, vm_name, input_err):
-        tmp_err = defaultdict(dict)
-        mand_err = []
+    def obj_err_msg(
+        self, obj_type: str, vm_name: str | None, input_err: list[Any]
+    ) -> None:
+        tmp_err: defaultdict[str, dict[str, Any]] = defaultdict(dict)
+        mand_err: list[Any] = []
         if vm_name is None:
             vm_name = "unknown"
 
@@ -300,9 +326,11 @@ class CreateDm:
     # ----------------------------------------------------------------------------
     # 4. Engine: Runs methods to get object IDs creating data model used in to create VMs, devices, interfaces and IPs
     # ----------------------------------------------------------------------------
-    def engine(self, cltr_dtype, vm_dvc, vm_dvc_fname):
-        all_obj = []
-        cltr_dtype_err = []
+    def engine(
+        self, cltr_dtype: str, vm_dvc: str, vm_dvc_fname: str
+    ) -> list[dict[str, Any]]:
+        all_obj: list[dict[str, Any]] = []
+        cltr_dtype_err: list[Any] = []
 
         ## 4a. CLTR/DTYPE:: Based on parent object (cluster or device-type) creates the objects (VM or device) DM by its getting attributes IDs
         if self.my_vars.get(cltr_dtype) is None:
@@ -320,9 +348,12 @@ class CreateDm:
                 ## 4b. VM/DVC: VM or device attributes object IDs collection, only proceeds if no cluster/device-type errors
                 if len(cltr_dtype_err) == 0:
                     for each_vm_dvc in each_cltr_dtype[vm_dvc]:
-                        vm_dvc_err, intf_err, port_err, intf, ip, port = (
-                            [] for i in range(6)
-                        )
+                        vm_dvc_err: list[Any] = []
+                        intf_err: list[Any] = []
+                        port_err: list[Any] = []
+                        intf: list[dict[str, Any]] = []
+                        ip: list[dict[str, Any]] = []
+                        port: list[dict[str, Any]] = []
                         tmp_vm_dvc = self.vm_device_info(
                             each_cltr_dtype, each_vm_dvc, vm_dvc, vm_dvc_err
                         )
@@ -337,7 +368,7 @@ class CreateDm:
                             ## 4c. GET_INTF_IP: Gathers object IDs (unique VLAN in GRP or IP in VRF) to create VM interfaces and associated IPs
                             if each_vm_dvc.get("intf", None) is not None:
                                 for each_intf in each_vm_dvc["intf"]:
-                                    vl_vrf = {}
+                                    vl_vrf: dict[str, Any] = {}
                                     if each_intf.get("name") is None:
                                         intf_err.append(
                                             (each_vm_dvc["name"], "intf name", None)
@@ -418,7 +449,7 @@ class CreateDm:
 # ----------------------------------------------------------------------------
 # RUN: Runs the script
 # ----------------------------------------------------------------------------
-def main():
+def main() -> None:
     ## 1. LOAD: Opens netbox connection and loads the variable file
     script, first = argv
     my_theme = {"repr.ipv4": "none", "repr.number": "none", "repr.call": "none"}
