@@ -28,7 +28,7 @@ TEST_INPUT_ERRORS = TEST_DIR / "test_files" / "test_inputs_errors.yml"
 # Same env vars/defaults as nbox_add_device.py
 NBOX_URL = os.environ.get("NBOX_URL", "http://netbox.netbox-docker.orb.local")
 NBOX_TOKEN = os.environ.get("NBOX_TOKEN")
-NBOX_SSL = os.environ.get("NBOX_SSL", False)
+NBOX_SSL = os.environ.get("NBOX_SSL", "false")
 
 # Base objects provisioned once per session (see provision_base below) and
 # shared by name across test modules.
@@ -51,12 +51,10 @@ VLAN_GROUP1 = "UTEST_vlgrp1"
 VLAN_IDS = (10, 20, 30)
 
 
-def _ssl_verify() -> bool:
-    return (
-        NBOX_SSL
-        if isinstance(NBOX_SSL, bool)
-        else NBOX_SSL.strip().lower() in ("1", "true", "yes")
-    )
+def _ssl_verify() -> bool | str:
+    if NBOX_SSL.strip().lower() in ("1", "true", "yes"):
+        return os.environ.get("CA_PATH") or True
+    return False
 
 
 @pytest.fixture(scope="session")

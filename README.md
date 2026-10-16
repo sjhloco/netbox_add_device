@@ -102,7 +102,8 @@ To get started set the Netbox API URL and token environment variables, SSL check
 | -------------------- | ------- | ----------- |
 | `NBOX_URL` | `http://netbox.netbox-docker.orb.local` | Default netbox instance, falls back to docker version on Orb |
 | `NBOX_TOKEN` | n/a | Netbox API token (don't include Bearer, just the token) |
-| `NBOX_SSL` | `False` | To enable HTTPS for netbox API, vy default uses HTTP |
+| `NBOX_SSL` | `false` | `true` verifies the TLS cert, `false` disables verification |
+| `CA_PATH` | unset | CA bundle used when `NBOX_SSL=true`, otherwise the default store (certifi) |
 
 ## Usage
 

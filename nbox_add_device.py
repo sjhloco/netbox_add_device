@@ -33,9 +33,12 @@ if TYPE_CHECKING:
 NBOX_URL = os.environ.get("NBOX_URL", "http://netbox.netbox-docker.orb.local")
 # Netbox API token (don't include Bearer, just the token) created under user profile
 NBOX_TOKEN = os.environ.get("NBOX_TOKEN")
-# By default use HTTP, if using Self-signed cert disable SSL verification (nb.http_session.verify = False) or specify the CA cert
-NBOX_SSL = os.environ.get("NBOX_SSL", False)
-# os.environ['REQUESTS_CA_BUNDLE'] = os.path.expanduser('~/Documents/Coding/Netbox/nbox_py_scripts/myCA.pem')
+# TLS verification: NBOX_SSL=false (default) disables it, NBOX_SSL=true enables it using the CA bundle in CA_PATH if set, else requests' default (certifi) store
+NBOX_SSL: bool | str = (
+    os.environ.get("CA_PATH") or True
+    if os.environ.get("NBOX_SSL", "false").strip().lower() in ("1", "true", "yes")
+    else False
+)
 
 
 class CreateDm:
