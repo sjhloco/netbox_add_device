@@ -436,6 +436,10 @@ class NboxApi:
                     obj_type.lower() + "_id": vm_dvc_id,
                 }
 
+            # MAC: Not sent with the interface, created as a separate MAC address object afterwards
+            mac = each_intf.pop("mac", None)
+            err_count = len(deploy_err)
+
             # CHK_EXIST: Checks if interface exists to know whether to create new or update existing interface
             fltr = {
                 "name": each_intf["name"],
@@ -462,6 +466,9 @@ class NboxApi:
                 intf_result.append(
                     self.obj_update(str(intf_exist), intf_exist, each_intf, deploy_err)
                 )
+            # MAC_ADDRESS: Only if the interface was created or updated without errors
+            if mac is not None and len(deploy_err) == err_count:
+                self.crte_upte_mac(obj_type, intf_result[-1][1], mac, deploy_err)
         # STDOUT: Only print message if error or no IPs defined
         if len(deploy_err) == 0 and len(dm["ip"]) == 0:
             self.crte_upte_stdout(obj_type, dm["vm_dvc"], vm_dvc_raw, intf_result)
@@ -472,6 +479,36 @@ class NboxApi:
             )
         result = dict(result=intf_result, deploy_err=deploy_err)
         return result
+
+    ## 4c-ii. CREATE_OR_UPDATE_MAC: NetBox 4.2+ MACs are their own object, creates it (if needed) and sets it as the interface primary MAC
+    def crte_upte_mac(
+        self,
+        obj_type: str,
+        intf: pynetbox.core.response.Record,
+        mac: str,
+        deploy_err: list[Any],
+    ) -> None:
+        if obj_type == "Virtual_machine":
+            intf_filter, assigned_type = "vminterface_id", "virtualization.vminterface"
+        else:
+            intf_filter, assigned_type = "interface_id", "dcim.interface"
+        mac_obj = self.chk_exist(
+            "dcim.mac_addresses", {"mac_address": mac, intf_filter: intf.id}, intf.name
+        )
+        if mac_obj is None:
+            err_count = len(deploy_err)
+            payload = {
+                "mac_address": mac,
+                "assigned_object_type": assigned_type,
+                "assigned_object_id": intf.id,
+            }
+            mac_result = self.obj_create(mac, "dcim.mac_addresses", payload, deploy_err)
+            if len(deploy_err) != err_count:
+                return
+            mac_obj = mac_result[1]
+        self.obj_update(
+            intf.name, intf, {"primary_mac_address": mac_obj.id}, deploy_err
+        )
 
     ## 4d. CREATE_OR_UPDATE_IP: Creates new VM interface IP address or adds existing one to a VM interfaces
     def crte_upte_ip(

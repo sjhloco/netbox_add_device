@@ -71,6 +71,8 @@ Interfaces are the same for VMs or devices except for *type* which only applies 
 | intf | `descr` | No | Description for the interface |
 | intf | `type` | No | Only needed on device interfaces. If not specified and a new interface will default to *virtual* otherwise uses the type from the device-type such as 1000Base-TE (1GE) |
 | intf | `lag` | No | Name of the LAG (port-channel) this interface is a member of |
+| intf | `mgmt` | No | Device interfaces only, set to true to mark interface as management only |
+| intf | `mac` | No | MAC address of the interface (any format NetBox accepts) |
 | intf | `role` | No | Role of the IP address, by default nothing |
 
 ### Patch panel port attributes

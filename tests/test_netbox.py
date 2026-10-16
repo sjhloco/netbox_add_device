@@ -840,6 +840,40 @@ class TestCrteUpteIntf:
         assert len(result["result"]) == 1
         assert result["result"][0][0] == "create"
 
+    def test_mac_created_and_primary_idempotent(
+        self,
+        nbox: NboxApi,
+        raw_nb: pynetbox.api,
+        scratch_vm: pynetbox.core.response.Record,
+    ) -> None:
+        def run() -> dict:
+            dm = {
+                "vm_dvc": self._vm_dvc_dm(),
+                "intf": [
+                    {
+                        "name": "eth0",
+                        "virtual_machine": {"name": "UTEST_scratch_intf_vm"},
+                        "mac": "02:00:00:aa:bb:cc",
+                    }
+                ],
+                "ip": [],
+            }
+            return nbox.crte_upte_intf(
+                "virtualization.interfaces",
+                dm,
+                scratch_vm,
+                self._vm_dvc_result(scratch_vm),
+            )
+
+        assert run()["deploy_err"] == []
+        assert run()["deploy_err"] == []
+        intf = raw_nb.virtualization.interfaces.get(
+            name="eth0", virtual_machine_id=scratch_vm.id
+        )
+        macs = list(raw_nb.dcim.mac_addresses.filter(vminterface_id=intf.id))
+        assert len(macs) == 1
+        assert intf.primary_mac_address.id == macs[0].id
+
     def test_access_to_trunk_clears_untagged(
         self,
         nbox: NboxApi,

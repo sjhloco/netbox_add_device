@@ -129,6 +129,28 @@ class TestCreateIntfDm:
         assert intf["type"] is None
         assert intf["lag"] is None
 
+    def test_device_mgmt_and_mac(self, create_dm: CreateDm) -> None:
+        result = create_dm.create_intf_dm(
+            "device",
+            {},
+            {"name": "dvc1"},
+            {"name": "Gi0/1", "mgmt": True, "mac": "00:11:22:33:44:55"},
+        )
+
+        assert result["intf"]["mgmt_only"] is True
+        assert result["intf"]["mac"] == "00:11:22:33:44:55"
+
+    def test_vm_mac_without_mgmt_only(self, create_dm: CreateDm) -> None:
+        result = create_dm.create_intf_dm(
+            "vm",
+            {},
+            {"name": "vm1"},
+            {"name": "eth0", "mgmt": True, "mac": "00:11:22:33:44:55"},
+        )
+
+        assert "mgmt_only" not in result["intf"]
+        assert result["intf"]["mac"] == "00:11:22:33:44:55"
+
     def test_access_port(self, create_dm: CreateDm) -> None:
         result = create_dm.create_intf_dm(
             "vm", {"vlan": 20}, {"name": "vm1"}, {"name": "eth2"}
