@@ -379,7 +379,8 @@ class TestObjErrMsg:
 
         out = capsys.readouterr().out
         assert (
-            "Device 'UTEST_dtype1' may not exist as could not get the object.id" in out
+            "Device-type 'UTEST_dtype1' may not exist as could not get the object.id"
+            in out
         )
 
     def test_groups_error_under_vm_own_name(
