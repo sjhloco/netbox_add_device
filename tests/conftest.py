@@ -116,7 +116,9 @@ def cr_nbox_obj(
         print(f"XX error creating test '{api_attr}' object '{obj_name}' - {e}")
 
 
-def del_nbox_obj(nb: pynetbox.api, api_attr: str, obj_fltr: str, obj_name: str | int) -> None:
+def del_nbox_obj(
+    nb: pynetbox.api, api_attr: str, obj_fltr: str, obj_name: str | int
+) -> None:
     try:
         obj = operator.attrgetter(api_attr)(nb).get(**{obj_fltr: obj_name})
         if obj is not None:
@@ -133,12 +135,20 @@ def provision_base(raw_nb: pynetbox.api, nbox: NboxApi) -> Iterator[None]:
     a VRF and VLANs — everything tests/test_files/test_inputs.yml refers to.
     """
     cr_nbox_obj(
-        raw_nb, "tenancy.tenants", {"name": TENANT1, "slug": nbox.make_slug(TENANT1)}, TENANT1
+        raw_nb,
+        "tenancy.tenants",
+        {"name": TENANT1, "slug": nbox.make_slug(TENANT1)},
+        TENANT1,
     )
     cr_nbox_obj(
-        raw_nb, "tenancy.tenants", {"name": TENANT2, "slug": nbox.make_slug(TENANT2)}, TENANT2
+        raw_nb,
+        "tenancy.tenants",
+        {"name": TENANT2, "slug": nbox.make_slug(TENANT2)},
+        TENANT2,
     )
-    cr_nbox_obj(raw_nb, "dcim.sites", {"name": SITE1, "slug": nbox.make_slug(SITE1)}, SITE1)
+    cr_nbox_obj(
+        raw_nb, "dcim.sites", {"name": SITE1, "slug": nbox.make_slug(SITE1)}, SITE1
+    )
     cr_nbox_obj(
         raw_nb,
         "dcim.device_roles",
@@ -200,7 +210,10 @@ def provision_base(raw_nb: pynetbox.api, nbox: NboxApi) -> Iterator[None]:
         CLUSTER1,
     )
     cr_nbox_obj(
-        raw_nb, "dcim.manufacturers", {"name": MFTR1, "slug": nbox.make_slug(MFTR1)}, MFTR1
+        raw_nb,
+        "dcim.manufacturers",
+        {"name": MFTR1, "slug": nbox.make_slug(MFTR1)},
+        MFTR1,
     )
     cr_nbox_obj(
         raw_nb,

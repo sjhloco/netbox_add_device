@@ -43,3 +43,6 @@ docs/_templates/
 # Claude
 .claude/settings.local.json
 CLAUDE.local.md
+
+# Site-specific device files
+site_*.yml
