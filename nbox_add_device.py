@@ -123,8 +123,8 @@ class CreateDm:
             ip = dict(
                 address=each_intf["vrf_ip"][1],
                 tenant=vm_dvc.get("tenant"),
-                vrf_name=each_intf["vrf_ip"][0],
-                vrf=vl_vrf["vrf"],
+                vrf_name=each_intf["vrf_ip"][0] or "global",
+                vrf=vl_vrf.get("vrf"),
                 intf_name=dict(name=each_intf["name"]),
                 dns_name=each_intf.get("dns", ""),
                 primary_ip=each_intf.get("primary_ip", False),
@@ -379,7 +379,11 @@ class CreateDm:
                                             vl_vrf["vlan"] = self.nbox.get_vlan_id(
                                                 each_intf, intf_err
                                             )
-                                        if each_intf.get("vrf_ip", None) is not None:
+                                        # Empty VRF name = global table, no VRF lookup
+                                        if (
+                                            each_intf.get("vrf_ip", None) is not None
+                                            and each_intf["vrf_ip"][0]
+                                        ):
                                             fltr = dict(name=each_intf["vrf_ip"][0])
                                             vl_vrf["vrf"] = self.nbox.get_single_id(
                                                 "ipam.vrfs", each_intf, fltr, intf_err

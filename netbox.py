@@ -499,7 +499,8 @@ class NboxApi:
             # PFX_ID: if the prefix already exists the prefix ID
             fltr = {
                 "address": each_ip["address"],
-                "vrf_id": each_ip["vrf"],
+                # rmv_empty_attr drops a None vrf; "null" filters on the global table
+                "vrf_id": each_ip.get("vrf") or "null",
             }
             each_ip["ip_obj"] = self.chk_exist(
                 "ipam.ip_addresses", fltr, each_ip["vrf_name"]
