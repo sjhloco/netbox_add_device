@@ -109,6 +109,10 @@ class CreateDm:
             intf["device"] = dict(name=vm_dvc["name"])
             intf["type"] = each_intf.get("type")
             intf["lag"] = each_intf.get("lag")
+            intf["mgmt_only"] = each_intf.get("mgmt")
+        # MAC: Not an interface field in NetBox 4.2+, popped and created as its own object by crte_upte_intf
+        if each_intf.get("mac") is not None:
+            intf["mac"] = each_intf["mac"]
         # INTF_DM: Sets whether an access or trunk port
         if vl_vrf.get("vlan") is not None:
             if isinstance(vl_vrf["vlan"], int):

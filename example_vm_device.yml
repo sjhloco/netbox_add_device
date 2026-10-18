@@ -35,6 +35,7 @@ cluster:
             vrf_ip: [MGMT, 10.10.30.10/24]
             dns: svr1.example.com                   # Optional DNS name of the device
             primary_ip: True                        # Optionally set this interface as the primary interface
+            mac: "00:11:22:33:44:55"                # Optional MAC address of the interface
 
 # ###################################### Create Devices ######################################
 device_type:
@@ -78,6 +79,7 @@ device_type:
           vrf_ip: [BLU, 10.10.10.10/24]
           dns: sw2.stesworld.com
           primary_ip: True
+          mgmt: true                                 # Optional device-only, marks the interface as management only
         - name: GigabitEthernet0/1
           grp_vl: [vl_grp1, [20, 30]]
           type: 10gbase-t                           # Optionally set as 10 gig port (overrides whats in device-type)
