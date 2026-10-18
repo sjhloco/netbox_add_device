@@ -310,7 +310,7 @@ class CreateDm:
                 obj_type != "device" and list(err_obj.keys())[0] == "Cluster"
             ) or list(err_obj.keys())[0] == "Device-type":
                 self.rc.print(
-                    f":x: {obj_type.capitalize()} '{name}' may not exist as could not get the object.id"
+                    f":x: {list(err_obj.keys())[0]} '{name}' may not exist as could not get the object.id"
                 )
             # OBJ: Error messages for all other object IDs couldnt not get
             else:
